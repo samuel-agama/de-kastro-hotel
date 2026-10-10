@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Point crawlers directly to the sitemap
+Sitemap: https://www.dekastrohotel.com/sitemap.xml

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De Kastro Hotel Limited | Premium Rooms & Event Hosting in Mowe</title>
+  <meta name="description" content="De Kastro Hotel in Mowe, opposite RCCG City Camp. Rooms from ₦30,000 a night, plus an event and reception space. Call or WhatsApp to book.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* 1. DESIGN TOKENS (Brand Colors: Navy, Blue, Orange) */
+    :root {
+      --color-bg-base: #060E1A; 
+      --color-bg-surface: #0B172A;
+      --color-border: #1E293B;
+      
+      --color-white: #ffffff;
+      --color-bone-white: #E2E8F0;
+      --color-ash-gray: #94A3B8;
+      
+      --color-brand-blue: #0077C8; 
+      --color-brand-orange: #F5821F; 
+      --color-brand-orange-hover: #FFA24A;
+      
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body: 'Montserrat', sans-serif;
+      
+      --radius-buttons: 4px;
+      --radius-cards: 0px; 
+    }
+
+    body {
+      background-color: var(--color-bg-base);
+      color: var(--color-bone-white);
+      font-family: var(--font-body);
+      font-weight: 300; 
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+    
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      color: var(--color-brand-orange); 
+      font-weight: 400;
+      margin-top: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .text-magnify {
+      display: inline-block; 
+      transform-origin: left center; 
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    }
+    
+    .text-magnify:hover {
+      transform: scale(1.03); 
+      cursor: default;
+    }
+
+    /* 3D CSS Logo Placeholder */
+    .logo-3d-placeholder {
+      width: 24px;
+      height: 24px;
+      background-color: var(--color-brand-blue);
+      box-shadow: 4px 4px 0px var(--color-brand-orange);
+      transform: rotate(-10deg);
+      margin-right: 16px;
+      transition: transform 0.3s ease;
+    }
+    .logo-3d-placeholder:hover {
+      transform: rotate(-10deg) scale(1.1);
+    }
+    .logo-hover {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
+}
+.logo-hover:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15);
+}
+
+    /* 2. CORE COMPONENTS */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-gap { padding-top: 80px; padding-bottom: 80px; }
+    .border-hairline { border: 1px solid var(--color-border); }
+
+    /* Buttons */
+    .btn-solid {
+      background-color: var(--color-brand-orange);
+      color: var(--color-white);
+      padding: 14px 32px;
+      border-radius: var(--radius-buttons);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      display: inline-block;
+      transition: background-color 0.2s ease-out;
+      border: none;
+      text-align: center;
+    }
+    .btn-solid:hover { background-color: var(--color-brand-orange-hover); }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-bone-white);
+      padding: 12px 28px;
+      border-radius: var(--radius-buttons);
+      text-decoration: none;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      display: inline-block;
+      transition: all 0.2s ease-out;
+      text-align: center;
+    }
+    .btn-ghost:hover {
+      border-color: var(--color-brand-blue);
+      color: var(--color-brand-blue);
+    }
+    
+    .nav-link {
+      color: var(--color-bone-white);
+      text-decoration: none;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.15s ease-out;
+    }
+    .nav-link:hover { color: var(--color-brand-orange); }
+
+    /* Hero Section */
+    /* The Container Boundary */
+.hero-wrapper {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hero-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* The gradient now fades to a completely solid (1) navy at the bottom */
+  background: linear-gradient(
+    to bottom, 
+    rgba(6, 14, 26, 0.4) 0%, 
+    rgba(6, 14, 26, 0.7) 60%, 
+    rgba(6, 14, 26, 1) 100%
+  );
+  z-index: 1;
+}
+
+/* The Text and Navigation */
+.hero-wrapper header, 
+.hero-wrapper .hero-content {
+  position: relative;
+  z-index: 2; /* Pushes the text safely in front of the video and overlay */
+}
+    .hero-title { font-size: 88px; line-height: 1.1; margin-bottom: 24px; color: var(--color-white); }
+    .section-title { font-size: 48px; margin-bottom: 24px; }
+
+    /* Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    
+    .flex-header { display: flex; justify-content: space-between; align-items: center; padding: 32px 0; position: relative; z-index: 10; }
+    .header-nav { display: flex; gap: 40px; align-items: center; }
+    .info-bar-flex { display: flex; justify-content: space-between; padding: 24px 0; }
+    .footer-nav { display: flex; gap: 40px; justify-content: flex-end; }
+    
+    /* Update the card container to prevent the image from spilling out when zoomed */
+.room-card {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Image base state with a smooth transition */
+.room-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 24px;
+  transform: scale(1);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* The hover effect */
+.room-card:hover img {
+  transform: scale(1.08); /* A gentle, luxurious 8% zoom */
+}
+
+    /* 3. MOBILE RESPONSIVENESS */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 48px; }
+      .section-title { font-size: 36px; }
+      .room-card h3 { font-size: 24px; }
+      .section-gap { padding-top: 48px; padding-bottom: 48px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 40px; }
+      .flex-header { flex-direction: column; gap: 24px; text-align: center; }
+      .header-nav { flex-wrap: wrap; justify-content: center; gap: 20px; }
+      .info-bar-flex { flex-direction: column; gap: 24px; align-items: flex-start; }
+      footer { padding: 48px 0 24px 0; }
+      .footer-nav { justify-content: flex-start; flex-wrap: wrap; gap: 24px; }
+      .btn-solid, .btn-ghost { width: 100%; box-sizing: border-box; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO WRAPPER -->
+  <div class="hero-wrapper">
+  <!-- Video Background -->
+  <video autoplay loop muted playsinline class="hero-bg-video">
+    <source src="images/hero-video.mp4" type="video/mp4">
+  </video>
+  
+  <!-- Dark Overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Header (Forced to the top) -->
+  <header class="container flex-header" style="position: relative; z-index: 10; width: 100%; box-sizing: border-box;">
+    <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+  <img src="images/logo.png" alt="De Kastro Hotel Logo" class="logo-hover" style="width: 120px; height: auto;">
+</a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="rooms.html" class="nav-link">Rooms</a>
+      <a href="events.html" class="nav-link">Event Space</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="https://wa.me/2348062911356" class="btn-solid" style="width: auto;">Book Now</a>
+    </nav>
+  </header>
+
+  <!-- Text Content (Forced to center vertically over the video) -->
+  <!-- Update Hero Content -->
+<section class="hero-content container" style="position: relative; z-index: 10; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding-bottom: 80px;">
+  <h1 class="hero-title text-magnify">De Kastro Hotel Mowe</h1>
+  <p style="color: var(--color-bone-white); max-width: 600px; font-size: 18px; margin: 0 auto; line-height: 1.6;">De Kastro Hotel provides premium rooms and event hosting in Mowe, located directly opposite RCCG City Camp.</p>
+</section>
+</div>
+
+    <!-- HERO CONTENT -->
+
+  <!-- INFO BAR -->
+  <div class="border-hairline" style="border-left: none; border-right: none;">
+    <div class="container info-bar-flex">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="color: var(--color-brand-orange); font-size: 24px;">&#9716;</span>
+        <div>
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-white);">Check-Out</div>
+          <div style="font-size: 13px; color: var(--color-ash-gray);">By 12:00 Noon</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="color: var(--color-brand-orange); font-size: 24px;">&#9737;</span>
+        <div>
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-white);">Location</div>
+          <div style="font-size: 13px; color: var(--color-ash-gray);">Opposite RCCG City Camp, Mowe</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span style="color: var(--color-brand-orange); font-size: 24px;">&#9990;</span>
+        <div>
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-white);">Direct Booking</div>
+          <div style="font-size: 13px; color: var(--color-ash-gray);">+234 806 291 1356</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ROOMS TEASER -->
+  <section class="container section-gap">
+    <h2 class="section-title text-magnify scrub-reveal" style="margin-bottom: 48px;">Rooms from ₦30,000 a Night</h2>
+    <div class="grid-3">
+      <div class="room-card">
+        <h3 class="text-magnify scrub-reveal">Economy Room</h3>
+        <p style="color: var(--color-ash-gray); font-size: 14px; margin-bottom: 24px;">Our most affordable room, at ₦30,000 per night.</p>
+        <img src="images/economy-room.jpg" alt="Economy Room at De Kastro Hotel, Mowe" loading="lazy">
+        <a href="rooms.html#economy-room" class="btn-ghost">View Details</a>
+      </div>
+      <div class="room-card">
+        <h3 class="text-magnify scrub-reveal">Deluxe Room</h3>
+        <p style="color: var(--color-ash-gray); font-size: 14px; margin-bottom: 24px;">₦45,000 per night, with complimentary breakfast included.</p>
+        <img src="images/deluxe-room.jpg" alt="Deluxe Room at De Kastro Hotel, Mowe" loading="lazy">
+        <a href="rooms.html#deluxe-room" class="btn-ghost">View Details</a>
+      </div>
+      <div class="room-card">
+        <h3 class="text-magnify scrub-reveal">Executive Room</h3>
+        <p style="color: var(--color-ash-gray); font-size: 14px; margin-bottom: 24px;">₦55,000 per night. A soundproof room for comfort and privacy, with complimentary breakfast included.</p>
+        <img src="images/executive-room.jpg" alt="Executive Room at De Kastro Hotel, Mowe" loading="lazy">
+        <a href="rooms.html#executive-room" class="btn-ghost">View Details</a>
+      </div>
+    </div>
+    <p style="color: var(--color-ash-gray); font-size: 14px; margin: 48px 0 24px 0;">Also available: Standard Room (₦35,000) and Double Bed Deluxe Room (₦65,000). Complimentary breakfast is included in the Deluxe, Executive and Double Bed Deluxe rooms.</p>
+    <a href="rooms.html" class="btn-solid" style="width: auto;">View All Rooms &amp; Rates</a>
+  </section>
+
+  <!-- EVENTS TEASER -->
+  <section class="container section-gap border-hairline" style="border-left: none; border-right: none;">
+    <div class="grid-2">
+      <div>
+<h2 class="section-title text-magnify scrub-reveal">Discover Refined Event Hosting</h2>
+       <p style="color: var(--color-ash-gray); margin-bottom: 24px; font-size: 15px; line-height: 1.8;">
+  Our event space is set up to handle celebrations with comfort and class. Blending modern elegance with a warm environment, it is suited for weddings, receptions, and gatherings that deserve careful presentation.
+</p>
+        <a href="events.html" class="btn-ghost" style="width: auto;">Explore The Venue &rarr;</a>
+      </div>
+      <div>
+        <img src="images/event-hall-preview.jpg" alt="Event Reception Hall at De Kastro" style="width: 100%; object-fit: cover;">
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOBAL FOOTER -->
+  <footer>
+    <div class="container grid-2" style="align-items: start;">
+      <div>
+        <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+  <img src="images/logo.png" alt="De Kastro Hotel Logo" class="logo-hover" style="width: 120px; height: auto;">
+</a>
+        <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0 0 8px 0;">42/44 Redemption Way, opposite RCCG City Camp</p>
+        <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Mowe, Obafemi Owode 110113, Ogun State</p>
+      </div>
+      <div class="footer-nav">
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="privacy-policy.html" class="nav-link" style="color: var(--color-brand-orange);">Privacy Policy</a>
+        <a href="terms.html" class="nav-link">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+<!-- GSAP and SplitType Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  
+  <script>
+  </script>
+</body>
+</html>

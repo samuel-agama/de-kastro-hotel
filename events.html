@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event & Reception Space in Mowe | De Kastro Hotel Limited</title>
+  <meta name="description" content="Host weddings, parties, and corporate events at De Kastro Hotel in Mowe, Ogun State. Located opposite RCCG City Camp for easy access from Lagos and Ibadan.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* 1. DESIGN TOKENS */
+    :root {
+      --color-bg-base: #060E1A; 
+      --color-bg-surface: #0B172A;
+      --color-border: #1E293B;
+      
+      --color-white: #ffffff;
+      --color-bone-white: #E2E8F0;
+      --color-ash-gray: #94A3B8;
+      
+      --color-brand-blue: #0077C8; 
+      --color-brand-orange: #F5821F; 
+      --color-brand-orange-hover: #FFA24A;
+      
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body: 'Montserrat', sans-serif;
+      
+      --radius-buttons: 4px;
+    }
+
+    body {
+      background-color: var(--color-bg-base);
+      color: var(--color-bone-white);
+      font-family: var(--font-body);
+      font-weight: 300; 
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      color: var(--color-brand-orange); 
+      font-weight: 400;
+      margin-top: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .text-magnify {
+      display: inline-block; 
+      transform-origin: left center; 
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    }
+    .text-magnify:hover { transform: scale(1.03); cursor: default; }
+
+    /* 3D CSS Logo Placeholder */
+    .logo-3d-placeholder {
+      width: 24px;
+      height: 24px;
+      background-color: var(--color-brand-blue);
+      box-shadow: 4px 4px 0px var(--color-brand-orange);
+      transform: rotate(-10deg);
+      margin-right: 16px;
+      transition: transform 0.3s ease;
+    }
+    .logo-3d-placeholder:hover { transform: rotate(-10deg) scale(1.1); }
+
+    .logo-hover {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
+}
+.logo-hover:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15);
+}
+    /* 2. CORE COMPONENTS */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-gap { padding-top: 80px; padding-bottom: 80px; }
+    .border-hairline { border: 1px solid var(--color-border); }
+
+    /* Buttons */
+    .btn-solid {
+      background-color: var(--color-brand-orange);
+      color: var(--color-white);
+      padding: 14px 32px;
+      border-radius: var(--radius-buttons);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      display: inline-block;
+      transition: background-color 0.2s ease-out;
+      border: none;
+      text-align: center;
+    }
+    .btn-solid:hover { background-color: var(--color-brand-orange-hover); }
+
+    .nav-link {
+      color: var(--color-bone-white);
+      text-decoration: none;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.15s ease-out;
+    }
+    .nav-link:hover { color: var(--color-brand-orange); }
+
+    /* Interior Hero Section */
+ .hero-interior-wrapper {
+  position: relative;
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hero-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* The gradient now fades to a completely solid (1) navy at the bottom */
+  background: linear-gradient(
+    to bottom, 
+    rgba(6, 14, 26, 0.4) 0%, 
+    rgba(6, 14, 26, 0.7) 60%, 
+    rgba(6, 14, 26, 1) 100%
+  );
+  z-index: 1;
+}
+    .hero-title { font-size: 64px; line-height: 1.1; margin-bottom: 16px; color: var(--color-white); }
+
+    /* Grids & Layout */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    
+    .flex-header { display: flex; justify-content: space-between; align-items: center; padding: 32px 0; border-bottom: none; position: relative; z-index: 10; }
+    .header-nav { display: flex; gap: 40px; align-items: center; }
+    .footer-nav { display: flex; gap: 40px; justify-content: flex-end; }
+    
+    /* Image Containers */
+    .img-container { overflow: hidden; background-color: #111; position: relative; }
+    .img-pan {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      transition: transform 10s linear; 
+    }
+    .img-container:hover .img-pan { transform: scale(1.08); transition: transform 0.15s ease-out; }
+
+    /* Facility Cards */
+    .facility-card {
+      background-color: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      padding: 32px 24px;
+      text-align: center;
+      transition: border-color 0.3s ease;
+    }
+    .facility-card:hover { border-color: var(--color-brand-orange); }
+    .facility-icon {
+      font-size: 32px;
+      color: var(--color-brand-orange);
+      margin-bottom: 16px;
+    }
+
+    /* 3. MOBILE RESPONSIVENESS */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 40px; }
+      .section-gap { padding-top: 48px; padding-bottom: 48px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; gap: 40px; }
+      .flex-header { flex-direction: column; gap: 24px; text-align: center; }
+      .header-nav { flex-wrap: wrap; justify-content: center; gap: 20px; }
+      footer { padding: 48px 0 24px 0; }
+      .footer-nav { justify-content: flex-start; flex-wrap: wrap; gap: 24px; }
+      .btn-solid { width: 100%; box-sizing: border-box; }
+    }
+
+    .flex-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 32px 0; 
+      position: relative; 
+      z-index: 10; 
+    }
+    
+    .header-nav { 
+      display: flex; 
+      gap: 40px; 
+      align-items: center; 
+    }
+    /* Image Container */
+.img-wrapper { 
+  overflow: hidden; 
+  width: 100%; 
+  position: relative;
+}
+
+/* Base Image State */
+.img-wrapper img {
+  width: 100%; 
+  height: 400px; 
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hover Zoom Effect */
+.img-wrapper:hover img { 
+  transform: scale(1.05); 
+}
+  </style>
+</head>
+<body>
+
+  <!-- INTERIOR HERO WRAPPER -->
+<div class="hero-interior-wrapper">
+  <!-- 1. Video Background Layer -->
+  <video autoplay loop muted playsinline class="hero-bg-video">
+    <source src="images/events-video.mp4" type="video/mp4">
+  </video>
+  
+  <!-- 2. Dark Overlay Layer -->
+  <div class="hero-overlay"></div>
+
+  <!-- 3. Header Layer -->
+  <header class="container flex-header" style="position: relative; z-index: 10; width: 100%; box-sizing: border-box;">
+    <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+  <img src="images/logo.png" alt="De Kastro Hotel Logo" class="logo-hover" style="width: 120px; height: auto;">
+</a>
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="rooms.html" class="nav-link">Rooms</a>
+      <a href="events.html" class="nav-link">Event Space</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="https://wa.me/2348062911356" class="btn-solid" style="width: auto;">Book Now</a>
+    </nav>
+  </header>
+
+  <!-- 4. Text Content Layer -->
+  <section class="hero-content container" style="position: relative; z-index: 10; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding-bottom: 80px;">
+    <h1 class="hero-title text-magnify">Premium Event Space</h1>
+    <p style="color: var(--color-bone-white); max-width: 600px; font-size: 18px; margin: 0 auto; line-height: 1.6;">The perfect backdrop for elegant weddings, professional corporate gatherings, and unforgettable celebrations.</p>
+  </section>
+</div>
+
+ <!-- INTRO BLOCK -->
+  <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+    <div class="grid-2">
+      <div>
+        <h2 class="text-magnify" style="font-size: 40px; margin-bottom: 16px; color: var(--color-white);">A Venue Built for Your Celebration</h2>
+        <p style="color: var(--color-ash-gray); margin-bottom: 24px;">
+          De Kastro Hotel offers a dedicated event and reception space in Mowe, Ogun State — suited for weddings, receptions, and gatherings that deserve careful presentation. 
+        </p>
+        <p style="color: var(--color-ash-gray); margin-bottom: 24px;">
+          Our venue blends modern elegance with a warm environment, offering a blank canvas that can be tailored exactly to your layout and decor needs. Located opposite RCCG City Camp, our venue is easy for guests to find from across Ogun State and the wider Lagos-Ibadan corridor.
+        </p>
+      </div>
+      <div class="img-container" style="height: 450px;">
+        <img src="images/events-hero.jpg" alt="De Kastro Event Hall Setup" class="img-pan" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- PERFECT FOR ANY OCCASION -->
+  <section class="container section-gap">
+    <div style="text-align: center; margin-bottom: 48px;">
+      <h2 class="text-magnify" style="font-size: 40px; color: var(--color-white);">Perfect For Any Occasion</h2>
+    </div>
+    <div class="grid-3">
+     <div style="text-align: center;">
+        <div class="img-container" style="height: 250px; margin-bottom: 24px;">
+          <img src="images/wedding-setup.jpg" alt="Weddings and Receptions at De Kastro" class="img-pan" loading="lazy">
+        </div>
+        <!-- ... -->
+      </div>
+      <div style="text-align: center;">
+        <div class="img-container" style="height: 250px; margin-bottom: 24px;">
+          <img src="images/corporate-setup.jpg" alt="Corporate Gatherings at De Kastro" class="img-pan" loading="lazy">
+        </div>
+        <!-- ... -->
+      </div>
+      <div style="text-align: center;">
+        <div class="img-container" style="height: 250px; margin-bottom: 24px;">
+          <img src="images/social-setup.jpg" alt="Social Celebrations at De Kastro" class="img-pan" loading="lazy">
+        </div>
+        <!-- ... -->
+      </div>
+        <h3 style="font-size: 28px; margin-bottom: 12px; color: var(--color-brand-orange);">Social Celebrations</h3>
+        <p style="color: var(--color-ash-gray); font-size: 14px;">The ideal setting for milestone birthdays, anniversaries, and large family reunions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENUE FACILITIES -->
+  <section class="border-hairline" style="border-left: none; border-right: none; background-color: var(--color-bg-base);">
+    <div class="container section-gap">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <h2 class="text-magnify" style="font-size: 40px; color: var(--color-white);">Venue Facilities</h2>
+      </div>
+      <div class="grid-4">
+        <div class="facility-card">
+          <div class="facility-icon">&#9839;</div> 
+          <h4 style="font-size: 20px; color: var(--color-white); margin-bottom: 8px;">Capacity</h4>
+          <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Comfortably accommodates large gatherings with flexible seating.</p>
+        </div>
+        <div class="facility-card">
+          <div class="facility-icon">&#9889;</div> 
+          <h4 style="font-size: 20px; color: var(--color-white); margin-bottom: 8px;">Power Supply</h4>
+          <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Uninterrupted, reliable power to keep your event running perfectly.</p>
+        </div>
+        <div class="facility-card">
+          <div class="facility-icon">&#9873;</div> 
+          <h4 style="font-size: 20px; color: var(--color-white); margin-bottom: 8px;">Parking</h4>
+          <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Ample and highly secure on-site parking space for all attendees.</p>
+        </div>
+        <div class="facility-card">
+          <div class="facility-icon">&#10048;</div> 
+          <h4 style="font-size: 20px; color: var(--color-white); margin-bottom: 8px;">Amenities</h4>
+          <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Clean, well-maintained restrooms and preparation areas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIRECT BOOKING CTA -->
+  <section class="border-hairline" style="border-left: none; border-right: none; border-top: none; background-color: var(--color-bg-surface);">
+    <div class="container section-gap" style="text-align: center;">
+      <h3 style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">Secure Your Date</h3>
+      <p style="color: var(--color-ash-gray); max-width: 500px; margin: 0 auto 32px auto;">
+        Venue pricing and availability are handled directly to ensure your specific event needs are met. Contact us to discuss your guest count, date, and requirements.
+      </p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="tel:+2348062911356" class="btn-solid" style="background-color: transparent; border: 1px solid var(--color-brand-orange); color: var(--color-brand-orange);">Call to Enquire</a>
+        <a href="https://wa.me/2348062911356?text=Hello,%20I%20would%20like%20to%20enquire%20about%20booking%20the%20Event%20Space." class="btn-solid">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOBAL FOOTER -->
+  <footer style="padding: 80px 0 40px 0;">
+    <div class="container grid-2" style="align-items: start;">
+      <div>
+        <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+  <img src="images/logo.png" alt="De Kastro Hotel Logo" class="logo-hover" style="width: 120px; height: auto;">
+</a>
+        <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0 0 8px 0;">42/44 Redemption Way, opposite RCCG City Camp</p>
+        <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Mowe, Obafemi Owode 110113, Ogun State</p>
+      </div>
+      <div class="footer-nav">
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="privacy-policy.html" class="nav-link" style="color: var(--color-brand-orange);">Privacy Policy</a>
+        <a href="terms.html" class="nav-link">Terms</a>
+      </div>
+    </div>
+  </footer>
+  
+ <!-- GSAP, SplitType & Unified Animation Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  
+  <script>
+
+  </script>
+  </script>
+</body>
+</html>

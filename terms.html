@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions | De Kastro Hotel Limited</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* 1. DESIGN TOKENS */
+    :root {
+      --color-bg-base: #060E1A; 
+      --color-bg-surface: #0B172A;
+      --color-border: #1E293B;
+      --color-white: #ffffff;
+      --color-bone-white: #E2E8F0;
+      --color-ash-gray: #94A3B8;
+      --color-brand-blue: #0077C8; 
+      --color-brand-orange: #F5821F; 
+      --color-brand-orange-hover: #FFA24A;
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body: 'Montserrat', sans-serif;
+      --radius-buttons: 4px;
+    }
+
+    body {
+      background-color: var(--color-bg-base);
+      color: var(--color-bone-white);
+      font-family: var(--font-body);
+      font-weight: 300; 
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    h1, h2, h3 { font-family: var(--font-heading); color: var(--color-brand-orange); font-weight: 400; margin-top: 0; letter-spacing: 0.02em; }
+    
+    .text-magnify { display: inline-block; transform-origin: left center; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .text-magnify:hover { transform: scale(1.03); cursor: default; }
+
+    .logo-3d-placeholder {
+      width: 24px; height: 24px; background-color: var(--color-brand-blue); box-shadow: 4px 4px 0px var(--color-brand-orange); transform: rotate(-10deg); margin-right: 16px; transition: transform 0.3s ease;
+    }
+    .logo-3d-placeholder:hover { transform: rotate(-10deg) scale(1.1); }
+    
+    .logo-hover {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
+}
+.logo-hover:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15);
+}
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .container-narrow { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+    .section-gap { padding-top: 80px; padding-bottom: 80px; }
+    
+    .btn-solid { background-color: var(--color-brand-orange); color: var(--color-white); padding: 14px 32px; border-radius: var(--radius-buttons); text-decoration: none; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; display: inline-block; transition: background-color 0.2s ease-out; border: none; text-align: center; }
+    .btn-solid:hover { background-color: var(--color-brand-orange-hover); }
+    
+    .nav-link { color: var(--color-bone-white); text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.15s ease-out; }
+    .nav-link:hover { color: var(--color-brand-orange); }
+
+    .hero-interior-wrapper { position: relative; background-color: var(--color-bg-surface); min-height: 40vh; display: flex; flex-direction: column; border-bottom: 1px solid var(--color-border); }
+    .hero-interior-content { position: relative; z-index: 2; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding-bottom: 40px; }
+    .hero-title { font-size: 64px; line-height: 1.1; margin-bottom: 16px; color: var(--color-white); }
+
+  .flex-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      width: 100%;
+      padding: 32px 0; 
+      box-sizing: border-box;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .header-nav { 
+      display: flex; 
+      gap: 32px; 
+      align-items: center; 
+    }
+    
+    .legal-content h2 { font-size: 32px; color: var(--color-white); margin-top: 48px; margin-bottom: 16px; }
+    .legal-content p { color: var(--color-ash-gray); margin-bottom: 24px; font-size: 15px; line-height: 1.8; }
+    .legal-content ul { color: var(--color-ash-gray); margin-bottom: 24px; font-size: 15px; line-height: 1.8; padding-left: 24px; }
+
+    
+    @media (max-width: 768px) {
+      .hero-title { font-size: 40px; }
+      .section-gap { padding-top: 48px; padding-bottom: 48px; }
+      .flex-header { flex-direction: column; gap: 24px; text-align: center; }
+      .header-nav { flex-wrap: wrap; justify-content: center; gap: 20px; }
+      .btn-solid { width: 100%; box-sizing: border-box; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero-interior-wrapper">
+<header class="container flex-header">
+      <!-- Left side: Brand Name -->
+      <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+  <img src="images/logo.png" alt="De Kastro Hotel Logo" class="logo-hover" style="width: 120px; height: auto;">
+</a>
+
+      <!-- Right side: Navigation Links -->
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="rooms.html" class="nav-link">Rooms</a>
+        <a href="events.html" class="nav-link">Event Space</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="https://wa.me/2348062911356" class="btn-solid" style="padding: 10px 20px;">Book Now</a>
+      </nav>
+    </header>
+
+    <section class="hero-interior-content container">
+      <h1 class="hero-title text-magnify">Terms & Conditions</h1>
+      <p style="color: var(--color-bone-white); font-size: 14px;">Effective Date: October 8, 2026</p>
+    </section>
+  </div>
+
+  <section class="container-narrow section-gap legal-content">
+    <p>By accessing our website or booking accommodation or event space with De Kastro Hotel Limited, you agree to be bound by the following Terms & Conditions. Please read them carefully.</p>
+
+    <h2>1. Reservations, Check-out & Breakfast</h2>
+    <ul>
+      <li>Check-out time is 12:00 PM (Noon). Guests are kindly requested to check out on or before 12:00 noon.</li>
+      <li>Any stay beyond the official check-out time is regarded as a new booking and will attract a fresh room charge.</li>
+      <li>Valid government-issued identification is required upon check-in.</li>
+      <li>Complimentary breakfast is available exclusively to guests staying in the Deluxe, Executive and Double Bed Deluxe rooms. Breakfast is served daily from 7:00 AM to 9:00 AM, and the complimentary breakfast service ends promptly at 9:00 AM.</li>
+    </ul>
+
+    <h2>2. Payment & Cancellations</h2>
+    <ul>
+      <li>All direct bookings require confirmation from our front desk. A deposit may be required to secure a room or the event hall.</li>
+      <li>Cancellations must be communicated directly to our front desk team. Depending on the timing of the cancellation and the type of booking, deposit refunds may be subject to a cancellation fee.</li>
+      <li>All event space bookings require a signed agreement outlining the specific terms of usage, deposit, and final payment deadlines.</li>
+    </ul>
+
+    <h2 id="payment">3. Payment Details</h2>
+    <p>Kindly make all payments only to the account details below. Please present your payment confirmation at the reception for verification.</p>
+    <ul>
+      <li>Bank: Wema Bank</li>
+      <li>Account Number: 9379127689</li>
+      <li>Account Name: DE-KASTRO HOTEL LIMITED</li>
+    </ul>
+
+    <h2>4. Guest Conduct & Liability</h2>
+    <p>Guests are expected to conduct themselves appropriately at all times and comply with hotel regulations. De Kastro Hotel Limited reserves the right to ask any guest to leave the premises without a refund if their behavior is deemed disruptive, illegal, or damaging to the property.</p>
+    <p>While we provide 24/7 security and safe parking, De Kastro Hotel Limited is not liable for the loss or damage of personal belongings left in rooms, vehicles, or event spaces.</p>
+
+    <h2>5. Modifications</h2>
+    <p>We reserve the right to amend these terms and conditions at any time. The updated terms will be posted on this website and will apply to all subsequent bookings.</p>
+  </section>
+
+  <!-- GLOBAL FOOTER -->
+  <footer style="padding: 0 0 40px 0;">
+    <div class="container" style="border-top: 1px solid var(--color-border); padding-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;">
+      <div>
+       <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+  <img src="images/logo.png" alt="De Kastro Hotel Logo" class="logo-hover" style="width: 120px; height: auto;">
+</a>
+        <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0 0 8px 0;">42/44 Redemption Way, opposite RCCG City Camp</p>
+        <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Mowe, Obafemi Owode 110113, Ogun State</p>
+      </div>
+      <div style="display: flex; gap: 40px; justify-content: flex-end;">
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="privacy-policy.html" class="nav-link" style="color: var(--color-brand-orange);">Privacy Policy</a>
+        <a href="terms.html" class="nav-link">Terms</a>
+      </div>
+    </div>
+  </footer>
+<!-- GSAP and SplitType Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  
+  <script>
+  </script>
+</body>
+</html>
