@@ -153,7 +153,7 @@
   width: 100%;
 }
 
-.img-wrapper img {
+.img-wrapper .room-image {
   width: 100%;
   height: 350px;
   object-fit: cover;
@@ -176,14 +176,12 @@
     @media (max-width: 768px) {
       .hero-title { font-size: 40px; }
       .section-gap { padding-top: 48px; padding-bottom: 48px; }
-      .grid-2 { grid-template-columns: 1fr; gap: 40px; }
       .reverse-mobile { display: flex; flex-direction: column-reverse; } 
       .flex-header { flex-direction: column; gap: 24px; text-align: center; }
       .header-nav { flex-wrap: wrap; justify-content: center; gap: 20px; }
       footer { padding: 48px 0 24px 0; }
       .footer-nav { justify-content: flex-start; flex-wrap: wrap; gap: 24px; }
       .btn-solid { width: 100%; box-sizing: border-box; }
-      .room-image { height: 300px; }
     }
     .flex-header { 
       display: flex; 
@@ -203,6 +201,10 @@
         /* Layout helpers missing from the original rooms page */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
     .footer-nav { display: flex; gap: 40px; justify-content: flex-end; }
+        @media (max-width: 768px) {
+          .grid-2 { grid-template-columns: 1fr; gap: 24px; }
+          .img-wrapper .room-image { height: clamp(240px, 70vw, 320px); }
+        }
 
     /* Rate table */
     .rate-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
@@ -287,7 +289,7 @@
     <section id="economy-room" class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
       <div class="grid-2">
         <div class="img-wrapper">
-          <img src="Images/economy-room.jpg" alt="Economy Room at De Kastro Hotel, Mowe" class="room-image" style="width: 100%; height: 350px; object-fit: cover;" loading="lazy">
+          <img src="Images/economy-room.jpg" alt="Economy Room at De Kastro Hotel, Mowe" class="room-image" loading="lazy">
         </div>
         <div>
           <h2 class="text-magnify" style="font-size: 40px; margin-bottom: 16px; color: var(--color-white);">Economy Room</h2>
@@ -305,7 +307,7 @@
     <section id="standard-room" class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
       <div class="grid-2">
         <div class="img-wrapper">
-          <img src="Images/standard-room.jpg" alt="Standard Room at De Kastro Hotel, Mowe" class="room-image" style="width: 100%; height: 350px; object-fit: cover;" loading="lazy">
+          <img src="Images/standard-room.jpg" alt="Standard Room at De Kastro Hotel, Mowe" class="room-image" loading="lazy">
         </div>
         <div>
           <h2 class="text-magnify" style="font-size: 40px; margin-bottom: 16px; color: var(--color-white);">Standard Room</h2>
@@ -321,7 +323,7 @@
     <section id="deluxe-room" class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
       <div class="grid-2">
         <div class="img-wrapper">
-          <img src="Images/deluxe-room.jpg" alt="Deluxe Room at De Kastro Hotel, Mowe" class="room-image" style="width: 100%; height: 350px; object-fit: cover;" loading="lazy">
+          <img src="Images/deluxe-room.jpg" alt="Deluxe Room at De Kastro Hotel, Mowe" class="room-image" loading="lazy">
         </div>
         <div>
           <h2 class="text-magnify" style="font-size: 40px; margin-bottom: 16px; color: var(--color-white);">Deluxe Room</h2>
@@ -331,13 +333,14 @@
             <li><span style="color: var(--color-brand-orange); margin-right: 8px;">✦</span> Complimentary breakfast included</li>
           </ul>
           <a href="https://wa.me/2348062911356?text=Hello,%20I%20would%20like%20to%20enquire%20about%20the%20Deluxe%20Room." class="btn-solid" data-event="whatsapp_lead" data-room="deluxe">Enquire via WhatsApp</a>
+        </div>
       </div>
     </section>
 
     <section id="executive-room" class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
       <div class="grid-2">
         <div class="img-wrapper">
-          <img src="Images/executive-room.jpg" alt="Executive Room at De Kastro Hotel, Mowe" class="room-image" style="width: 100%; height: 350px; object-fit: cover;" loading="lazy">
+          <img src="Images/executive-room.jpg" alt="Executive Room at De Kastro Hotel, Mowe" class="room-image" loading="lazy">
         </div>
         <div>
           <h2 class="text-magnify" style="font-size: 40px; margin-bottom: 16px; color: var(--color-white);">Executive Room</h2>
@@ -348,13 +351,14 @@
             <li><span style="color: var(--color-brand-orange); margin-right: 8px;">✦</span> Soundproof environment for comfort, privacy and relaxation</li>
           </ul>
           <a href="https://wa.me/2348062911356?text=Hello,%20I%20would%20like%20to%20enquire%20about%20the%20Executive%20Room." class="btn-solid" data-event="whatsapp_lead" data-room="executive">Enquire via WhatsApp</a>
-       </div>
+        </div>
+      </div>
     </section>
 
     <section id="double-bed-deluxe-room" class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
       <div class="grid-2">
         <div class="img-wrapper">
-          <img src="Images/double-bed-deluxe-room.jpg" alt="Double Bed Deluxe Room at De Kastro Hotel, Mowe" class="room-image" style="width: 100%; height: 350px; object-fit: cover;" loading="lazy">
+          <img src="Images/double-bed-deluxe-room.jpg" alt="Double Bed Deluxe Room at De Kastro Hotel, Mowe" class="room-image" loading="lazy">
         </div>
         <div>
           <h2 class="text-magnify" style="font-size: 40px; margin-bottom: 16px; color: var(--color-white);">Double Bed Deluxe Room</h2>
