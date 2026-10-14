@@ -231,9 +231,20 @@
   <!-- HERO WRAPPER -->
   <div class="hero-wrapper">
   <!-- Video Background -->
-  <video autoplay loop muted playsinline class="hero-bg-video">
-    <source src="Images/hero-video.mp4" type="video/mp4">
+  <video autoplay loop muted playsinline preload="none" poster="Images/lobby-hero.jpg" class="hero-bg-video">
+    <source data-src="Images/hero-video.mp4" type="video/mp4">
   </video>
+  <script>
+    const heroVideo = document.currentScript.previousElementSibling;
+    const connection = navigator.connection;
+    if (window.matchMedia("(min-width: 769px)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+        !(connection && connection.saveData)) {
+      const source = heroVideo.querySelector("source");
+      source.src = source.dataset.src;
+      heroVideo.load();
+    }
+  </script>
   
   <!-- Dark Overlay -->
   <div class="hero-overlay"></div>
