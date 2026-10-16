@@ -232,20 +232,9 @@
   <!-- HERO WRAPPER -->
   <div class="hero-wrapper">
   <!-- Video Background -->
-  <video autoplay loop muted playsinline preload="none" poster="Images/lobby-hero.jpg" class="hero-bg-video">
-    <source data-src="Images/hero-video.mp4" type="video/mp4">
+  <video autoplay loop muted playsinline preload="metadata" poster="Images/hero-exterior-optimized.jpg" class="hero-bg-video">
+    <source src="Images/Hero-Video.mp4" type="video/mp4">
   </video>
-  <script>
-    const heroVideo = document.currentScript.previousElementSibling;
-    const connection = navigator.connection;
-    if (window.matchMedia("(min-width: 769px)").matches &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-        !(connection && connection.saveData)) {
-      const source = heroVideo.querySelector("source");
-      source.src = source.dataset.src;
-      heroVideo.load();
-    }
-  </script>
   
   <!-- Dark Overlay -->
   <div class="hero-overlay"></div>
@@ -308,19 +297,19 @@
       <div class="room-card">
         <h3 class="text-magnify scrub-reveal">Economy Room</h3>
         <p style="color: var(--color-ash-gray); font-size: 14px; margin-bottom: 24px;">Our most affordable room, at ₦30,000 per night.</p>
-        <img src="Images/economy-room.jpg" alt="Economy Room at De Kastro Hotel, Mowe" loading="lazy">
+        <img src="Images/economy-room-optimized.jpg" alt="Economy Room at De Kastro Hotel, Mowe" loading="lazy" decoding="async">
         <a href="rooms.html#economy-room" class="btn-ghost">View Details</a>
       </div>
       <div class="room-card">
         <h3 class="text-magnify scrub-reveal">Deluxe Room</h3>
         <p style="color: var(--color-ash-gray); font-size: 14px; margin-bottom: 24px;">₦45,000 per night, with complimentary breakfast included.</p>
-        <img src="Images/deluxe-room.jpg" alt="Deluxe Room at De Kastro Hotel, Mowe" loading="lazy">
+        <img src="Images/deluxe-room-optimized.jpg" alt="Deluxe Room at De Kastro Hotel, Mowe" loading="lazy" decoding="async">
         <a href="rooms.html#deluxe-room" class="btn-ghost">View Details</a>
       </div>
       <div class="room-card">
         <h3 class="text-magnify scrub-reveal">Executive Room</h3>
         <p style="color: var(--color-ash-gray); font-size: 14px; margin-bottom: 24px;">₦55,000 per night. A soundproof room for comfort and privacy, with complimentary breakfast included.</p>
-        <img src="Images/executive-room.jpg" alt="Executive Room at De Kastro Hotel, Mowe" loading="lazy">
+        <img src="Images/executive-room-optimized.jpg" alt="Executive Room at De Kastro Hotel, Mowe" loading="lazy" decoding="async">
         <a href="rooms.html#executive-room" class="btn-ghost">View Details</a>
       </div>
     </div>
@@ -339,7 +328,7 @@
         <a href="events.html" class="btn-ghost" style="width: auto;">Explore The Venue &rarr;</a>
       </div>
       <div>
-        <img src="Images/event-hall-preview.jpg" alt="Event Reception Hall at De Kastro" style="width: 100%; object-fit: cover;">
+        <img src="Images/event-hall-preview-optimized.jpg" alt="Event Reception Hall at De Kastro" loading="lazy" decoding="async" style="width: 100%; object-fit: cover;">
       </div>
     </div>
   </section>

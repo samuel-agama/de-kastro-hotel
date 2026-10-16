@@ -234,20 +234,9 @@
   <!-- INTERIOR HERO WRAPPER -->
 <div class="hero-interior-wrapper">
   <!-- 1. Video Background Layer -->
-  <video autoplay loop muted playsinline preload="none" poster="Images/events-hero.jpg" class="hero-bg-video">
-    <source data-src="Images/events-video.mp4" type="video/mp4">
+  <video autoplay loop muted playsinline preload="metadata" poster="Images/events-hero.jpg" class="hero-bg-video">
+    <source src="Images/Events-Video.mp4" type="video/mp4">
   </video>
-  <script>
-    const heroVideo = document.currentScript.previousElementSibling;
-    const connection = navigator.connection;
-    if (window.matchMedia("(min-width: 769px)").matches &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-        !(connection && connection.saveData)) {
-      const source = heroVideo.querySelector("source");
-      source.src = source.dataset.src;
-      heroVideo.load();
-    }
-  </script>
   
   <!-- 2. Dark Overlay Layer -->
   <div class="hero-overlay"></div>
