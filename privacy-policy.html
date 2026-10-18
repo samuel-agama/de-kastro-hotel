@@ -94,6 +94,20 @@
       .header-nav { flex-wrap: wrap; justify-content: center; gap: 20px; }
       .btn-solid { width: 100%; box-sizing: border-box; }
     }
+
+    /* Scroll the hero up half a viewport, then hold it behind the content. */
+    .hero-wrapper, .hero-interior-wrapper {
+      position: sticky;
+      top: -50vh;
+      z-index: 0;
+      min-height: 100vh;
+    }
+    /* Opaque content layers rise over the pinned hero and cover the viewport. */
+    body > :not(.hero-wrapper):not(.hero-interior-wrapper):not(script) {
+      position: relative;
+      z-index: 1;
+      background-color: var(--color-bg-base);
+    }
   </style>
 </head>
 <body>

@@ -227,6 +227,21 @@
 .img-wrapper:hover img { 
   transform: scale(1.05); 
 }
+
+    /* Scroll the hero up half a viewport, then hold it behind the content. */
+    .hero-wrapper, .hero-interior-wrapper {
+      position: sticky;
+      top: -50vh;
+      z-index: 0;
+      min-height: 100vh;
+    }
+    /* A full-width opaque layer covers the pinned hero as page content rises. */
+    .page-content {
+      position: relative;
+      z-index: 1;
+      background-color: var(--color-bg-base);
+      min-height: 100vh;
+    }
   </style>
 </head>
 <body>
@@ -262,8 +277,9 @@
   </section>
 </div>
 
- <!-- INTRO BLOCK -->
-  <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+  <main class="page-content">
+   <!-- INTRO BLOCK -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
     <div class="grid-2">
       <div>
         <h2 class="text-magnify" style="font-size: 40px; margin-bottom: 16px; color: var(--color-white);">A Venue Built for Your Celebration</h2>
@@ -372,6 +388,7 @@
       </div>
     </div>
   </footer>
+</main>
   
  <!-- GSAP, SplitType & Unified Animation Script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

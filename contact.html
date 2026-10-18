@@ -306,6 +306,21 @@
       .footer-nav { justify-content: flex-start; flex-wrap: wrap; gap: 24px; }
       .btn-solid { width: 100%; box-sizing: border-box; }
     }
+
+    /* Scroll the hero up half a viewport, then hold it behind the content. */
+    .hero-wrapper, .hero-interior-wrapper {
+      position: sticky;
+      top: -50vh;
+      z-index: 0;
+      min-height: 100vh;
+    }
+    /* A full-width opaque layer covers the pinned hero as page content rises. */
+    .page-content {
+      position: relative;
+      z-index: 1;
+      background-color: var(--color-bg-base);
+      min-height: 100vh;
+    }
   </style>
 </head>
 <body>
@@ -341,8 +356,9 @@
   </section>
 </div>
 
-  <!-- CONTACT INFO & FORM SECTION -->
-  <section class="container section-gap">
+  <main class="page-content">
+    <!-- CONTACT INFO & FORM SECTION -->
+    <section class="container section-gap">
     <div class="grid-2">
       
       <!-- Left: Contact Details -->
@@ -505,6 +521,7 @@
       </div>
     </div>
   </footer>
+</main>
   
 <!-- GSAP and SplitType Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
