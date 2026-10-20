@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="fLgpSrhbzDEbzZdLxn3yowtnuinsioBCGKlU-OAFDiQ">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De Kastro Hotel Gallery | Photos of Rooms, Pool & Restaurant</title>
+  <meta name="description" content="View photos of De Kastro Hotel in Mowe. Explore our premium rooms, restaurant, swimming area, reception, and hotel premises.">
+  <link rel="icon" type="image/png" href="Images/logo.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* Gallery "See More" Styles */
+    .hidden-gallery-item {
+      display: none;
+    }
+    .see-more-container {
+      text-align: center;
+      margin-top: 24px;
+      margin-bottom: 48px;
+    }
+    .btn-see-more {
+      background: transparent;
+      border: 1px solid var(--color-brand-orange);
+      color: var(--color-brand-orange);
+      padding: 12px 32px;
+      border-radius: var(--radius-buttons);
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transition: all 0.3s ease;
+    }
+    .btn-see-more:hover {
+      background: var(--color-brand-orange);
+      color: var(--color-white);
+    }
+
+    /* 1. DESIGN TOKENS */
+    :root {
+      --color-bg-base: #060E1A; 
+      --color-bg-surface: #0B172A;
+      --color-border: #1E293B;
+      
+      --color-white: #ffffff;
+      --color-bone-white: #E2E8F0;
+      --color-ash-gray: #94A3B8;
+      
+      --color-brand-blue: #0077C8; 
+      --color-brand-orange: #F5821F; 
+      --color-brand-orange-hover: #FFA24A;
+      
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body: 'Montserrat', sans-serif;
+      
+      --radius-buttons: 4px;
+    }
+
+    body {
+      background-color: var(--color-bg-base);
+      color: var(--color-bone-white);
+      font-family: var(--font-body);
+      font-weight: 300; 
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      color: var(--color-brand-orange); 
+      font-weight: 400;
+      margin-top: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .text-magnify {
+      display: inline-block; 
+      transform-origin: left center; 
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    }
+    .text-magnify:hover { transform: scale(1.03); cursor: default; }
+
+    .logo-hover {
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
+    }
+    .logo-hover:hover {
+      transform: scale(1.05);
+      filter: brightness(1.15);
+    }
+
+    /* 2. CORE COMPONENTS */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-gap { padding-top: 80px; padding-bottom: 80px; }
+    .border-hairline { border: 1px solid var(--color-border); }
+
+    /* Buttons */
+    .btn-solid {
+      background-color: var(--color-brand-orange);
+      color: var(--color-white);
+      padding: 14px 32px;
+      border-radius: var(--radius-buttons);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      display: inline-block;
+      transition: background-color 0.2s ease-out;
+      border: none;
+      text-align: center;
+    }
+    .btn-solid:hover { background-color: var(--color-brand-orange-hover); }
+
+    .nav-link {
+      color: var(--color-bone-white);
+      text-decoration: none;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.15s ease-out;
+    }
+    .nav-link:hover { color: var(--color-brand-orange); }
+
+    /* Interior Hero Section */
+    .hero-interior-wrapper {
+      position: relative;
+      min-height: 55vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .hero-bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom, 
+        rgba(6, 14, 26, 0.4) 0%, 
+        rgba(6, 14, 26, 0.7) 60%, 
+        rgba(6, 14, 26, 1) 100%
+      );
+      z-index: 1;
+    }
+    .hero-title { font-size: 64px; line-height: 1.1; margin-bottom: 16px; color: var(--color-white); }
+
+    /* Grids & Layout */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    
+    .flex-header { display: flex; justify-content: space-between; align-items: center; padding: 32px 0; position: relative; z-index: 10; }
+    .header-nav { display: flex; gap: 40px; align-items: center; }
+    .footer-nav { display: flex; gap: 40px; justify-content: flex-end; }
+
+    /* Image Wrapper for Zoom & Reveal Effect */
+    .img-wrapper {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--color-bg-surface);
+    }
+
+    .img-wrapper .gallery-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transform: scale(1);
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: block;
+    }
+
+    .img-wrapper:hover .gallery-image {
+      transform: scale(1.05);
+    }
+
+    /* 3. MOBILE RESPONSIVENESS */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 40px; }
+      .section-gap { padding-top: 48px; padding-bottom: 48px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 24px; }
+      .flex-header { flex-direction: column; gap: 24px; text-align: center; }
+      .header-nav { flex-wrap: wrap; justify-content: center; gap: 20px; }
+      footer { padding: 48px 0 24px 0; }
+      .footer-nav { justify-content: flex-start; flex-wrap: wrap; gap: 24px; }
+      .btn-solid { width: 100%; box-sizing: border-box; }
+      .img-wrapper .gallery-image { height: clamp(240px, 70vw, 320px); }
+    }
+
+    /* Scroll the hero up half a viewport, then hold it behind the content. */
+    .hero-wrapper, .hero-interior-wrapper {
+      position: sticky;
+      top: -50vh;
+      z-index: 0;
+      min-height: 100vh;
+    }
+    .page-content {
+      position: relative;
+      z-index: 1;
+      background-color: var(--color-bg-base);
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO INTERIOR WRAPPER -->
+  <div class="hero-interior-wrapper">
+    <!-- 1. Video Background Layer (Uses the Events video as a premium placeholder, or you can add Gallery-Video.mp4 later) -->
+    <video autoplay loop muted playsinline preload="metadata" poster="Images/rooms-hero.jpg" class="hero-bg-video">
+      <source src="Images/Rooms-Video.mp4" type="video/mp4">
+    </video>
+    
+    <!-- 2. Dark Overlay Layer -->
+    <div class="hero-overlay"></div>
+
+    <!-- 3. Header Layer -->
+    <header class="container flex-header" style="position: relative; z-index: 10; width: 100%; box-sizing: border-box;">
+      <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+        <img src="Images/logo.png" alt="De Kastro Hotel Logo" class="logo-hover" style="width: 120px; height: auto;">
+      </a>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="rooms.html" class="nav-link">Rooms</a>
+        <a href="events.html" class="nav-link">Event Space</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="gallery.html" class="nav-link" style="color: var(--color-brand-orange);">Gallery</a>
+        <a href="https://wa.me/2348062911356" class="btn-solid" style="width: auto;">Book Now</a>
+      </nav>
+    </header>
+
+    <!-- 4. Hero Text Content Layer -->
+    <section class="hero-content container" style="position: relative; z-index: 10; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding-bottom: 80px;">
+      <h1 class="hero-title text-magnify">Photo Gallery</h1>
+      <p style="color: var(--color-bone-white); max-width: 600px; font-size: 18px; margin: 0 auto; line-height: 1.6;">Explore our premium accommodations, dedicated restaurant, relaxing swimming area, and secure premises located opposite RCCG City Camp.</p>
+    </section>
+  </div>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="page-content">
+
+   <!-- Economy Room -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Economy Room look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Economy Room at De Kastro Hotel offers practical comfort with premium bedding and modern amenities.</p>
+      
+      <div class="grid-3">
+        <!-- Visible Images (First 3) -->
+        <div class="img-wrapper"><img src="Images/economy-room-1.jpeg" alt="Economy room bed setup at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/economy-room-2.jpeg" alt="Economy room bathroom facilities" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/economy-room-3.jpeg" alt="Economy room seating and amenities" class="gallery-image" loading="lazy"></div>
+        
+        <!-- Hidden Images (4, 5, 6, etc.) - Notice the 'hidden-gallery-item' class -->
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/economy-room-4.jpeg" alt="Economy room wardrobe" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/economy-room-5.jpeg" alt="Economy room desk area" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/economy-room-6.jpeg" alt="Economy room wide angle" class="gallery-image" loading="lazy"></div>
+      </div>
+
+      <!-- The See More Button -->
+      <div class="see-more-container">
+        <button class="btn-see-more" onclick="toggleGallery(this)">See More Photos (+)</button>
+      </div>
+    </section>
+
+    <!-- Standard Room -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Standard Room look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Standard Room features extra space, ample natural light, and a dedicated workspace.</p>
+      <div class="grid-3">
+        <div class="img-wrapper"><img src="Images/standard-room-1.jpg" alt="Standard room interior at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/standard-room-2.jpg" alt="Standard room desk and workspace" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/standard-room-3.jpg" alt="Standard room modern bathroom" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- Deluxe Room -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Deluxe Room look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Deluxe Room offers elevated luxury, featuring elegant decor and a comfortable lounge area.</p>
+      <div class="grid-3">
+        <div class="img-wrapper"><img src="Images/deluxe-room-1.jpg" alt="Deluxe room plush bed and decor" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/deluxe-room-2.jpg" alt="Deluxe room seating area" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/deluxe-room-3.jpg" alt="Deluxe room complimentary breakfast setup" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- Executive Room -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Executive Room look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Executive Room is a soundproof suite designed for maximum privacy and upscale relaxation.</p>
+      <div class="grid-3">
+        <div class="img-wrapper"><img src="Images/executive-room-1.jpg" alt="Executive soundproof room wide view" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/executive-room-2.jpg" alt="Executive room luxury bathroom" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/executive-room-3.jpg" alt="Executive room premium lounge chair" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- Double Bed Deluxe -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Double Bed Deluxe Room look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Double Bed Deluxe Room provides spacious accommodation perfect for families or group stays.</p>
+      <div class="grid-3">
+        <div class="img-wrapper"><img src="Images/double-bed-deluxe-1.jpg" alt="Double Bed Deluxe room two beds" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/double-bed-deluxe-2.jpg" alt="Double Bed Deluxe spacious layout" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/double-bed-deluxe-3.jpg" alt="Double Bed Deluxe wardrobe and amenities" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- Reception -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the hotel reception look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">Our reception offers a welcoming lobby with a 24/7 front desk to assist guests upon arrival.</p>
+      <div class="grid-2">
+        <div class="img-wrapper"><img src="Images/reception-1.jpg" alt="De Kastro Hotel modern reception desk" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/reception-2.jpg" alt="De Kastro Hotel lobby waiting area" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- Restaurant -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the restaurant look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The on-site restaurant serves a variety of local and continental dishes in a comfortable dining setting.</p>
+      <div class="grid-2">
+        <div class="img-wrapper"><img src="Images/restaurant-1.jpg" alt="Dining tables inside De Kastro Hotel restaurant" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/restaurant-2.jpg" alt="Buffet or bar area in the restaurant" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- Swimming Area -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the swimming area look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The outdoor swimming area features a clean pool with shaded poolside seating.</p>
+      <div class="grid-2">
+        <div class="img-wrapper"><img src="Images/swimming-pool-1.jpg" alt="Outdoor swimming pool at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/swimming-pool-2.jpg" alt="Poolside seating and lounge chairs" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- Premises -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the hotel premises look like?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The hotel premises offer a secure, gated environment with ample parking space directly opposite the RCCG City Camp.</p>
+      <div class="grid-3">
+        <div class="img-wrapper"><img src="Images/hotel-exterior-1.jpg" alt="Exterior building of De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/hotel-exterior-2.jpg" alt="Secure parking lot at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/event-hall-exterior.jpg" alt="Event hall exterior at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- GLOBAL FOOTER -->
+    <footer style="padding: 80px 0 40px 0;">
+      <div class="container grid-2" style="align-items: start;">
+        <div>
+          <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="Images/logo.png" alt="De Kastro Hotel Logo" class="logo-hover" style="width: 120px; height: auto;">
+          </a>
+          <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0 0 8px 0;">42/44 Redemption Way, opposite RCCG City Camp</p>
+          <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Mowe, Obafemi Owode 110113, Ogun State</p>
+        </div>
+        <div class="footer-nav">
+          <a href="contact.html" class="nav-link">Contact</a>
+          <a href="privacy-policy.html" class="nav-link" style="color: var(--color-brand-orange);">Privacy Policy</a>
+          <a href="terms.html" class="nav-link">Terms</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Empty script tags to match the structural pattern of your other pages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  
+  <script>
+  </script>
+  <script>
+    function toggleGallery(button) {
+      // Find the grid container that is directly above this button's container
+      const gridContainer = button.parentElement.previousElementSibling;
+      // Find all hidden items within that specific grid
+      const hiddenItems = gridContainer.querySelectorAll('.hidden-gallery-item');
+      
+      let isShowing = button.getAttribute('data-showing') === 'true';
+
+      if (!isShowing) {
+        // Reveal the images
+        hiddenItems.forEach(item => {
+          item.style.display = 'block'; 
+        });
+        button.innerText = "Show Less (-)";
+        button.setAttribute('data-showing', 'true');
+      } else {
+        // Hide the images again
+        hiddenItems.forEach(item => {
+          item.style.display = 'none';
+        });
+        button.innerText = "See More Photos (+)";
+        button.setAttribute('data-showing', 'false');
+      }
+    }
+  </script>
+</body>
+</html>
