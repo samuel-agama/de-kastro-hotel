@@ -379,13 +379,25 @@
         <div class="img-wrapper hidden-gallery-item"><img src="Images/restaurant-6.jpeg" alt="Restaurant evening ambiance" class="gallery-image" loading="lazy"></div>
       </div>
 
-    <!-- Swimming Area -->
-    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+   <!-- Swimming Area -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
       <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the swimming area look like?</h2>
       <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The outdoor swimming area features a clean pool with shaded poolside seating.</p>
-      <div class="grid-2">
-        <div class="img-wrapper"><img src="Images/swimming-pool-1.jpg" alt="Outdoor swimming pool at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/swimming-pool-2.jpg" alt="Poolside seating and lounge chairs" class="gallery-image" loading="lazy"></div>
+      
+      <div class="grid-3">
+        <!-- Visible Images (First 3) -->
+        <div class="img-wrapper"><img src="Images/swimming-pool-1.jpeg" alt="Outdoor swimming pool at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/swimming-pool-2.jpeg" alt="Poolside seating and lounge chairs" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/swimming-pool-3.jpeg" alt="Swimming pool wide angle view" class="gallery-image" loading="lazy"></div>
+        
+        <!-- Hidden Images (4 through 6) -->
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/swimming-pool-4.jpeg" alt="Swimming pool evening lighting" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/swimming-pool-5.jpeg" alt="Poolside relaxation area" class="gallery-image" loading="lazy"></div>
+      </div>
+
+      <!-- The See More Button -->
+      <div class="see-more-container">
+        <button class="btn-see-more" onclick="toggleGallery(this)">See More Photos (+)</button>
       </div>
     </section>
 
