@@ -281,14 +281,27 @@
       </div>
     </section>
 
-    <!-- Standard Room -->
-    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
+   <!-- Standard Room -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
       <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Standard Room look like?</h2>
       <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Standard Room features extra space, ample natural light, and a dedicated workspace.</p>
+      
       <div class="grid-3">
-        <div class="img-wrapper"><img src="Images/standard-room-1.jpg" alt="Standard room interior at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/standard-room-2.jpg" alt="Standard room desk and workspace" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/standard-room-3.jpg" alt="Standard room modern bathroom" class="gallery-image" loading="lazy"></div>
+        <!-- Visible Images (First 3) -->
+        <div class="img-wrapper"><img src="Images/standard-room-1.jpeg" alt="Standard room interior at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/standard-room-2.jpeg" alt="Standard room desk and workspace" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/standard-room-3.jpeg" alt="Standard room modern bathroom" class="gallery-image" loading="lazy"></div>
+        
+        <!-- Hidden Images (4 through 7) -->
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-4.jpeg" alt="Standard room wide angle view" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-5.jpeg" alt="Standard room closet area" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-6.jpeg" alt="Standard room window view" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-7.jpeg" alt="Standard room additional amenities" class="gallery-image" loading="lazy"></div>
+      </div>
+
+      <!-- The See More Button -->
+      <div class="see-more-container">
+        <button class="btn-see-more" onclick="toggleGallery(this)">See More Photos (+)</button>
       </div>
     </section>
 
