@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terms & Conditions | De Kastro Hotel Limited</title>
   <link rel="icon" type="image/png" href="Images/logo.png">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -14,14 +14,14 @@
   <style>
     /* 1. DESIGN TOKENS */
     :root {
-      --color-bg-base: #060E1A; 
+      --color-bg-base: #060E1A;
       --color-bg-surface: #0B172A;
       --color-border: #1E293B;
       --color-white: #ffffff;
       --color-bone-white: #E2E8F0;
       --color-ash-gray: #94A3B8;
-      --color-brand-blue: #0077C8; 
-      --color-brand-orange: #F5821F; 
+      --color-brand-blue: #0077C8;
+      --color-brand-orange: #F5821F;
       --color-brand-orange-hover: #FFA24A;
       --font-heading: 'Cormorant Garamond', serif;
       --font-body: 'Montserrat', sans-serif;
@@ -32,7 +32,7 @@
       background-color: var(--color-bg-base);
       color: var(--color-bone-white);
       font-family: var(--font-body);
-      font-weight: 300; 
+      font-weight: 300;
       margin: 0;
       padding: 0;
       line-height: 1.6;
@@ -40,7 +40,7 @@
     }
 
     h1, h2, h3 { font-family: var(--font-heading); color: var(--color-brand-orange); font-weight: 400; margin-top: 0; letter-spacing: 0.02em; }
-    
+
     .text-magnify { display: inline-block; transform-origin: left center; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     .text-magnify:hover { transform: scale(1.03); cursor: default; }
 
@@ -48,7 +48,7 @@
       width: 24px; height: 24px; background-color: var(--color-brand-blue); box-shadow: 4px 4px 0px var(--color-brand-orange); transform: rotate(-10deg); margin-right: 16px; transition: transform 0.3s ease;
     }
     .logo-3d-placeholder:hover { transform: rotate(-10deg) scale(1.1); }
-    
+
     .logo-hover {
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
 }
@@ -60,10 +60,10 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     .container-narrow { max-width: 800px; margin: 0 auto; padding: 0 24px; }
     .section-gap { padding-top: 80px; padding-bottom: 80px; }
-    
+
     .btn-solid { background-color: var(--color-brand-orange); color: var(--color-white); padding: 14px 32px; border-radius: var(--radius-buttons); text-decoration: none; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; display: inline-block; transition: background-color 0.2s ease-out; border: none; text-align: center; }
     .btn-solid:hover { background-color: var(--color-brand-orange-hover); }
-    
+
     .nav-link { color: var(--color-bone-white); text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.15s ease-out; }
     .nav-link:hover { color: var(--color-brand-orange); }
 
@@ -71,12 +71,12 @@
     .hero-interior-content { position: relative; z-index: 2; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; padding-bottom: 40px; }
     .hero-title { font-size: 64px; line-height: 1.1; margin-bottom: 16px; color: var(--color-white); }
 
-  .flex-header { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
+  .flex-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       width: 100%;
-      padding: 32px 0; 
+      padding: 32px 0;
       box-sizing: border-box;
     }
     .logo-container {
@@ -84,17 +84,17 @@
       align-items: center;
       text-decoration: none;
     }
-    .header-nav { 
-      display: flex; 
-      gap: 32px; 
-      align-items: center; 
+    .header-nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
     }
-    
+
     .legal-content h2 { font-size: 32px; color: var(--color-white); margin-top: 48px; margin-bottom: 16px; }
     .legal-content p { color: var(--color-ash-gray); margin-bottom: 24px; font-size: 15px; line-height: 1.8; }
     .legal-content ul { color: var(--color-ash-gray); margin-bottom: 24px; font-size: 15px; line-height: 1.8; padding-left: 24px; }
 
-    
+
     @media (max-width: 768px) {
       .hero-title { font-size: 40px; }
       .section-gap { padding-top: 48px; padding-bottom: 48px; }
@@ -110,8 +110,9 @@
       z-index: 0;
       min-height: 100vh;
     }
-    /* Opaque content layers rise over the pinned hero and cover the viewport. */
-    body > :not(.hero-wrapper):not(.hero-interior-wrapper):not(script) {
+    /* Keep the content layer full-width as it rises over the pinned hero. */
+    .page-content {
+      min-height: 100vh;
       position: relative;
       z-index: 1;
       background-color: var(--color-bg-base);
@@ -143,6 +144,7 @@
     </section>
   </div>
 
+  <main class="page-content">
   <section class="container-narrow section-gap legal-content">
     <p>By accessing our website or booking accommodation or event space with De Kastro Hotel Limited, you agree to be bound by the following Terms & Conditions. Please read them carefully.</p>
 
@@ -194,11 +196,12 @@
       </div>
     </div>
   </footer>
+  </main>
 <!-- GSAP and SplitType Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/split-type"></script>
-  
+
   <script>
   </script>
 </body>

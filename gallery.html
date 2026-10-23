@@ -7,7 +7,7 @@
   <title>De Kastro Hotel Gallery | Photos of Rooms, Pool & Restaurant</title>
   <meta name="description" content="View photos of De Kastro Hotel in Mowe. Explore our premium rooms, restaurant, swimming area, reception, and hotel premises.">
   <link rel="icon" type="image/png" href="Images/logo.png">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -43,21 +43,21 @@
 
     /* 1. DESIGN TOKENS */
     :root {
-      --color-bg-base: #060E1A; 
+      --color-bg-base: #060E1A;
       --color-bg-surface: #0B172A;
       --color-border: #1E293B;
-      
+
       --color-white: #ffffff;
       --color-bone-white: #E2E8F0;
       --color-ash-gray: #94A3B8;
-      
-      --color-brand-blue: #0077C8; 
-      --color-brand-orange: #F5821F; 
+
+      --color-brand-blue: #0077C8;
+      --color-brand-orange: #F5821F;
       --color-brand-orange-hover: #FFA24A;
-      
+
       --font-heading: 'Cormorant Garamond', serif;
       --font-body: 'Montserrat', sans-serif;
-      
+
       --radius-buttons: 4px;
     }
 
@@ -65,7 +65,7 @@
       background-color: var(--color-bg-base);
       color: var(--color-bone-white);
       font-family: var(--font-body);
-      font-weight: 300; 
+      font-weight: 300;
       margin: 0;
       padding: 0;
       line-height: 1.6;
@@ -74,16 +74,16 @@
 
     h1, h2, h3, h4 {
       font-family: var(--font-heading);
-      color: var(--color-brand-orange); 
+      color: var(--color-brand-orange);
       font-weight: 400;
       margin-top: 0;
       letter-spacing: 0.02em;
     }
 
     .text-magnify {
-      display: inline-block; 
-      transform-origin: left center; 
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+      display: inline-block;
+      transform-origin: left center;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     .text-magnify:hover { transform: scale(1.03); cursor: default; }
 
@@ -154,9 +154,9 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(
-        to bottom, 
-        rgba(6, 14, 26, 0.4) 0%, 
-        rgba(6, 14, 26, 0.7) 60%, 
+        to bottom,
+        rgba(6, 14, 26, 0.4) 0%,
+        rgba(6, 14, 26, 0.7) 60%,
         rgba(6, 14, 26, 1) 100%
       );
       z-index: 1;
@@ -166,7 +166,7 @@
     /* Grids & Layout */
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    
+
     .flex-header { display: flex; justify-content: space-between; align-items: center; padding: 32px 0; position: relative; z-index: 10; }
     .header-nav { display: flex; gap: 40px; align-items: center; }
     .footer-nav { display: flex; gap: 40px; justify-content: flex-end; }
@@ -229,7 +229,7 @@
     <video autoplay loop muted playsinline preload="metadata" poster="Images/rooms-hero.jpg" class="hero-bg-video">
       <source src="Images/Rooms-Video.mp4" type="video/mp4">
     </video>
-    
+
     <!-- 2. Dark Overlay Layer -->
     <div class="hero-overlay"></div>
 
@@ -244,7 +244,7 @@
         <a href="events.html" class="nav-link">Event Space</a>
         <a href="contact.html" class="nav-link">Contact</a>
         <a href="gallery.html" class="nav-link" style="color: var(--color-brand-orange);">Gallery</a>
-        <a href="https://wa.me/2348062911356" class="btn-solid" style="width: auto;">Book Now</a>
+        <a href="contact.html" class="btn-solid">BOOK NOW</a>
       </nav>
     </header>
 
@@ -258,18 +258,27 @@
   <!-- MAIN CONTENT AREA -->
   <main class="page-content">
 
-   <!-- Economy Room -->
+   <!-- Economy Room with Video & Photos -->
     <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
       <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Economy Room look like?</h2>
       <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Economy Room at De Kastro Hotel offers practical comfort with premium bedding and modern amenities.</p>
-      
+
+      <!-- Video Showcase Wrapper -->
+      <div style="margin-bottom: 32px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border);">
+        <video autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 400px; object-fit: cover; display: block;">
+          <source src="Images/economy-room-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Image Grid with "See More" Functionality -->
       <div class="grid-3">
         <!-- Visible Images (First 3) -->
         <div class="img-wrapper"><img src="Images/economy-room-1.jpeg" alt="Economy room bed setup at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper"><img src="Images/economy-room-2.jpeg" alt="Economy room bathroom facilities" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper"><img src="Images/economy-room-3.jpeg" alt="Economy room seating and amenities" class="gallery-image" loading="lazy"></div>
-        
-        <!-- Hidden Images (4, 5, 6, etc.) - Notice the 'hidden-gallery-item' class -->
+
+        <!-- Hidden Images (4 through 6) -->
         <div class="img-wrapper hidden-gallery-item"><img src="Images/economy-room-4.jpeg" alt="Economy room wardrobe" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper hidden-gallery-item"><img src="Images/economy-room-5.jpeg" alt="Economy room desk area" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper hidden-gallery-item"><img src="Images/economy-room-6.jpeg" alt="Economy room wide angle" class="gallery-image" loading="lazy"></div>
@@ -281,22 +290,31 @@
       </div>
     </section>
 
-   <!-- Standard Room -->
+ <!-- Standard Room -->
     <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
-      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Standard Room look like?</h2>
-      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Standard Room features extra space, ample natural light, and a dedicated workspace.</p>
-      
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">How much is a Standard Room in Mowe?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">A Standard Room at De Kastro Hotel in Mowe costs ₦35,000 per night, featuring extra space, ample natural light, and a dedicated workspace.</p>
+
+      <!-- Video Showcase Wrapper -->
+      <div style="margin-bottom: 32px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border);">
+        <video autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 400px; object-fit: cover; display: block;">
+          <source src="Images/standard-room-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Image Grid (3 Visible, 4 Hidden) -->
       <div class="grid-3">
         <!-- Visible Images (First 3) -->
-        <div class="img-wrapper"><img src="Images/standard-room-1.jpeg" alt="Standard room interior at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/standard-room-2.jpeg" alt="Standard room desk and workspace" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/standard-room-3.jpeg" alt="Standard room modern bathroom" class="gallery-image" loading="lazy"></div>
-        
+        <div class="img-wrapper"><img src="Images/standard-room-1.jpg" alt="Standard room interior at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/standard-room-2.jpg" alt="Standard room desk and workspace" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/standard-room-3.jpg" alt="Standard room modern bathroom" class="gallery-image" loading="lazy"></div>
+
         <!-- Hidden Images (4 through 7) -->
         <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-4.jpeg" alt="Standard room wide angle view" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-5.jpeg" alt="Standard room closet area" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-6.jpeg" alt="Standard room window view" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-7.jpeg" alt="Standard room additional amenities" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-6.jpg" alt="Standard room window view" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/standard-room-7.jpg" alt="Standard room additional amenities" class="gallery-image" loading="lazy"></div>
       </div>
 
       <!-- The See More Button -->
@@ -305,17 +323,26 @@
       </div>
     </section>
 
-    <!-- Deluxe Room -->
+   <!-- Deluxe Room -->
     <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
-      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Deluxe Room look like?</h2>
-      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Deluxe Room offers elevated luxury, featuring elegant decor and a comfortable lounge area.</p>
-      
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">How much is a Deluxe Room in Mowe?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">A Deluxe Room at De Kastro Hotel in Mowe costs ₦45,000 per night and includes complimentary breakfast. It offers elevated luxury, featuring elegant decor and a comfortable lounge area.</p>
+
+      <!-- Video Showcase Wrapper -->
+      <div style="margin-bottom: 32px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border);">
+        <video autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 400px; object-fit: cover; display: block;">
+          <source src="Images/deluxe-room-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Image Grid (3 Visible, 3 Hidden) -->
       <div class="grid-3">
         <!-- Visible Images (First 3) -->
-        <div class="img-wrapper"><img src="Images/deluxe-room-1.jpeg" alt="Deluxe room plush bed and decor" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/deluxe-room-1.jpeg" alt="Deluxe room plush bed and decor at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper"><img src="Images/deluxe-room-2.jpeg" alt="Deluxe room seating area" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper"><img src="Images/deluxe-room-3.jpeg" alt="Deluxe room complimentary breakfast setup" class="gallery-image" loading="lazy"></div>
-        
+
         <!-- Hidden Images (4 through 6) -->
         <div class="img-wrapper hidden-gallery-item"><img src="Images/deluxe-room-4.jpeg" alt="Deluxe room additional angle" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper hidden-gallery-item"><img src="Images/deluxe-room-5.jpeg" alt="Deluxe room bathroom view" class="gallery-image" loading="lazy"></div>
@@ -328,71 +355,20 @@
       </div>
     </section>
 
-    <!-- Executive Room -->
-    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
-      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Executive Room look like?</h2>
-      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Executive Room is a soundproof suite designed for maximum privacy and upscale relaxation.</p>
+<!-- Executive Room -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">How much is an Executive Room in Mowe?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">An Executive Room at De Kastro Hotel in Mowe costs ₦55,000 per night and includes complimentary breakfast. It is a soundproof suite designed for maximum comfort, privacy, and upscale relaxation.</p>
+
+      <!-- Image Grid (3 Visible, 3 Hidden) -->
       <div class="grid-3">
-        <div class="img-wrapper"><img src="Images/executive-room-1.jpg" alt="Executive soundproof room wide view" class="gallery-image" loading="lazy"></div>
+        <!-- Visible Images (First 3) -->
+        <div class="img-wrapper"><img src="Images/executive-room-1.jpg" alt="Executive soundproof room wide view at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper"><img src="Images/executive-room-2.jpg" alt="Executive room luxury bathroom" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper"><img src="Images/executive-room-3.jpg" alt="Executive room premium lounge chair" class="gallery-image" loading="lazy"></div>
-      </div>
-    </section>
 
-  <!-- Double Bed Deluxe -->
-    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
-      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the Double Bed Deluxe Room look like?</h2>
-      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The Double Bed Deluxe Room provides spacious accommodation perfect for families or group stays.</p>
-      
-      <div class="grid-3">
-        <!-- Visible Images (First 3) -->
-        <div class="img-wrapper"><img src="Images/double-bed-deluxe-1.jpeg" alt="Double Bed Deluxe room two beds" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/double-bed-deluxe-2.jpeg" alt="Double Bed Deluxe spacious layout" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/double-bed-deluxe-3.jpeg" alt="Double Bed Deluxe wardrobe and amenities" class="gallery-image" loading="lazy"></div>
-        
         <!-- Hidden Images (4 through 6) -->
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/double-bed-deluxe-4.jpeg" alt="Double Bed Deluxe additional angle" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/double-bed-deluxe-5.jpeg" alt="Double Bed Deluxe bathroom view" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/double-bed-deluxe-6.jpeg" alt="Double Bed Deluxe seating area" class="gallery-image" loading="lazy"></div>
-      </div>
-
-<!-- The See More Button -->
-      <div class="see-more-container">
-        <button class="btn-see-more" onclick="toggleGallery(this)">See More Photos (+)</button>
-      </div>
-    </section>
-
-    <!-- Restaurant -->
-    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
-      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the restaurant look like?</h2>
-      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The on-site restaurant serves a variety of local and continental dishes in a comfortable dining setting.</p>
-      
-      <div class="grid-3">
-        <!-- Visible Images (First 3) -->
-        <div class="img-wrapper"><img src="Images/restaurant-1.jpeg" alt="Dining tables inside De Kastro Hotel restaurant" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/restaurant-2.jpeg" alt="Buffet or bar area in the restaurant" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/restaurant-3.jpeg" alt="Restaurant seating layout" class="gallery-image" loading="lazy"></div>
-        
-        <!-- Hidden Images (4 through 6) -->
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/restaurant-4.jpeg" alt="Restaurant food display" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/restaurant-5.jpeg" alt="Restaurant counter area" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/restaurant-6.jpeg" alt="Restaurant evening ambiance" class="gallery-image" loading="lazy"></div>
-      </div>
-
-   <!-- Swimming Area -->
-    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
-      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the swimming area look like?</h2>
-      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The outdoor swimming area features a clean pool with shaded poolside seating.</p>
-      
-      <div class="grid-3">
-        <!-- Visible Images (First 3) -->
-        <div class="img-wrapper"><img src="Images/swimming-pool-1.jpeg" alt="Outdoor swimming pool at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/swimming-pool-2.jpeg" alt="Poolside seating and lounge chairs" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/swimming-pool-3.jpeg" alt="Swimming pool wide angle view" class="gallery-image" loading="lazy"></div>
-        
-        <!-- Hidden Images (4 through 6) -->
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/swimming-pool-4.jpeg" alt="Swimming pool evening lighting" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper hidden-gallery-item"><img src="Images/swimming-pool-5.jpeg" alt="Poolside relaxation area" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/executive-room-4.jpg" alt="Executive room workspace desk" class="gallery-image" loading="lazy"></div>
       </div>
 
       <!-- The See More Button -->
@@ -401,14 +377,140 @@
       </div>
     </section>
 
-    <!-- Premises -->
-    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none;">
-      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the hotel premises look like?</h2>
-      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The hotel premises offer a secure, gated environment with ample parking space directly opposite the RCCG City Camp.</p>
+ <!-- Double Bed Deluxe -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">How much is a Double Bed Deluxe Room in Mowe?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">A Double Bed Deluxe Room at De Kastro Hotel in Mowe costs ₦65,000 per night and includes complimentary breakfast. It provides spacious accommodation perfect for families or group stays.</p>
+
+      <!-- Video Showcase Wrapper -->
+      <div style="margin-bottom: 32px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border);">
+        <video autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 400px; object-fit: cover; display: block;">
+          <source src="Images/double-bed-deluxe-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Image Grid (3 Visible, 3 Hidden) -->
       <div class="grid-3">
+        <!-- Visible Images (First 3) -->
+        <div class="img-wrapper"><img src="Images/double-bed-deluxe-1.jpeg" alt="Double Bed Deluxe room two beds at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/double-bed-deluxe-2.jpeg" alt="Double Bed Deluxe spacious layout" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/double-bed-deluxe-3.jpeg" alt="Double Bed Deluxe wardrobe and amenities" class="gallery-image" loading="lazy"></div>
+
+        <!-- Hidden Images (4 through 6) -->
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/double-bed-deluxe-4.jpeg" alt="Double Bed Deluxe additional angle" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/double-bed-deluxe-5.jpeg" alt="Double Bed Deluxe bathroom view" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/double-bed-deluxe-6.jpg" alt="Double Bed Deluxe seating area" class="gallery-image" loading="lazy"></div>
+      </div>
+
+      <!-- The See More Button -->
+      <div class="see-more-container">
+        <button class="btn-see-more" onclick="toggleGallery(this)">See More Photos (+)</button>
+      </div>
+    </section>
+
+  <!-- Restaurant -->
+    <!-- Restaurant -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the restaurant look like at De Kastro Hotel?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The on-site restaurant at De Kastro Hotel in Mowe serves a variety of local and continental dishes in a comfortable dining setting.</p>
+
+      <!-- Video Showcase Wrapper -->
+      <div style="margin-bottom: 32px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border);">
+        <video autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 400px; object-fit: cover; display: block;">
+          <source src="Images/restaurant-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="grid-3">
+        <div class="img-wrapper"><img src="Images/restaurant-1.jpeg" alt="Dining tables inside De Kastro Hotel restaurant" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/restaurant-2.jpeg" alt="Buffet or bar area in the restaurant" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/restaurant-3.jpeg" alt="Restaurant seating layout" class="gallery-image" loading="lazy"></div>
+      </div>
+    </section>
+
+<!-- Reception -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the hotel reception look like at De Kastro Hotel?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The reception at De Kastro Hotel in Mowe offers a welcoming lobby with a 24/7 front desk to assist guests upon arrival.</p>
+
+      <!-- Image Grid (3 Visible, 3 Hidden) -->
+      <div class="grid-3">
+        <!-- Visible Images (First 3) -->
+        <div class="img-wrapper"><img src="gallery/reception-1.jpeg" alt="De Kastro Hotel modern reception desk" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="gallery/reception-2.jpeg" alt="De Kastro Hotel lobby waiting area" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="gallery/reception-3.jpeg" alt="Reception desk check-in counter view" class="gallery-image" loading="lazy"></div>
+
+        <!-- Hidden Images (4 through 6) -->
+        <div class="img-wrapper hidden-gallery-item"><img src="gallery/reception-4.jpeg" alt="Lobby seating and guest lounge" class="gallery-image" loading="lazy"></div>
+      </div>
+
+      <!-- The See More Button -->
+      <div class="see-more-container">
+        <button class="btn-see-more" onclick="toggleGallery(this)">See More Photos (+)</button>
+      </div>
+    </section>
+
+   <!-- Swimming Area -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What does the swimming area look like at De Kastro Hotel?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The outdoor swimming area at De Kastro Hotel in Mowe features a clean pool with shaded poolside seating for relaxation.</p>
+
+      <!-- Video Showcase Wrapper -->
+      <div style="margin-bottom: 32px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border);">
+        <video autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 400px; object-fit: cover; display: block;">
+          <source src="Images/swimming-pool-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Image Grid (3 Visible, 3 Hidden) -->
+      <div class="grid-3">
+        <!-- Visible Images (First 3) -->
+        <div class="img-wrapper"><img src="Images/swimming-pool-1.jpeg" alt="Outdoor swimming pool at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/swimming-pool-2.jpeg" alt="Poolside seating and lounge chairs" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/swimming-pool-3.jpg" alt="Swimming pool wide angle view" class="gallery-image" loading="lazy"></div>
+
+        <!-- Hidden Images (4 through 6) -->
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/swimming-pool-4.jpg" alt="Swimming pool evening lighting" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/swimming-pool-5.jpg" alt="Poolside relaxation area" class="gallery-image" loading="lazy"></div>
+      </div>
+
+      <!-- The See More Button -->
+      <div class="see-more-container">
+        <button class="btn-see-more" onclick="toggleGallery(this)">See More Photos (+)</button>
+      </div>
+    </section>
+
+
+<!-- Premises -->
+    <section class="container section-gap border-hairline" style="border-left: none; border-right: none; border-top: none; padding-bottom: 24px;">
+      <h2 class="text-magnify" style="font-size: 36px; margin-bottom: 16px; color: var(--color-white);">What do the hotel premises look like at De Kastro Hotel?</h2>
+      <p style="color: var(--color-ash-gray); margin-bottom: 32px;">The hotel premises at De Kastro Hotel in Mowe offer a secure, gated environment with ample parking space directly opposite the RCCG City Camp.</p>
+
+      <!-- Video Showcase Wrapper -->
+      <div style="margin-bottom: 32px; border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border);">
+        <video autoplay loop muted playsinline preload="metadata" style="width: 100%; height: 400px; object-fit: cover; display: block;">
+          <source src="Images/premises-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Image Grid (3 Visible, 3 Hidden) -->
+      <div class="grid-3">
+        <!-- Visible Images (First 3) -->
         <div class="img-wrapper"><img src="Images/hotel-exterior-1.jpg" alt="Exterior building of De Kastro Hotel" class="gallery-image" loading="lazy"></div>
         <div class="img-wrapper"><img src="Images/hotel-exterior-2.jpg" alt="Secure parking lot at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
-        <div class="img-wrapper"><img src="Images/event-hall-exterior.jpg" alt="Event hall exterior at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+        <div class="img-wrapper"><img src="Images/hotel-exterior-3.jpg" alt="Event hall exterior at De Kastro Hotel" class="gallery-image" loading="lazy"></div>
+
+        <!-- Hidden Images (4 through 6) -->
+        <div class="img-wrapper hidden-gallery-item"><img src="Images/hotel-exterior-4.jpg" alt="De Kastro Hotel main gate and security" class="gallery-image" loading="lazy"></div>
+      </div>
+
+      <!-- The See More Button -->
+      <div class="see-more-container">
+        <button class="btn-see-more" onclick="toggleGallery(this)">See More Photos (+)</button>
       </div>
     </section>
 
@@ -435,7 +537,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/split-type"></script>
-  
+
   <script>
   </script>
   <script>
@@ -444,13 +546,13 @@
       const gridContainer = button.parentElement.previousElementSibling;
       // Find all hidden items within that specific grid
       const hiddenItems = gridContainer.querySelectorAll('.hidden-gallery-item');
-      
+
       let isShowing = button.getAttribute('data-showing') === 'true';
 
       if (!isShowing) {
         // Reveal the images
         hiddenItems.forEach(item => {
-          item.style.display = 'block'; 
+          item.style.display = 'block';
         });
         button.innerText = "Show Less (-)";
         button.setAttribute('data-showing', 'true');

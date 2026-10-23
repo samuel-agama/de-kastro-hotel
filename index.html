@@ -7,7 +7,7 @@
   <title>De Kastro Hotel Limited | Premium Rooms & Event Hosting in Mowe</title>
   <meta name="description" content="De Kastro Hotel in Mowe, opposite RCCG City Camp. Rooms from ₦30,000 a night, plus an event and reception space. Call or WhatsApp to book.">
   <link rel="icon" type="image/png" href="Images/logo.png">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -15,52 +15,52 @@
   <style>
     /* 1. DESIGN TOKENS (Brand Colors: Navy, Blue, Orange) */
     :root {
-      --color-bg-base: #060E1A; 
+      --color-bg-base: #060E1A;
       --color-bg-surface: #0B172A;
       --color-border: #1E293B;
-      
+
       --color-white: #ffffff;
       --color-bone-white: #E2E8F0;
       --color-ash-gray: #94A3B8;
-      
-      --color-brand-blue: #0077C8; 
-      --color-brand-orange: #F5821F; 
+
+      --color-brand-blue: #0077C8;
+      --color-brand-orange: #F5821F;
       --color-brand-orange-hover: #FFA24A;
-      
+
       --font-heading: 'Cormorant Garamond', serif;
       --font-body: 'Montserrat', sans-serif;
-      
+
       --radius-buttons: 4px;
-      --radius-cards: 0px; 
+      --radius-cards: 0px;
     }
 
     body {
       background-color: var(--color-bg-base);
       color: var(--color-bone-white);
       font-family: var(--font-body);
-      font-weight: 300; 
+      font-weight: 300;
       margin: 0;
       padding: 0;
       line-height: 1.6;
       letter-spacing: 0.02em;
     }
-    
+
     h1, h2, h3 {
       font-family: var(--font-heading);
-      color: var(--color-brand-orange); 
+      color: var(--color-brand-orange);
       font-weight: 400;
       margin-top: 0;
       letter-spacing: 0.02em;
     }
 
     .text-magnify {
-      display: inline-block; 
-      transform-origin: left center; 
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+      display: inline-block;
+      transform-origin: left center;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    
+
     .text-magnify:hover {
-      transform: scale(1.03); 
+      transform: scale(1.03);
       cursor: default;
     }
 
@@ -126,7 +126,7 @@
       border-color: var(--color-brand-blue);
       color: var(--color-brand-blue);
     }
-    
+
     .nav-link {
       color: var(--color-bone-white);
       text-decoration: none;
@@ -165,16 +165,16 @@
   height: 100%;
   /* The gradient now fades to a completely solid (1) navy at the bottom */
   background: linear-gradient(
-    to bottom, 
-    rgba(6, 14, 26, 0.4) 0%, 
-    rgba(6, 14, 26, 0.7) 60%, 
+    to bottom,
+    rgba(6, 14, 26, 0.4) 0%,
+    rgba(6, 14, 26, 0.7) 60%,
     rgba(6, 14, 26, 1) 100%
   );
   z-index: 1;
 }
 
 /* The Text and Navigation */
-.hero-wrapper header, 
+.hero-wrapper header,
 .hero-wrapper .hero-content {
   position: relative;
   z-index: 2; /* Pushes the text safely in front of the video and overlay */
@@ -185,12 +185,12 @@
     /* Grids */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    
+
     .flex-header { display: flex; justify-content: space-between; align-items: center; padding: 32px 0; position: relative; z-index: 10; }
     .header-nav { display: flex; gap: 40px; align-items: center; }
     .info-bar-flex { display: flex; justify-content: space-between; padding: 24px 0; }
     .footer-nav { display: flex; gap: 40px; justify-content: flex-end; }
-    
+
     /* Update the card container to prevent the image from spilling out when zoomed */
 .room-card {
   overflow: hidden;
@@ -251,7 +251,7 @@
   <video autoplay loop muted playsinline preload="metadata" class="hero-bg-video">
     <source src="Images/Hero-Video-optimized.mp4" type="video/mp4">
   </video>
-  
+
   <!-- Dark Overlay -->
   <div class="hero-overlay"></div>
 
@@ -265,7 +265,7 @@
       <a href="rooms.html" class="nav-link">Rooms</a>
       <a href="events.html" class="nav-link">Event Space</a>
       <a href="contact.html" class="nav-link">Contact</a>
-      <a href="https://wa.me/2348062911356" class="btn-solid" style="width: auto;">Book Now</a>
+      <a href="contact.html" class="btn-solid">BOOK NOW</a>
     </nav>
   </header>
 
@@ -367,13 +367,14 @@
       </div>
     </div>
   </footer>
+
   </main>
 
 <!-- GSAP and SplitType Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/split-type"></script>
-  
+
   <script>
   </script>
 </body>
