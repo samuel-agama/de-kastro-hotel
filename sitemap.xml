@@ -23,6 +23,14 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Photo Gallery -->
+  <url>
+    <loc>https://www.dekastrohotel.com/gallery.html</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   
   <!-- Contact & FAQs -->
   <url>
