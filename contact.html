@@ -12,6 +12,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const SUPABASE_URL = 'https://cqyhxyzqzgjkddnwdqrw.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxeWh4bnlxemdqa2RkbndkcXJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzNTE1NjAsImV4cCI6MjEwODkyNzU2MH0.WkHg3PmEAjHkmUs-HirFO3wPCL9GpNd2KXs9A3gUzxQ';
+      
+      const { createClient } = supabase;
+      const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </script>
+<style>
+
+</style>
   <!-- Local SEO & FAQ Schema Markup based on 'Understanding SEO' strategy -->
   <script type="application/ld+json">
   {
@@ -190,8 +201,43 @@
             referrerpolicy="strict-origin-when-cross-origin">
           </iframe>
         </div>
-      </div>
+        </div> <!-- THIS TAG CLOSES THE LEFT COLUMN -->
 
+      <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const bookingForm = document.getElementById('enquiry-form');
+    
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Stop default form submit for a moment
+        
+        // 1. Gather data from the form inputs
+        const formData = {
+          guest_name: bookingForm.querySelector('[name="name"]').value,
+          guest_phone: bookingForm.querySelector('[name="phone"]').value,
+          message: bookingForm.querySelector('[name="message"]').value,
+          payment_status: 'Pending',
+          booking_status: 'Active'
+        };
+
+        // 2. Insert data into your Supabase 'bookings' table
+        const { data, error } = await _supabase
+          .from('bookings')
+          .insert([formData]);
+
+        if (error) {
+          console.error('Error saving booking:', error);
+          alert('There was an error submitting your booking. Please try again.');
+        } else {
+          alert('Booking successfully saved! We will contact you shortly.');
+          bookingForm.reset();
+        }
+      });
+    }
+  });
+</script>
+  </body>
+</html>
       <!-- RIGHT COLUMN: Transparent Hub Form -->
       <div style="background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);">
         <h3 style="font-size: 28px; color: var(--color-white); margin-bottom: 8px;">Send Us a Message</h3>
