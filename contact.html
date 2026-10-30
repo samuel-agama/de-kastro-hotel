@@ -479,17 +479,36 @@
 
           const { error } = await _supabase.from('bookings').insert([formData]);
           if (error) throw error;
-          bookingMessage.textContent = 'Booking request sent. Our front desk will contact you to confirm availability and arrange payment.';
-          bookingForm.reset();
-          checkIn.min = formatLocalDate(today);
-          checkOut.min = '';
-          await loadAvailableRooms();
+          const formContainer = bookingForm.parentElement;
+          const whatsappMessage = encodeURIComponent(
+            `Hello! I just submitted a room booking request online for ${formData.guest_name}, ` +
+            `${formData.check_in_date} to ${formData.check_out_date} (${roomSelect.value}). ` +
+            'Please confirm availability and the amount due.'
+          );
+          formContainer.innerHTML = `
+            <div style="text-align: center; padding: 32px; background: rgba(16, 185, 129, 0.05); border: 1px solid var(--color-brand-orange); border-radius: 12px;">
+              <h3 style="font-family: var(--font-heading); color: var(--color-white); margin-bottom: 16px; font-size: 24px;">Booking Received!</h3>
+              <p style="color: var(--color-ash-gray); margin-bottom: 24px;">Your reservation request is <strong>Pending</strong> front desk confirmation. Please confirm availability and the amount due before making a transfer.</p>
+
+              <div style="background: var(--color-bg-surface); padding: 20px; border-radius: 8px; margin-bottom: 24px; text-align: left; display: inline-block; border: 1px solid rgba(255,255,255,0.1);">
+                <p style="margin: 4px 0; color: var(--color-ash-gray);">Bank: <strong style="color: var(--color-white);">Wema Bank</strong></p>
+                <p style="margin: 4px 0; color: var(--color-ash-gray);">Account Name: <strong style="color: var(--color-white);">DE-KASTRO HOTEL LIMITED</strong></p>
+                <p style="margin: 4px 0; color: var(--color-ash-gray);">Account Number: <strong style="color: var(--color-brand-orange); font-size: 20px; letter-spacing: 1px;">9379127689</strong></p>
+              </div>
+
+              <p style="color: var(--color-ash-gray); margin-bottom: 24px;">Contact our front desk to confirm your booking and payment details. After transferring, you can send your payment receipt directly via WhatsApp.</p>
+
+              <a href="https://wa.me/2348062911356?text=${whatsappMessage}" target="_blank" rel="noopener noreferrer" class="btn-solid" style="display: inline-block; text-decoration: none; padding: 14px 24px;">Contact Front Desk via WhatsApp</a>
+            </div>
+          `;
         } catch (error) {
           console.error('Booking error:', error);
           bookingMessage.textContent = `Unable to submit your booking: ${error.message || error}`;
         } finally {
-          submitBtn.textContent = 'Secure Booking';
-          submitBtn.disabled = false;
+          if (bookingForm.isConnected) {
+            submitBtn.textContent = 'Secure Booking';
+            submitBtn.disabled = false;
+          }
         }
       });
 

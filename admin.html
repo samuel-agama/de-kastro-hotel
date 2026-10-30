@@ -323,7 +323,6 @@
         max-width: none !important;
       }
     }
-
     @media (max-width: 420px) {
       .dashboard-header h1 {
         font-size: 24px;
@@ -333,6 +332,101 @@
         flex-basis: 100%;
       }
     }
+    /* Executive Nocturne Analytics Design System */
+:root {
+  --canvas-base: #060E1A;
+  --surface-card: #0B172A;
+  --surface-hover: #132238;
+  --brand-orange: #F5821F;
+  --metric-success: #10B981;
+  --metric-secondary: #0EA5E9;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-structural: rgba(30, 41, 59, 0.8);
+}
+
+/* Typography Classes */
+.metric-numeral {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums lining-nums;
+  margin: 8px 0;
+}
+.label-sm {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.delta-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.delta-positive {
+  color: var(--metric-success);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* Structural Components */
+.analytics-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+.row-3-col { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.row-6-4 { grid-template-columns: 2fr 1fr; }
+@media (max-width: 800px) {
+  .row-6-4 { grid-template-columns: 1fr; }
+}
+
+.analytic-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-structural);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.analytic-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 0;
+}
+
+/* Segmented Pill Control */
+.pill-track {
+  background: #081220;
+  border: 1px solid var(--border-structural);
+  border-radius: 9999px;
+  padding: 4px;
+  display: inline-flex;
+  gap: 4px;
+}
+.pill-segment {
+  padding: 6px 16px;
+  border-radius: 9999px;
+  color: var(--text-secondary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: all 0.2s;
+}
+.pill-segment.active {
+  background: var(--brand-orange);
+  color: var(--canvas-base);
+  font-weight: 700;
+}
   </style>
 </head>
 <body>
@@ -367,6 +461,10 @@
       <button class="tab-btn" id="tab-inquiries">
         Customer Inquiries <span id="inquiry-badge" class="notification-badge" aria-live="polite">0</span>
       </button>
+      <button class="tab-btn" id="tab-events">
+        Event Bookings <span id="event-badge" class="notification-badge" aria-live="polite">0</span>
+      </button>
+      <button class="tab-btn" id="tab-analytics">Performance Analytics</button>
     </div>
 
 <!-- Bookings Panel -->
@@ -383,12 +481,14 @@
   <input type="tel" id="manual-phone" class="input-field" placeholder="Phone Number" required style="margin-bottom:0; padding: 10px 14px; height: 38px;">
   <input type="date" id="manual-checkin" class="input-field" required style="margin-bottom:0; padding: 10px 14px; height: 38px; color-scheme: dark;">
   <input type="date" id="manual-checkout" class="input-field" required style="margin-bottom:0; padding: 10px 14px; height: 38px; color-scheme: dark;">
+  <input type="number" id="manual-price" class="input-field" placeholder="Amount (₦)" min="0.01" step="0.01" required style="margin-bottom:0; padding: 10px 14px; height: 38px;">
   <select id="manual-room" class="input-field" required style="margin-bottom:0; padding: 10px 14px; height: 38px;">
     <option value="" disabled selected>Room Type</option>
     <option value="Economy">Economy</option>
     <option value="Standard">Standard</option>
     <option value="Deluxe">Deluxe</option>
     <option value="Executive">Executive</option>
+    <option value="Double Bed Deluxe">Double Bed Deluxe</option>
   </select>
   <button type="submit" class="btn-solid" style="padding: 10px 14px; height: 38px; font-size: 13px;">Save Booking</button>
 </form>
@@ -399,8 +499,10 @@
           <tr>
             <th>Guest Name</th>
             <th>Phone / WhatsApp</th>
+            <th>Room</th>
             <th>Check-in</th>
             <th>Check-out</th>
+            <th>Price</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -451,6 +553,131 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Event Bookings Panel -->
+    <div id="panel-events" class="table-container" style="display: none;">
+      <div style="padding: 16px 24px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid var(--color-border);">
+        <input type="search" id="event-search" class="input-field" placeholder="Search event name, date, or phone..." aria-label="Search event bookings" style="margin-bottom:0; max-width: 350px; padding: 10px 14px; height: 38px;">
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Guest Name</th>
+            <th>Phone</th>
+            <th>Event Date</th>
+            <th>Event Type</th>
+            <th>Guests</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="events-table-body">
+          <!-- Event rows injected via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <div id="panel-analytics" class="table-container" style="display: none; padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
+        <h2 style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-white); margin: 0;">Revenue &amp; Operations</h2>
+        <div class="pill-track" role="group" aria-label="Analytics timeframe">
+          <button type="button" class="pill-segment" data-analytics-period="today">Today</button>
+          <button type="button" class="pill-segment active" data-analytics-period="week">This Week</button>
+          <button type="button" class="pill-segment" data-analytics-period="month">This Month</button>
+          <button type="button" class="pill-segment" data-analytics-period="ytd">YTD</button>
+        </div>
+      </div>
+
+      <div class="analytics-grid row-3-col">
+        <div class="analytic-card">
+          <div class="label-sm">Estimated Paid Revenue</div>
+          <div class="metric-numeral" id="kpi-revenue">₦0.00</div>
+          <div class="label-sm">Based on recorded payment amounts</div>
+        </div>
+        <div class="analytic-card">
+          <div class="label-sm">Projected Occupancy</div>
+          <div class="metric-numeral" id="kpi-occupancy">0%</div>
+          <div class="label-sm">Estimate from active booking dates</div>
+        </div>
+        <div class="analytic-card">
+          <div class="label-sm">Reservations</div>
+          <div class="metric-numeral" id="kpi-reservations">0</div>
+          <div class="label-sm" id="kpi-period-label">This week</div>
+        </div>
+      </div>
+
+      <p class="label-sm" style="margin: 16px 0 0;">
+        Revenue is estimated from paid bookings with matching room rates and dates. Occupancy is estimated from active booking dates; bookings are not assigned to room numbers and may include requests awaiting confirmation.
+      </p>
+
+      <div class="analytics-grid row-6-4" style="margin-top: 1.25rem;">
+        <div class="analytic-card" style="min-height: 350px;">
+          <h3>Reservation Pacing</h3>
+          <div id="analytics-chart" role="img" aria-label="Reservations by check-in date" style="min-height: 280px; display: flex; align-items: end; justify-content: space-around; gap: 8px; padding-top: 24px;"></div>
+        </div>
+
+        <div class="analytic-card">
+          <h3>Reservations by Room Tier</h3>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+            <tbody>
+              <tr>
+                <td style="padding: 12px 0; color: var(--text-primary);">Economy</td>
+                <td id="tier-economy" style="text-align: right; color: var(--text-secondary);">0</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; color: var(--text-primary);">Standard</td>
+                <td id="tier-standard" style="text-align: right; color: var(--text-secondary);">0</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; color: var(--text-primary);">Deluxe</td>
+                <td id="tier-deluxe" style="text-align: right; color: var(--text-secondary);">0</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; color: var(--text-primary);">Executive</td>
+                <td id="tier-executive" style="text-align: right; color: var(--text-secondary);">0</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; color: var(--text-primary);">Double Bed Deluxe</td>
+                <td id="tier-double" style="text-align: right; color: var(--text-secondary);">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Row 3: Events & Grand Totals -->
+      <div class="analytics-grid row-6-4" style="margin-top: 1.25rem;">
+        <div class="analytic-card">
+          <h3>Event Space Performance</h3>
+          <div style="display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;">
+            <div>
+              <div class="label-sm">Total Events</div>
+              <div class="metric-numeral" id="kpi-events-total" style="font-size: 1.75rem;">0</div>
+            </div>
+            <div>
+              <div class="label-sm">Event Revenue</div>
+              <div class="metric-numeral" id="kpi-events-revenue" style="font-size: 1.75rem;">₦0</div>
+            </div>
+          </div>
+          <p style="font-size: 10px; color: var(--color-ash-gray); margin-top: 12px; text-transform: uppercase;">Revenue is calculated from exact payment amounts entered by staff.</p>
+        </div>
+
+        <div class="analytic-card" style="background: var(--brand-orange); border: none;">
+          <h3 style="color: var(--canvas-base);">Combined Property Totals</h3>
+          <div style="display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;">
+            <div>
+              <div class="label-sm" style="color: rgba(6,14,26,0.7);">Total Volume (Rooms + Events)</div>
+              <div class="metric-numeral" id="kpi-grand-volume" style="color: var(--canvas-base); font-size: 1.75rem;">0</div>
+            </div>
+            <div>
+              <div class="label-sm" style="color: rgba(6,14,26,0.7);">Grand Revenue</div>
+              <div class="metric-numeral" id="kpi-grand-revenue" style="color: var(--canvas-base); font-size: 1.75rem;">₦0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 <!-- Supabase Library -->
@@ -472,13 +699,19 @@
     const tabBookings = document.getElementById('tab-bookings');
     const tabRooms = document.getElementById('tab-rooms');
     const tabInquiries = document.getElementById('tab-inquiries');
+    const tabEvents = document.getElementById('tab-events');
+    const tabAnalytics = document.getElementById('tab-analytics');
     const panelBookings = document.getElementById('panel-bookings');
     const panelRooms = document.getElementById('panel-rooms');
     const panelInquiries = document.getElementById('panel-inquiries');
+    const panelEvents = document.getElementById('panel-events');
+    const panelAnalytics = document.getElementById('panel-analytics');
     let bookingsChannel = null;
     let inquiriesChannel = null;
+    let eventBookingsChannel = null;
     let allInquiries = [];
     let allBookings = [];
+    let allEvents = [];
 
     function isLegacyInquiry(booking) {
       return typeof booking.message === 'string' &&
@@ -487,14 +720,34 @@
         !booking.check_out_date;
     }
 
+    function switchTab(tabName, button) {
+      const panels = {
+        bookings: panelBookings,
+        rooms: panelRooms,
+        inquiries: panelInquiries,
+        events: panelEvents,
+        analytics: panelAnalytics
+      };
+
+      Object.entries(panels).forEach(([name, panel]) => {
+        panel.style.display = name === tabName ? 'block' : 'none';
+      });
+      document.querySelectorAll('.nav-tabs .tab-btn').forEach(tab => tab.classList.remove('active'));
+      button.classList.add('active');
+
+      if (tabName === 'analytics') renderAnalytics();
+    }
+
     function showDashboard() {
       loginView.style.display = 'none';
       dashboardView.style.display = 'block';
       fetchBookings();
       fetchRooms();
       fetchInquiries();
+      fetchEvents();
       subscribeToBookings();
       subscribeToInquiries();
+      subscribeToEventBookings();
     }
 
     function subscribeToBookings() {
@@ -573,6 +826,10 @@
           await _supabase.removeChannel(inquiriesChannel);
           inquiriesChannel = null;
         }
+        if (eventBookingsChannel) {
+          await _supabase.removeChannel(eventBookingsChannel);
+          eventBookingsChannel = null;
+        }
         dashboardView.style.display = 'none';
         loginView.style.display = 'flex';
         loginForm.reset();
@@ -583,42 +840,42 @@
     });
 
     // 4. Tab Switching Logic
-    tabBookings.addEventListener('click', () => {
-      tabBookings.classList.add('active');
-      tabRooms.classList.remove('active');
-      tabInquiries.classList.remove('active');
-      panelBookings.style.display = 'block';
-      panelRooms.style.display = 'none';
-      panelInquiries.style.display = 'none';
-    });
+    tabBookings.addEventListener('click', () => switchTab('bookings', tabBookings));
+    tabRooms.addEventListener('click', () => switchTab('rooms', tabRooms));
+    tabInquiries.addEventListener('click', () => switchTab('inquiries', tabInquiries));
+    tabEvents.addEventListener('click', () => switchTab('events', tabEvents));
+    tabAnalytics.addEventListener('click', () => switchTab('analytics', tabAnalytics));
 
-    tabRooms.addEventListener('click', () => {
-      tabRooms.classList.add('active');
-      tabBookings.classList.remove('active');
-      tabInquiries.classList.remove('active');
-      panelRooms.style.display = 'block';
-      panelBookings.style.display = 'none';
-      panelInquiries.style.display = 'none';
-    });
+    const officialRoomRates = {
+      economy: 30000,
+      standard: 35000,
+      deluxe: 45000,
+      executive: 55000,
+      'double_bed deluxe': 65000,
+      'double bed deluxe': 65000
+    };
 
-    tabInquiries.addEventListener('click', () => {
-      tabInquiries.classList.add('active');
-      tabBookings.classList.remove('active');
-      tabRooms.classList.remove('active');
-      panelInquiries.style.display = 'block';
-      panelBookings.style.display = 'none';
-      panelRooms.style.display = 'none';
-    });
+    async function togglePaymentStatus(id, currentStatus, roomType) {
+      const newStatus = currentStatus === 'Paid' ? 'Pending' : 'Paid';
+      const cleanRoom = String(roomType || '')
+        .toLowerCase()
+        .trim()
+        .replace(/_/g, ' ')
+        .replace(/\s*room$/, '')
+        .replace(/\s+/g, ' ');
+      const lockedPrice = newStatus === 'Paid' ? (officialRoomRates[cleanRoom] || 35000) : 0;
+      const paymentUpdate = {
+        payment_status: newStatus,
+        payment_amount: lockedPrice,
+        is_read: true
+      };
 
-    // Live Update: Toggle Booking Payment Status
-    async function togglePaymentStatus(id, currentStatus) {
-      const newStatus = currentStatus === 'Pending' ? 'Paid' : 'Pending';
-      const { error } = await _supabase.from('bookings').update({ payment_status: newStatus }).eq('id', id);
+      const { error } = await _supabase.from('bookings').update(paymentUpdate).eq('id', id);
       if (error) {
         alert(`Unable to update booking: ${error.message}`);
         return;
       }
-      fetchBookings();
+      await fetchBookings();
     }
 
     let allRooms = [];
@@ -631,7 +888,7 @@
       if (error) {
         console.error('Error fetching bookings:', error);
         document.getElementById('bookings-table-body').innerHTML =
-          '<tr><td colspan="6" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load bookings. Check the console for details.</td></tr>';
+          '<tr><td colspan="8" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load bookings. Check the console for details.</td></tr>';
         return;
       }
 
@@ -639,6 +896,7 @@
       unreadCount = allBookings.filter(booking => booking.is_read === false).length;
       updateNotificationBadge();
       renderBookings(allBookings);
+      renderAnalytics();
     }
 
     function updateNotificationBadge() {
@@ -653,7 +911,7 @@
       tbody.innerHTML = '';
 
       if (bookingsToRender.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">No matching bookings found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">No matching bookings found.</td></tr>';
         return;
       }
 
@@ -668,17 +926,30 @@
               ${isUnread ? '<span style="display:inline-block; width:8px; height:8px; background:var(--color-brand-orange); border-radius:50%; margin-left:6px;" title="New booking"></span>' : ''}
             </td>
             <td data-label="Phone / WhatsApp">${booking.guest_phone || 'N/A'}</td>
+            <td data-label="Room">${booking.room_type || getBookingRoomType(booking) || 'N/A'}</td>
             <td data-label="Check-in">${booking.check_in_date || 'TBD'}</td>
             <td data-label="Check-out">${booking.check_out_date || 'TBD'}</td>
+            <td data-label="Price">₦${(Number(booking.payment_amount) || 0).toLocaleString('en-NG')}</td>
             <td data-label="Status"><span class="status-badge ${statusClass}">${booking.payment_status || 'Pending'}</span></td>
             <td data-label="Actions">
-              <button class="action-btn" onclick="togglePaymentStatus(${booking.id}, '${booking.payment_status || 'Pending'}')">Toggle Payment</button>
+              <button class="action-btn" type="button" data-booking-payment-id="${escapeHTML(booking.id)}" data-payment-status="${escapeHTML(booking.payment_status || 'Pending')}" data-room-type="${escapeHTML(booking.room_type || getBookingRoomType(booking))}">Toggle Payment</button>
               ${isUnread ? `<button class="action-btn" style="border-color: var(--color-brand-orange); color: var(--color-brand-orange); margin-left: 6px;" onclick="markAsRead(${booking.id})">Mark Read</button>` : ''}
             </td>
           </tr>
         `;
       });
     }
+
+    document.getElementById('bookings-table-body').addEventListener('click', event => {
+      const button = event.target.closest('button[data-booking-payment-id]');
+      if (button) {
+        togglePaymentStatus(
+          button.dataset.bookingPaymentId,
+          button.dataset.paymentStatus,
+          button.dataset.roomType
+        );
+      }
+    });
 
     async function markAsRead(id) {
       const { error } = await _supabase.from('bookings').update({ is_read: true }).eq('id', id);
@@ -749,6 +1020,220 @@
         console.warn('Some inquiry sources could not be loaded; see console for details.');
       }
     }
+
+    function subscribeToEventBookings() {
+      if (eventBookingsChannel) return;
+
+      eventBookingsChannel = _supabase
+        .channel('public:event_bookings')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'event_bookings' }, () => {
+          fetchEvents();
+        })
+        .subscribe(status => {
+          if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+            console.error(`Event bookings realtime subscription failed: ${status}`);
+          }
+        });
+    }
+
+    async function fetchEvents() {
+      const { data, error } = await _supabase
+        .from('event_bookings')
+        .select('*')
+        .order('event_date', { ascending: true });
+
+      const tbody = document.getElementById('events-table-body');
+      if (error) {
+        console.error('Error fetching event bookings:', error);
+        tbody.innerHTML =
+          '<tr><td colspan="8" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load event bookings. Check the console for details.</td></tr>';
+        return;
+      }
+
+      allEvents = data || [];
+      const unreadEvents = allEvents.filter(event => event.is_read === false).length;
+      const badge = document.getElementById('event-badge');
+      badge.textContent = String(unreadEvents);
+      badge.style.display = unreadEvents > 0 ? 'inline-block' : 'none';
+      renderEvents(allEvents);
+      renderAnalytics();
+    }
+
+    function renderEvents(eventsToRender) {
+      const tbody = document.getElementById('events-table-body');
+      tbody.replaceChildren();
+
+      if (eventsToRender.length === 0) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 8;
+        cell.style.cssText = 'text-align: center; color: var(--color-ash-gray); padding: 24px;';
+        cell.textContent = 'No event bookings found.';
+        row.appendChild(cell);
+        tbody.appendChild(row);
+        return;
+      }
+
+      eventsToRender.forEach(event => {
+        const isUnread = event.is_read === false;
+        const row = document.createElement('tr');
+        if (isUnread) row.className = 'unread-booking';
+
+        const values = [
+          ['Guest Name', event.guest_name || 'N/A'],
+          ['Phone', event.guest_phone || 'N/A'],
+          ['Event Date', event.event_date || 'TBD'],
+          ['Event Type', event.event_type || 'N/A'],
+          ['Guests', event.guest_count ?? '0']
+        ];
+        values.forEach(([label, value], index) => {
+          const cell = document.createElement('td');
+          cell.dataset.label = label;
+          cell.textContent = String(value);
+          if (index === 0) {
+            const name = document.createElement('strong');
+            name.textContent = String(value);
+            cell.replaceChildren(name);
+            if (isUnread) {
+              const indicator = document.createElement('span');
+              indicator.style.cssText = 'display: inline-block; width: 8px; height: 8px; background: var(--color-brand-orange); border-radius: 50%; margin-left: 6px;';
+              indicator.title = 'New event';
+              cell.appendChild(indicator);
+            }
+          }
+          row.appendChild(cell);
+        });
+
+        const statusCell = document.createElement('td');
+        statusCell.dataset.label = 'Status';
+        const statusBadge = document.createElement('span');
+        statusBadge.className = `status-badge ${event.payment_status === 'Paid' ? 'status-active' : 'status-pending'}`;
+        statusBadge.textContent = event.payment_status || 'Pending';
+        statusCell.appendChild(statusBadge);
+        row.appendChild(statusCell);
+
+        const priceCell = document.createElement('td');
+        priceCell.dataset.label = 'Price';
+        priceCell.textContent = `₦${(Number(event.payment_amount) || 0).toLocaleString('en-NG')}`;
+        row.insertBefore(priceCell, statusCell);
+
+        const actionsCell = document.createElement('td');
+        actionsCell.dataset.label = 'Actions';
+        const paymentButton = document.createElement('button');
+        paymentButton.type = 'button';
+        paymentButton.className = 'action-btn';
+        paymentButton.textContent = 'Manage Price / Pay';
+        paymentButton.addEventListener('click', () =>
+          toggleEventPayment(event.id, event.payment_status, event.payment_amount)
+        );
+        actionsCell.appendChild(paymentButton);
+
+        if (event.payment_status === 'Paid') {
+          const pendingButton = document.createElement('button');
+          pendingButton.type = 'button';
+          pendingButton.className = 'action-btn';
+          pendingButton.style.marginLeft = '6px';
+          pendingButton.textContent = 'Mark Pending';
+          pendingButton.addEventListener('click', () => markEventPending(event.id));
+          actionsCell.appendChild(pendingButton);
+        }
+
+        if (isUnread) {
+          const readButton = document.createElement('button');
+          readButton.type = 'button';
+          readButton.className = 'action-btn';
+          readButton.style.cssText = 'border-color: var(--color-brand-orange); color: var(--color-brand-orange); margin-left: 6px;';
+          readButton.textContent = 'Mark Read';
+          readButton.addEventListener('click', () => markEventRead(event.id));
+          actionsCell.appendChild(readButton);
+        }
+
+        row.appendChild(actionsCell);
+        tbody.appendChild(row);
+      });
+    }
+
+    function promptForPaymentAmount(message, currentAmount = '') {
+      const amountInput = prompt(message, String(currentAmount || ''));
+      if (amountInput === null) return null;
+
+      const normalizedAmount = amountInput.replace(/,/g, '').trim();
+      const finalAmount = Number(normalizedAmount);
+      if (!/^\d+(\.\d{1,2})?$/.test(normalizedAmount) || !Number.isFinite(finalAmount) || finalAmount <= 0) {
+        alert('Enter a valid payment amount greater than zero.');
+        return null;
+      }
+      return finalAmount;
+    }
+
+    async function toggleEventPayment(id, currentStatus, currentAmount) {
+      const finalAmount = promptForPaymentAmount(
+        'Enter or update the exact agreed price for this event (₦):',
+        currentAmount || 150000
+      );
+      if (finalAmount === null) return;
+      const newStatus = (currentStatus || 'Pending') === 'Pending' ? 'Paid' : currentStatus;
+
+      const { error } = await _supabase
+        .from('event_bookings')
+        .update({ payment_status: newStatus, payment_amount: finalAmount, is_read: true })
+        .eq('id', id);
+
+      if (error) {
+        alert(`Unable to update event payment: ${error.message}`);
+        return;
+      }
+      await fetchEvents();
+    }
+
+    async function markEventPending(id) {
+      const { error } = await _supabase
+        .from('event_bookings')
+        .update({ payment_status: 'Pending', is_read: true })
+        .eq('id', id);
+
+      if (error) {
+        alert(`Unable to update event payment: ${error.message}`);
+        return;
+      }
+      await fetchEvents();
+    }
+
+    async function markEventRead(id) {
+      const { error } = await _supabase
+        .from('event_bookings')
+        .update({ is_read: true })
+        .eq('id', id);
+
+      if (error) {
+        alert(`Unable to mark event as read: ${error.message}`);
+        return;
+      }
+      await fetchEvents();
+    }
+
+    const roomPrices = {
+      Economy: 30000,
+      Standard: 35000,
+      Deluxe: 45000,
+      Executive: 55000,
+      'Double Bed Deluxe': 65000
+    };
+    document.getElementById('manual-room').addEventListener('change', event => {
+      const price = roomPrices[event.target.value];
+      if (price) document.getElementById('manual-price').value = price;
+    });
+
+    document.getElementById('event-search').addEventListener('input', event => {
+      const query = event.target.value.toLowerCase().trim();
+      const filtered = allEvents.filter(event =>
+        String(event.guest_name || '').toLowerCase().includes(query) ||
+        String(event.event_date || '').toLowerCase().includes(query) ||
+        String(event.guest_phone || '').toLowerCase().includes(query) ||
+        String(event.event_type || '').toLowerCase().includes(query)
+      );
+      renderEvents(filtered);
+    });
 
     function escapeHTML(value) {
       return String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -831,6 +1316,7 @@
 
       allRooms = data || [];
       renderRooms(allRooms);
+      renderAnalytics();
     }
 
     function renderRooms(roomsToRender) {
@@ -857,6 +1343,197 @@
           </tr>
         `;
       });
+    }
+
+    let analyticsPeriod = 'week';
+
+    document.querySelectorAll('[data-analytics-period]').forEach(button => {
+      button.addEventListener('click', () => {
+        analyticsPeriod = button.dataset.analyticsPeriod;
+        document.querySelectorAll('[data-analytics-period]').forEach(periodButton => {
+          periodButton.classList.toggle('active', periodButton === button);
+        });
+        renderAnalytics();
+      });
+    });
+
+    function getAnalyticsRange(period, referenceDate = new Date()) {
+      const start = new Date(referenceDate);
+      start.setHours(0, 0, 0, 0);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 1);
+
+      if (period === 'week') {
+        start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+        end.setTime(start.getTime());
+        end.setDate(end.getDate() + 7);
+      } else if (period === 'month') {
+        start.setDate(1);
+        end.setTime(start.getTime());
+        end.setMonth(end.getMonth() + 1);
+      } else if (period === 'ytd') {
+        start.setMonth(0, 1);
+        end.setTime(referenceDate.getTime());
+        end.setHours(0, 0, 0, 0);
+        end.setDate(end.getDate() + 1);
+      }
+
+      return { start, end };
+    }
+
+    function parseBookingDate(value) {
+      if (!value) return null;
+      const date = new Date(`${value}T00:00:00`);
+      return Number.isNaN(date.getTime()) ? null : date;
+    }
+
+    function getBookingRoomType(booking) {
+      const message = String(booking.message || '');
+      const match = message.match(/room\s*:\s*(.+)$/i);
+      if (!match) return '';
+      return match[1].trim().replace(/\s*room$/i, '').toLowerCase();
+    }
+
+    function renderAnalytics() {
+      const { start, end } = getAnalyticsRange(analyticsPeriod);
+      const periodBookings = allBookings.filter(booking => {
+        const checkIn = parseBookingDate(booking.check_in_date);
+        if (checkIn) return checkIn >= start && checkIn < end;
+        const createdAt = booking.created_at ? new Date(booking.created_at) : null;
+        return createdAt && !Number.isNaN(createdAt.getTime()) && createdAt >= start && createdAt < end;
+      });
+      const periodEvents = allEvents.filter(event => {
+        const eventDate = parseBookingDate(event.event_date);
+        return eventDate && eventDate >= start && eventDate < end;
+      });
+
+      const paidRevenue = periodBookings.reduce((total, booking) => {
+        if (booking.payment_status !== 'Paid') return total;
+        return total + (Number(booking.payment_amount) || 0);
+      }, 0);
+
+      const daysInPeriod = Math.max(1, Math.ceil((end - start) / 86400000));
+      const requestedRoomNights = allBookings.reduce((total, booking) => {
+        if (booking.booking_status && String(booking.booking_status).toLowerCase() !== 'active') return total;
+        const checkIn = parseBookingDate(booking.check_in_date);
+        const checkOut = parseBookingDate(booking.check_out_date);
+        if (!checkIn || !checkOut || checkOut <= checkIn) return total;
+        const overlapStart = Math.max(start.getTime(), checkIn.getTime());
+        const overlapEnd = Math.min(end.getTime(), checkOut.getTime());
+        return total + Math.max(0, Math.ceil((overlapEnd - overlapStart) / 86400000));
+      }, 0);
+      const occupancy = allRooms.length
+        ? Math.round((requestedRoomNights / (allRooms.length * daysInPeriod)) * 100)
+        : 0;
+
+      document.getElementById('kpi-revenue').textContent = new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'NGN',
+        minimumFractionDigits: 2
+      }).format(paidRevenue);
+      document.getElementById('kpi-occupancy').textContent = `${occupancy}%`;
+      document.getElementById('kpi-reservations').textContent = String(periodBookings.length);
+      document.getElementById('kpi-period-label').textContent = {
+        today: 'Today',
+        week: 'This week',
+        month: 'This month',
+        ytd: 'Year to date'
+      }[analyticsPeriod];
+
+      const paidEventRevenue = periodEvents.reduce((total, event) =>
+        total + (event.payment_status === 'Paid' ? Number(event.payment_amount) || 0 : 0), 0);
+      document.getElementById('kpi-events-total').textContent = String(periodEvents.length);
+      document.getElementById('kpi-events-revenue').textContent = new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'NGN',
+        maximumFractionDigits: 0
+      }).format(paidEventRevenue);
+      document.getElementById('kpi-grand-volume').textContent = String(periodBookings.length + periodEvents.length);
+      document.getElementById('kpi-grand-revenue').textContent = new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'NGN',
+        maximumFractionDigits: 0
+      }).format(paidRevenue + paidEventRevenue);
+
+      renderAnalyticsChart(periodBookings, start, end);
+      renderRoomTierCounts(periodBookings);
+    }
+
+    function renderAnalyticsChart(bookings, start, end) {
+      const chart = document.getElementById('analytics-chart');
+      const buckets = [];
+
+      if (analyticsPeriod === 'today') {
+        buckets.push({ label: 'Today', start, end });
+      } else if (analyticsPeriod === 'week') {
+        for (let day = 0; day < 7; day++) {
+          const bucketStart = new Date(start);
+          bucketStart.setDate(bucketStart.getDate() + day);
+          const bucketEnd = new Date(bucketStart);
+          bucketEnd.setDate(bucketEnd.getDate() + 1);
+          buckets.push({ label: bucketStart.toLocaleDateString(undefined, { weekday: 'short' }), start: bucketStart, end: bucketEnd });
+        }
+      } else if (analyticsPeriod === 'month') {
+        for (let week = 0; week < 5; week++) {
+          const bucketStart = new Date(start);
+          bucketStart.setDate(1 + week * 7);
+          if (bucketStart >= end) break;
+          const bucketEnd = new Date(bucketStart);
+          bucketEnd.setDate(bucketEnd.getDate() + 7);
+          buckets.push({ label: `Week ${week + 1}`, start: bucketStart, end: bucketEnd < end ? bucketEnd : end });
+        }
+      } else {
+        for (let month = 0; month < 12; month++) {
+          const bucketStart = new Date(start.getFullYear(), month, 1);
+          const bucketEnd = new Date(start.getFullYear(), month + 1, 1);
+          buckets.push({ label: bucketStart.toLocaleDateString(undefined, { month: 'short' }), start: bucketStart, end: bucketEnd });
+        }
+      }
+
+      const counts = buckets.map(bucket => bookings.filter(booking => {
+        const checkIn = parseBookingDate(booking.check_in_date);
+        return checkIn && checkIn >= bucket.start && checkIn < bucket.end;
+      }).length);
+      const maxCount = Math.max(1, ...counts);
+
+      chart.replaceChildren();
+      buckets.forEach((bucket, index) => {
+        const column = document.createElement('div');
+        column.style.cssText = 'flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: end; height: 260px; gap: 8px;';
+
+        const count = document.createElement('span');
+        count.className = 'label-sm';
+        count.textContent = String(counts[index]);
+
+        const bar = document.createElement('div');
+        bar.title = `${bucket.label}: ${counts[index]} reservations`;
+        bar.style.cssText = `width: 100%; max-width: 42px; min-height: 4px; height: ${Math.max(4, (counts[index] / maxCount) * 190)}px; border-radius: 6px 6px 0 0; background: var(--brand-orange);`;
+
+        const label = document.createElement('span');
+        label.className = 'label-sm';
+        label.textContent = bucket.label;
+
+        column.append(count, bar, label);
+        chart.appendChild(column);
+      });
+    }
+
+    function renderRoomTierCounts(bookings) {
+      const counts = { economy: 0, standard: 0, deluxe: 0, executive: 0, double: 0 };
+      bookings.forEach(booking => {
+        const roomType = String(booking.room_type || getBookingRoomType(booking) || '').toLowerCase();
+        if (roomType.includes('economy')) counts.economy++;
+        else if (roomType.includes('standard')) counts.standard++;
+        else if (roomType.includes('double')) counts.double++;
+        else if (roomType.includes('deluxe')) counts.deluxe++;
+        else if (roomType.includes('executive')) counts.executive++;
+      });
+
+      document.getElementById('tier-economy').textContent = String(counts.economy);
+      document.getElementById('tier-standard').textContent = String(counts.standard);
+      document.getElementById('tier-deluxe').textContent = String(counts.deluxe);
+      document.getElementById('tier-executive').textContent = String(counts.executive);
+      document.getElementById('tier-double').textContent = String(counts.double);
     }
 
     const roomSearchInput = document.getElementById('room-search');
@@ -888,8 +1565,10 @@
         const manualData = {
           guest_name: document.getElementById('manual-name').value,
           guest_phone: document.getElementById('manual-phone').value,
+          room_type: document.getElementById('manual-room').value,
           check_in_date: document.getElementById('manual-checkin').value,
           check_out_date: document.getElementById('manual-checkout').value,
+          payment_amount: Number(document.getElementById('manual-price').value),
           message: `Walk-in / Phone Booking - Room: ${document.getElementById('manual-room').value}`,
           payment_status: 'Paid', // Walk-ins usually settle payment immediately at reception
           booking_status: 'Active',

@@ -623,6 +623,22 @@
     }
     .form-textarea { resize: vertical; min-height: 120px; }
 
+    /* Dark Theme Dropdown Fix */
+    select.input-field,
+    select.form-select,
+    #room-selection {
+      background-color: var(--color-bg-surface) !important;
+      color: var(--color-white) !important;
+    }
+
+    select.input-field option,
+    select.form-select option,
+    #room-selection option {
+      background-color: var(--color-bg-surface);
+      color: var(--color-white);
+      padding: 12px;
+    }
+
     /* FAQ Accordion */
     details {
       border-bottom: 1px solid var(--color-border);

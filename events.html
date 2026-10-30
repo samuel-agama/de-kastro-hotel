@@ -124,6 +124,46 @@
           <p style="color: var(--color-ash-gray); font-size: 13px; margin: 0;">Clean, well-maintained restrooms and preparation areas.</p>
         </div>
       </div>
+
+      <div id="event-booking-container" style="background-color: var(--color-bg-surface); padding: 48px; border: 1px solid var(--color-border); border-radius: 12px; margin-top: 40px;">
+        <h3 style="font-size: 28px; color: var(--color-white); margin-bottom: 16px;">Request Event Space</h3>
+        <form id="event-booking-form" style="display: grid; gap: 16px;">
+          <label class="form-group" style="margin: 0;">
+            <span class="form-label">Full Name</span>
+            <input type="text" id="event-name" class="form-input" placeholder="Full Name" required>
+          </label>
+          <label class="form-group" style="margin: 0;">
+            <span class="form-label">Phone Number</span>
+            <input type="tel" id="event-phone" class="form-input" placeholder="Phone Number" required>
+          </label>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+            <label>
+              <span class="form-label">Event Date</span>
+              <input type="date" id="event-date" class="form-input" required>
+            </label>
+            <label>
+              <span class="form-label">Event Type</span>
+              <select id="event-type" class="form-select" required>
+                <option value="" disabled selected>Event Type</option>
+                <option value="Wedding Reception">Wedding Reception</option>
+                <option value="Corporate Event">Corporate Event</option>
+                <option value="Birthday / Party">Birthday / Party</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+          </div>
+          <label class="form-group" style="margin: 0;">
+            <span class="form-label">Estimated Guest Count</span>
+            <input type="number" id="event-guests" class="form-input" placeholder="Estimated Guest Count" min="1" step="1" required>
+          </label>
+          <label class="form-group" style="margin: 0;">
+            <span class="form-label">Additional Details</span>
+            <textarea id="event-message" class="form-textarea" placeholder="Additional details (catering needs, layout, time)" rows="4"></textarea>
+          </label>
+          <p id="event-booking-message" role="status" aria-live="polite" style="color: var(--color-ash-gray); font-size: 14px; margin: 0;"></p>
+          <button type="submit" class="btn-solid" style="padding: 16px; font-size: 16px;">Submit Event Request</button>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -161,13 +201,63 @@
 </main>
 
  <!-- GSAP, SplitType & Unified Animation Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/split-type"></script>
 
   <script>
+    const SUPABASE_URL = 'https://cqyhxnyqzgjkddnwdqrw.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxeWh4bnlxemdqa2RkbndkcXJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzNTE1NjAsImV4cCI6MjEwODkyNzU2MH0.WkHg3PmEAjHkmUs-HirFO3wPCL9GpNd2KXs9A3gUzxQ';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  </script>
+    const eventBookingForm = document.getElementById('event-booking-form');
+    const eventBookingMessage = document.getElementById('event-booking-message');
+    const eventDateInput = document.getElementById('event-date');
+    const today = new Date();
+    eventDateInput.min = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+    eventBookingForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      eventBookingMessage.textContent = '';
+      const submitButton = eventBookingForm.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
+
+      try {
+        const { error } = await _supabase.from('event_bookings').insert([{
+          guest_name: document.getElementById('event-name').value.trim(),
+          guest_phone: document.getElementById('event-phone').value.trim(),
+          event_date: eventDateInput.value,
+          event_type: document.getElementById('event-type').value,
+          guest_count: Number.parseInt(document.getElementById('event-guests').value, 10),
+          message: document.getElementById('event-message').value.trim(),
+          payment_status: 'Pending',
+          is_read: false
+        }]);
+
+        if (error) throw error;
+
+        document.getElementById('event-booking-container').innerHTML = `
+          <div style="text-align: center; padding: 32px; background: rgba(16, 185, 129, 0.05); border: 1px solid var(--color-brand-orange); border-radius: 12px;">
+            <h3 style="color: var(--color-white); margin-bottom: 16px; font-size: 24px;">Request Received!</h3>
+            <p style="color: var(--color-ash-gray); margin-bottom: 24px;">Your event request is pending confirmation. Please contact our front desk to confirm availability and whether a deposit is required before making a transfer.</p>
+            <div style="background: var(--color-bg-base); padding: 20px; border-radius: 8px; margin-bottom: 24px; display: inline-block; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
+              <p style="margin: 4px 0; color: var(--color-ash-gray);">Bank: <strong style="color: var(--color-white);">Wema Bank</strong></p>
+              <p style="margin: 4px 0; color: var(--color-ash-gray);">Account Name: <strong style="color: var(--color-white);">DE-KASTRO HOTEL LIMITED</strong></p>
+              <p style="margin: 4px 0; color: var(--color-ash-gray);">Account Number: <strong style="color: var(--color-brand-orange); font-size: 20px;">9379127689</strong></p>
+            </div>
+            <p style="color: var(--color-ash-gray); margin-bottom: 24px;">Once the front desk confirms your booking and deposit, you can send your payment receipt via WhatsApp.</p>
+            <a href="https://wa.me/2348062911356?text=Hello%21%20I%20submitted%20an%20event%20space%20request%20and%20would%20like%20to%20confirm%20availability%20and%20deposit%20details." target="_blank" rel="noopener noreferrer" class="btn-solid" style="display: inline-block; text-decoration: none; padding: 14px 24px;">Contact Front Desk via WhatsApp</a>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Event booking submission error:', error);
+        eventBookingMessage.textContent = `Unable to submit your event request: ${error.message || error}`;
+        submitButton.textContent = 'Submit Event Request';
+        submitButton.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
