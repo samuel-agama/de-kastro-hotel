@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>De Kastro Hotel | Admin Dashboard</title>
-  <link rel="icon" href="images/logo.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="Images/logo.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -24,7 +24,7 @@
       margin: 0;
       font-family: var(--font-body);
       background-color: var(--color-bg-base);
-      color: var(--color-bone-white);
+      color: var(--color-white);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -98,7 +98,7 @@
     }
 
     /* --- DASHBOARD SCREEN (Hidden by default) --- */
-    #dashboard-view {
+    #dashboard-container {
       display: none;
       padding: 40px 20px;
       max-width: 1200px;
@@ -107,11 +107,42 @@
       box-sizing: border-box;
     }
 
+    .glass-panel {
+      background: linear-gradient(145deg, rgba(19, 34, 56, 0.9), rgba(11, 23, 42, 0.96));
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-input {
+      width: 100%;
+      min-height: 42px;
+      padding: 10px 14px;
+      background: rgba(6, 14, 26, 0.72);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      color: var(--color-white);
+      color-scheme: dark;
+      font: inherit;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .glass-input:focus {
+      border-color: var(--color-brand-orange);
+    }
+
+    .glass-input option {
+      background: var(--color-bg-surface);
+      color: var(--color-white);
+    }
+
     .dashboard-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 32px;
       border-bottom: 1px solid var(--color-border);
       padding-bottom: 20px;
     }
@@ -125,26 +156,22 @@
 
     .nav-tabs {
       display: flex;
-      gap: 16px;
-      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding: 16px 24px;
     }
 
-    .tab-btn {
-      background: transparent;
-      border: 1px solid var(--color-border);
-      color: var(--color-ash-gray);
+    .nav-tabs .tab-btn {
+      width: auto;
       padding: 10px 20px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       font-family: var(--font-body);
+      letter-spacing: normal;
+      text-transform: none;
       font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .tab-btn.active {
-      background: var(--color-bg-surface);
-      color: var(--color-brand-orange);
-      border-color: var(--color-brand-orange);
+      white-space: nowrap;
     }
 
     .notification-badge {
@@ -160,9 +187,6 @@
 
     /* --- DATA TABLES --- */
     .table-container {
-      background: var(--color-bg-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 12px;
       overflow-x: auto;
     }
 
@@ -225,7 +249,7 @@
     }
 
     @media (max-width: 700px) {
-      #dashboard-view {
+      #dashboard-container {
         padding: 24px 12px;
       }
 
@@ -240,14 +264,14 @@
       }
 
       .nav-tabs {
-        flex-wrap: wrap;
         gap: 8px;
         margin-bottom: 20px;
       }
 
-      .tab-btn {
+      .nav-tabs .tab-btn {
         flex: 1 1 30%;
         padding: 10px 12px;
+        white-space: normal;
       }
 
       #manual-booking-form {
@@ -328,7 +352,7 @@
         font-size: 24px;
       }
 
-      .tab-btn {
+      .nav-tabs .tab-btn {
         flex-basis: 100%;
       }
     }
@@ -427,6 +451,298 @@
   color: var(--canvas-base);
   font-weight: 700;
 }
+
+/* Executive Nocturne theme adapted to De Kastro's brand palette */
+:root {
+  --color-bg-base: #060E1A;
+  --color-bg-surface: #0B172A;
+  --color-panel-hover: #132238;
+  --color-brand-orange: #F5821F;
+  --color-brand-orange-hover: #FFA24A;
+  --color-white: #F8FAFC;
+  --color-ash-gray: #94A3B8;
+  --color-muted: #64748B;
+  --color-border: rgba(30, 41, 59, 0.8);
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-bg-base);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+#login-view {
+  min-height: 100vh;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 15% 15%, rgba(245, 130, 31, 0.08), transparent 38%),
+    var(--color-bg-base);
+}
+
+.login-card,
+.glass-panel,
+.analytic-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+.login-card h2,
+.dashboard-header h1,
+h3 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+.login-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.input-field,
+.glass-input {
+  background: #07101E;
+  border-color: var(--color-border);
+  border-radius: 8px;
+  color: var(--color-white);
+  font: 400 0.875rem/1.25rem var(--font-body);
+}
+
+.input-field::placeholder,
+.glass-input::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
+.input-field:focus,
+.glass-input:focus {
+  border-color: rgba(245, 130, 31, 0.7);
+  box-shadow: 0 0 0 1px rgba(245, 130, 31, 0.35);
+}
+
+.btn-solid {
+  border-radius: 8px;
+  background: var(--color-brand-orange);
+  color: var(--color-bg-base);
+  font-family: var(--font-body);
+  letter-spacing: 0.04em;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-solid:hover {
+  background: var(--color-brand-orange-hover);
+  box-shadow: 0 0 16px rgba(245, 130, 31, 0.25);
+}
+
+#dashboard-container {
+  max-width: 1440px;
+  padding: 32px;
+}
+
+.dashboard-header {
+  align-items: center;
+  border-color: var(--color-border);
+  margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 600;
+}
+
+.nav-tabs {
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 8px;
+  background: #081220;
+  border-radius: 9999px;
+}
+
+.nav-tabs .tab-btn {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 9px 18px;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-tabs .tab-btn.glass-input {
+  background: transparent;
+  color: var(--color-ash-gray);
+}
+
+.nav-tabs .tab-btn.glass-input:hover {
+  background: var(--color-panel-hover);
+  color: var(--color-white);
+}
+
+.nav-tabs .tab-btn.btn-solid {
+  background: var(--color-brand-orange);
+  color: var(--color-bg-base);
+}
+
+.notification-badge {
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: rgba(6, 14, 26, 0.22);
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  color: var(--color-white);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: var(--color-bg-surface);
+  border-bottom-color: var(--color-border);
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+td {
+  border-bottom-color: rgba(30, 41, 59, 0.55);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(8, 18, 32, 0.45);
+}
+
+tbody tr:hover {
+  background: var(--color-panel-hover);
+}
+
+.status-badge {
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.status-active,
+.status-clean {
+  background: rgba(16, 185, 129, 0.12);
+  color: #4EDEA3;
+}
+
+.status-dirty {
+  background: rgba(239, 68, 68, 0.12);
+  color: #F87171;
+}
+
+.status-pending {
+  background: rgba(245, 130, 31, 0.14);
+  color: var(--color-brand-orange-hover);
+}
+
+.action-btn {
+  border-color: var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg-surface);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.action-btn:hover {
+  border-color: var(--color-ash-gray);
+  background: var(--color-panel-hover);
+  color: var(--color-white);
+}
+
+.metric-numeral {
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.03em;
+}
+
+.label-sm {
+  color: var(--color-muted);
+  font-family: var(--font-body);
+}
+
+.analytic-card h3 {
+  color: var(--color-white);
+  font-family: var(--font-heading);
+}
+
+.pill-track {
+  background: #081220;
+  border-color: var(--color-border);
+}
+
+.pill-segment {
+  color: var(--color-ash-gray);
+  font-family: var(--font-body);
+}
+
+.pill-segment.active {
+  background: var(--color-brand-orange);
+  color: var(--color-bg-base);
+}
+
+.analytics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.analytics-periods {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.analytics-periods .pill-segment:focus-visible {
+  outline: 2px solid var(--color-brand-orange);
+  outline-offset: 2px;
+}
+
+@media (max-width: 700px) {
+  #dashboard-container {
+    padding: 20px 12px;
+  }
+
+  .nav-tabs {
+    justify-content: flex-start;
+    border-radius: 16px;
+  }
+
+  .nav-tabs .tab-btn {
+    flex: 1 1 calc(50% - 6px);
+    white-space: normal;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-tabs .tab-btn {
+    flex-basis: 100%;
+  }
+}
   </style>
 </head>
 <body>
@@ -434,7 +750,7 @@
   <!-- 1. LOGIN SCREEN -->
   <div id="login-view">
     <div class="login-card">
-      <img src="images/logo.png" alt="De Kastro Logo" style="width: 80px; margin-bottom: 16px;">
+      <img src="Images/logo.png" alt="De Kastro Logo" style="width: 80px; margin-bottom: 16px;">
       <h2>Staff Portal</h2>
       <form id="login-form">
         <input type="email" id="email" class="input-field" placeholder="Staff Email" required>
@@ -446,43 +762,43 @@
   </div>
 
   <!-- 2. DASHBOARD SCREEN -->
-  <div id="dashboard-view">
+  <div id="dashboard-container">
     <div class="dashboard-header">
       <h1>Management Dashboard</h1>
-      <button id="logout-btn" class="action-btn">Log Out</button>
+      <button id="logout-btn" class="glass-input" style="width: auto; cursor: pointer; font-size: 12px;">Log Out</button>
     </div>
 
     <!-- Navigation Tabs -->
-    <div class="nav-tabs">
-      <button class="tab-btn active" id="tab-bookings">
+    <div class="nav-tabs glass-panel">
+      <button type="button" class="tab-btn btn-solid" id="tab-bookings">
         Active Bookings <span id="notification-badge" class="notification-badge" aria-live="polite">0</span>
       </button>
-      <button class="tab-btn" id="tab-rooms">Housekeeping Status</button>
-      <button class="tab-btn" id="tab-inquiries">
+      <button type="button" class="tab-btn glass-input" id="tab-housekeeping">Housekeeping Status</button>
+      <button type="button" class="tab-btn glass-input" id="tab-inquiries">
         Customer Inquiries <span id="inquiry-badge" class="notification-badge" aria-live="polite">0</span>
       </button>
-      <button class="tab-btn" id="tab-events">
+      <button type="button" class="tab-btn glass-input" id="tab-events">
         Event Bookings <span id="event-badge" class="notification-badge" aria-live="polite">0</span>
       </button>
-      <button class="tab-btn" id="tab-analytics">Performance Analytics</button>
+      <button type="button" class="tab-btn glass-input" id="tab-analytics">Performance Analytics</button>
     </div>
 
 <!-- Bookings Panel -->
-    <div id="panel-bookings" class="table-container">
-      <div style="padding: 16px 24px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid var(--color-border);">
-        <input type="search" id="booking-search" class="input-field" placeholder="Search guest name or phone number..." aria-label="Search bookings" style="margin-bottom:0; max-width: 350px; padding: 10px 14px; height: 38px;">
+    <div id="panel-bookings" class="glass-panel table-container" style="padding: 24px;">
+      <div style="padding-bottom: 20px; border-bottom: 1px solid var(--color-border); margin-bottom: 24px;">
+        <input type="search" id="booking-search" class="glass-input" placeholder="Search guest name or phone number..." aria-label="Search bookings" style="max-width: 350px;">
       </div>
 
       <!-- Manual Booking Entry Form for Staff -->
-      <div style="padding: 24px; background: rgba(0, 0, 0, 0.2); border-bottom: 1px solid var(--color-border);">
-        <h3 style="font-family: var(--font-heading); color: var(--color-white); font-size: 20px; margin-top: 0; margin-bottom: 16px;">Add Walk-in / Manual Booking</h3>
-        <form id="manual-booking-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) 130px; gap: 12px; align-items: end;">
-  <input type="text" id="manual-name" class="input-field" placeholder="Guest Name" required style="margin-bottom:0; padding: 10px 14px; height: 38px;">
-  <input type="tel" id="manual-phone" class="input-field" placeholder="Phone Number" required style="margin-bottom:0; padding: 10px 14px; height: 38px;">
-  <input type="date" id="manual-checkin" class="input-field" required style="margin-bottom:0; padding: 10px 14px; height: 38px; color-scheme: dark;">
-  <input type="date" id="manual-checkout" class="input-field" required style="margin-bottom:0; padding: 10px 14px; height: 38px; color-scheme: dark;">
-  <input type="number" id="manual-price" class="input-field" placeholder="Amount (₦)" min="0.01" step="0.01" required style="margin-bottom:0; padding: 10px 14px; height: 38px;">
-  <select id="manual-room" class="input-field" required style="margin-bottom:0; padding: 10px 14px; height: 38px;">
+      <div style="padding-bottom: 24px; border-bottom: 1px solid var(--color-border); margin-bottom: 24px;">
+        <h3 style="font-family: var(--font-heading); color: var(--color-white); font-size: 22px; font-weight: 500; margin: 0 0 20px;">Add Walk-in / Manual Booking</h3>
+        <form id="manual-booking-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; align-items: end;">
+  <input type="text" id="manual-name" class="glass-input" placeholder="Guest Name" required>
+  <input type="tel" id="manual-phone" class="glass-input" placeholder="Phone Number" required>
+  <input type="date" id="manual-checkin" class="glass-input" required>
+  <input type="date" id="manual-checkout" class="glass-input" required>
+  <input type="number" id="manual-price" class="glass-input" placeholder="Amount (₦)" min="0.01" step="0.01" required>
+  <select id="manual-room" class="glass-input" required>
     <option value="" disabled selected>Room Type</option>
     <option value="Economy">Economy</option>
     <option value="Standard">Standard</option>
@@ -490,7 +806,7 @@
     <option value="Executive">Executive</option>
     <option value="Double Bed Deluxe">Double Bed Deluxe</option>
   </select>
-  <button type="submit" class="btn-solid" style="padding: 10px 14px; height: 38px; font-size: 13px;">Save Booking</button>
+  <button type="submit" class="btn-solid" style="font-size: 13px;">Save Booking</button>
 </form>
       </div>
 
@@ -504,6 +820,7 @@
             <th>Check-out</th>
             <th>Price</th>
             <th>Status</th>
+            <th>Stay Status</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -513,166 +830,136 @@
       </table>
     </div>
 
-    <!-- Rooms Panel (Hidden initially) -->
-    <div id="panel-rooms" class="table-container" style="display: none;">
-      <div style="padding: 16px 24px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid var(--color-border);">
-        <input type="search" id="room-search" class="input-field" placeholder="Search room number or type (e.g. 101, Standard)..." aria-label="Search rooms" style="margin-bottom:0; max-width: 350px; padding: 10px 14px; height: 38px;">
+    <!-- Panel 2: Housekeeping -->
+    <div id="panel-housekeeping" class="glass-panel table-container" style="display: none; padding: 24px;">
+      <h3 style="margin: 0 0 20px; color: var(--color-white); font-weight: 500; font-family: var(--font-heading);">Housekeeping Status</h3>
+      <input type="search" id="room-search" class="glass-input" placeholder="Search room number or type..." aria-label="Search rooms" style="max-width: 300px; margin: 0 0 20px;">
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Room Number</th>
+              <th>Room Type</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rooms-table-body"></tbody>
+        </table>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Room #</th>
-            <th>Type</th>
-            <th>Price</th>
-            <th>Housekeeping</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="rooms-table-body">
-          <!-- JavaScript will inject room rows here -->
-        </tbody>
-      </table>
     </div>
 
-    <div id="panel-inquiries" class="table-container" style="display: none;">
-      <div style="padding: 16px 24px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid var(--color-border);">
-        <input type="search" id="inquiry-search" class="input-field" placeholder="Search guest name, phone, or message..." aria-label="Search inquiries" style="margin-bottom:0; max-width: 350px; padding: 10px 14px; height: 38px;">
+    <!-- Panel 3: Customer Inquiries -->
+    <div id="panel-inquiries" class="glass-panel table-container" style="display: none; padding: 24px;">
+      <h3 style="margin: 0 0 20px; color: var(--color-white); font-weight: 500; font-family: var(--font-heading);">Customer Inquiries</h3>
+      <input type="search" id="inquiry-search" class="glass-input" placeholder="Search guest name, phone, or message..." aria-label="Search inquiries" style="max-width: 300px; margin: 0 0 20px;">
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Phone / WhatsApp</th>
+              <th>Message</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="inquiries-table-body"></tbody>
+        </table>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Guest Name</th>
-            <th>Phone / WhatsApp</th>
-            <th>Message / Enquiry</th>
-            <th>Date Received</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="inquiries-table-body">
-          <!-- Inquiries injected via JavaScript -->
-        </tbody>
-      </table>
     </div>
 
-    <!-- Event Bookings Panel -->
-    <div id="panel-events" class="table-container" style="display: none;">
-      <div style="padding: 16px 24px; background: rgba(0, 0, 0, 0.1); border-bottom: 1px solid var(--color-border);">
-        <input type="search" id="event-search" class="input-field" placeholder="Search event name, date, or phone..." aria-label="Search event bookings" style="margin-bottom:0; max-width: 350px; padding: 10px 14px; height: 38px;">
+    <!-- Panel 4: Event Bookings -->
+    <div id="panel-events" class="glass-panel table-container" style="display: none; padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
+        <h3 style="color: var(--color-white); font-weight: 500; font-family: var(--font-heading); margin: 0;">Event Space Bookings</h3>
+        <input type="search" id="event-search" class="glass-input" placeholder="Search events..." aria-label="Search event bookings" style="max-width: 300px; margin: 0;">
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Guest Name</th>
-            <th>Phone</th>
-            <th>Event Date</th>
-            <th>Event Type</th>
-            <th>Guests</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="events-table-body">
-          <!-- Event rows injected via JavaScript -->
-        </tbody>
-      </table>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Guest Name</th>
+              <th>Phone</th>
+              <th>Event Date</th>
+              <th>Event Type</th>
+              <th>Guests</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="events-table-body"></tbody>
+        </table>
+      </div>
     </div>
 
-    <div id="panel-analytics" class="table-container" style="display: none; padding: 24px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
-        <h2 style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-white); margin: 0;">Revenue &amp; Operations</h2>
-        <div class="pill-track" role="group" aria-label="Analytics timeframe">
-          <button type="button" class="pill-segment" data-analytics-period="today">Today</button>
-          <button type="button" class="pill-segment active" data-analytics-period="week">This Week</button>
-          <button type="button" class="pill-segment" data-analytics-period="month">This Month</button>
-          <button type="button" class="pill-segment" data-analytics-period="ytd">YTD</button>
+    <!-- Panel 5: Performance Analytics -->
+    <div id="panel-analytics" style="display: none;">
+      <div class="analytics-header">
+        <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; margin: 0;">Performance Analytics</h2>
+        <div class="pill-track analytics-periods" role="group" aria-label="Analytics timeframe">
+          <button type="button" class="pill-segment" data-analytics-period="today" aria-pressed="false">Today</button>
+          <button type="button" class="pill-segment active" data-analytics-period="week" aria-pressed="true">Week</button>
+          <button type="button" class="pill-segment" data-analytics-period="month" aria-pressed="false">Month</button>
+          <button type="button" class="pill-segment" data-analytics-period="ytd" aria-pressed="false">Year</button>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+        <div class="glass-panel" style="padding: 24px;">
+          <div style="font-size: 11px; color: var(--color-ash-gray); text-transform: uppercase; letter-spacing: 1px;">Estimated Paid Revenue</div>
+          <div id="kpi-revenue" style="font-size: 28px; font-weight: 700; margin-top: 8px; color: var(--color-white);">₦0</div>
+        </div>
+        <div class="glass-panel" style="padding: 24px;">
+          <div style="font-size: 11px; color: var(--color-ash-gray); text-transform: uppercase; letter-spacing: 1px;">Projected Occupancy</div>
+          <div id="kpi-occupancy" style="font-size: 28px; font-weight: 700; margin-top: 8px; color: var(--color-white);">0%</div>
+        </div>
+        <div class="glass-panel" style="padding: 24px;">
+          <div style="font-size: 11px; color: var(--color-ash-gray); text-transform: uppercase; letter-spacing: 1px;">Reservations</div>
+          <div id="kpi-volume" style="font-size: 28px; font-weight: 700; margin-top: 8px; color: var(--color-white);">0</div>
+          <div id="kpi-period-label" class="label-sm" style="margin-top: 8px;">This week</div>
         </div>
       </div>
 
-      <div class="analytics-grid row-3-col">
-        <div class="analytic-card">
-          <div class="label-sm">Estimated Paid Revenue</div>
-          <div class="metric-numeral" id="kpi-revenue">₦0.00</div>
-          <div class="label-sm">Based on recorded payment amounts</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px;">
+        <div class="glass-panel" style="padding: 24px;">
+          <h3 style="font-size: 16px; margin: 0 0 24px; font-weight: 500;">Reservation Pacing</h3>
+          <div id="analytics-chart" role="img" aria-label="Reservations by check-in date" style="height: 200px; display: flex; align-items: flex-end; gap: 10px;"></div>
         </div>
-        <div class="analytic-card">
-          <div class="label-sm">Projected Occupancy</div>
-          <div class="metric-numeral" id="kpi-occupancy">0%</div>
-          <div class="label-sm">Estimate from active booking dates</div>
-        </div>
-        <div class="analytic-card">
-          <div class="label-sm">Reservations</div>
-          <div class="metric-numeral" id="kpi-reservations">0</div>
-          <div class="label-sm" id="kpi-period-label">This week</div>
-        </div>
-      </div>
-
-      <p class="label-sm" style="margin: 16px 0 0;">
-        Revenue is estimated from paid bookings with matching room rates and dates. Occupancy is estimated from active booking dates; bookings are not assigned to room numbers and may include requests awaiting confirmation.
-      </p>
-
-      <div class="analytics-grid row-6-4" style="margin-top: 1.25rem;">
-        <div class="analytic-card" style="min-height: 350px;">
-          <h3>Reservation Pacing</h3>
-          <div id="analytics-chart" role="img" aria-label="Reservations by check-in date" style="min-height: 280px; display: flex; align-items: end; justify-content: space-around; gap: 8px; padding-top: 24px;"></div>
-        </div>
-
-        <div class="analytic-card">
-          <h3>Reservations by Room Tier</h3>
-          <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
-            <tbody>
-              <tr>
-                <td style="padding: 12px 0; color: var(--text-primary);">Economy</td>
-                <td id="tier-economy" style="text-align: right; color: var(--text-secondary);">0</td>
-              </tr>
-              <tr>
-                <td style="padding: 12px 0; color: var(--text-primary);">Standard</td>
-                <td id="tier-standard" style="text-align: right; color: var(--text-secondary);">0</td>
-              </tr>
-              <tr>
-                <td style="padding: 12px 0; color: var(--text-primary);">Deluxe</td>
-                <td id="tier-deluxe" style="text-align: right; color: var(--text-secondary);">0</td>
-              </tr>
-              <tr>
-                <td style="padding: 12px 0; color: var(--text-primary);">Executive</td>
-                <td id="tier-executive" style="text-align: right; color: var(--text-secondary);">0</td>
-              </tr>
-              <tr>
-                <td style="padding: 12px 0; color: var(--text-primary);">Double Bed Deluxe</td>
-                <td id="tier-double" style="text-align: right; color: var(--text-secondary);">0</td>
-              </tr>
-            </tbody>
+        <div class="glass-panel" style="padding: 24px;">
+          <h3 style="font-size: 16px; margin: 0 0 12px; font-weight: 500;">Reservations by Room Tier</h3>
+          <table style="margin-top: 0;">
+            <tbody id="tier-table-body"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Row 3: Events & Grand Totals -->
-      <div class="analytics-grid row-6-4" style="margin-top: 1.25rem;">
-        <div class="analytic-card">
-          <h3>Event Space Performance</h3>
-          <div style="display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div class="glass-panel" style="padding: 24px;">
+          <h3 style="font-size: 16px; margin: 0 0 16px; font-weight: 500;">Event Space Performance</h3>
+          <div style="display: flex; gap: 32px; flex-wrap: wrap;">
             <div>
-              <div class="label-sm">Total Events</div>
-              <div class="metric-numeral" id="kpi-events-total" style="font-size: 1.75rem;">0</div>
+              <div style="font-size: 11px; color: var(--color-ash-gray); text-transform: uppercase; letter-spacing: 1px;">Total Events</div>
+              <div id="kpi-events-total" style="font-size: 24px; font-weight: 700; margin-top: 4px; color: var(--color-white);">0</div>
             </div>
             <div>
-              <div class="label-sm">Event Revenue</div>
-              <div class="metric-numeral" id="kpi-events-revenue" style="font-size: 1.75rem;">₦0</div>
+              <div style="font-size: 11px; color: var(--color-ash-gray); text-transform: uppercase; letter-spacing: 1px;">Event Revenue</div>
+              <div id="kpi-events-revenue" style="font-size: 24px; font-weight: 700; margin-top: 4px; color: var(--color-white);">₦0</div>
             </div>
           </div>
-          <p style="font-size: 10px; color: var(--color-ash-gray); margin-top: 12px; text-transform: uppercase;">Revenue is calculated from exact payment amounts entered by staff.</p>
         </div>
 
-        <div class="analytic-card" style="background: var(--brand-orange); border: none;">
-          <h3 style="color: var(--canvas-base);">Combined Property Totals</h3>
-          <div style="display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap;">
+        <div class="glass-panel" style="padding: 24px; background: var(--color-brand-orange); border: none;">
+          <h3 style="font-size: 16px; margin: 0 0 16px; font-weight: 600; color: #000;">Combined Property Totals</h3>
+          <div style="display: flex; gap: 32px; flex-wrap: wrap;">
             <div>
-              <div class="label-sm" style="color: rgba(6,14,26,0.7);">Total Volume (Rooms + Events)</div>
-              <div class="metric-numeral" id="kpi-grand-volume" style="color: var(--canvas-base); font-size: 1.75rem;">0</div>
+              <div style="font-size: 11px; color: rgba(0,0,0,0.7); text-transform: uppercase; letter-spacing: 1px;">Total Volume</div>
+              <div id="kpi-grand-volume" style="font-size: 24px; font-weight: 800; margin-top: 4px; color: #000;">0</div>
             </div>
             <div>
-              <div class="label-sm" style="color: rgba(6,14,26,0.7);">Grand Revenue</div>
-              <div class="metric-numeral" id="kpi-grand-revenue" style="color: var(--canvas-base); font-size: 1.75rem;">₦0</div>
+              <div style="font-size: 11px; color: rgba(0,0,0,0.7); text-transform: uppercase; letter-spacing: 1px;">Grand Revenue</div>
+              <div id="kpi-grand-revenue" style="font-size: 24px; font-weight: 800; margin-top: 4px; color: #000;">₦0</div>
             </div>
           </div>
         </div>
@@ -691,18 +978,18 @@
 
     // 2. DOM Elements
     const loginView = document.getElementById('login-view');
-    const dashboardView = document.getElementById('dashboard-view');
+    const dashboardView = document.getElementById('dashboard-container');
     const loginForm = document.getElementById('login-form');
     const loginError = document.getElementById('login-error');
     const logoutBtn = document.getElementById('logout-btn');
 
     const tabBookings = document.getElementById('tab-bookings');
-    const tabRooms = document.getElementById('tab-rooms');
+    const tabHousekeeping = document.getElementById('tab-housekeeping');
     const tabInquiries = document.getElementById('tab-inquiries');
     const tabEvents = document.getElementById('tab-events');
     const tabAnalytics = document.getElementById('tab-analytics');
     const panelBookings = document.getElementById('panel-bookings');
-    const panelRooms = document.getElementById('panel-rooms');
+    const panelHousekeeping = document.getElementById('panel-housekeeping');
     const panelInquiries = document.getElementById('panel-inquiries');
     const panelEvents = document.getElementById('panel-events');
     const panelAnalytics = document.getElementById('panel-analytics');
@@ -723,7 +1010,7 @@
     function switchTab(tabName, button) {
       const panels = {
         bookings: panelBookings,
-        rooms: panelRooms,
+        housekeeping: panelHousekeeping,
         inquiries: panelInquiries,
         events: panelEvents,
         analytics: panelAnalytics
@@ -732,8 +1019,14 @@
       Object.entries(panels).forEach(([name, panel]) => {
         panel.style.display = name === tabName ? 'block' : 'none';
       });
-      document.querySelectorAll('.nav-tabs .tab-btn').forEach(tab => tab.classList.remove('active'));
-      button.classList.add('active');
+      document.querySelectorAll('.nav-tabs .tab-btn').forEach(tab => {
+        tab.classList.remove('btn-solid');
+        tab.classList.add('glass-input');
+        tab.style.width = 'auto';
+        tab.style.cursor = 'pointer';
+      });
+      button.classList.remove('glass-input');
+      button.classList.add('btn-solid');
 
       if (tabName === 'analytics') renderAnalytics();
     }
@@ -795,18 +1088,23 @@
     // 3. Secure Supabase Auth Login
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      loginError.textContent = '';
       const emailInput = document.getElementById('email').value;
       const passwordInput = document.getElementById('password').value;
 
-      const { data, error } = await _supabase.auth.signInWithPassword({
-        email: emailInput,
-        password: passwordInput,
-      });
+      try {
+        const { error } = await _supabase.auth.signInWithPassword({
+          email: emailInput,
+          password: passwordInput,
+        });
 
-      if (error) {
-        alert('Access Denied: ' + error.message);
-      } else {
+        if (error) {
+          loginError.textContent = `Access denied: ${error.message}`;
+          return;
+        }
         showDashboard();
+      } catch (error) {
+        loginError.textContent = `Unable to log in: ${error.message || error}`;
       }
     });
 
@@ -841,7 +1139,7 @@
 
     // 4. Tab Switching Logic
     tabBookings.addEventListener('click', () => switchTab('bookings', tabBookings));
-    tabRooms.addEventListener('click', () => switchTab('rooms', tabRooms));
+    tabHousekeeping.addEventListener('click', () => switchTab('housekeeping', tabHousekeeping));
     tabInquiries.addEventListener('click', () => switchTab('inquiries', tabInquiries));
     tabEvents.addEventListener('click', () => switchTab('events', tabEvents));
     tabAnalytics.addEventListener('click', () => switchTab('analytics', tabAnalytics));
@@ -888,7 +1186,7 @@
       if (error) {
         console.error('Error fetching bookings:', error);
         document.getElementById('bookings-table-body').innerHTML =
-          '<tr><td colspan="8" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load bookings. Check the console for details.</td></tr>';
+          '<tr><td colspan="9" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load bookings. Check the console for details.</td></tr>';
         return;
       }
 
@@ -911,29 +1209,34 @@
       tbody.innerHTML = '';
 
       if (bookingsToRender.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">No matching bookings found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">No matching bookings found.</td></tr>';
         return;
       }
 
       bookingsToRender.forEach(booking => {
         const statusClass = booking.payment_status === 'Paid' ? 'status-active' : 'status-pending';
         const isUnread = booking.is_read === false;
+        const roomType = booking.room_type || getBookingRoomType(booking) || 'N/A';
+        const stayStatus = booking.stay_status || 'Upcoming';
 
         tbody.innerHTML += `
           <tr class="${isUnread ? 'unread-booking' : ''}">
             <td data-label="Guest Name">
-              <strong>${booking.guest_name || 'N/A'}</strong>
+              <strong>${escapeHTML(booking.guest_name || 'N/A')}</strong>
               ${isUnread ? '<span style="display:inline-block; width:8px; height:8px; background:var(--color-brand-orange); border-radius:50%; margin-left:6px;" title="New booking"></span>' : ''}
             </td>
-            <td data-label="Phone / WhatsApp">${booking.guest_phone || 'N/A'}</td>
-            <td data-label="Room">${booking.room_type || getBookingRoomType(booking) || 'N/A'}</td>
-            <td data-label="Check-in">${booking.check_in_date || 'TBD'}</td>
-            <td data-label="Check-out">${booking.check_out_date || 'TBD'}</td>
+            <td data-label="Phone / WhatsApp">${escapeHTML(booking.guest_phone || 'N/A')}</td>
+            <td data-label="Room">${escapeHTML(roomType)}</td>
+            <td data-label="Check-in">${escapeHTML(booking.check_in_date || 'TBD')}</td>
+            <td data-label="Check-out">${escapeHTML(booking.check_out_date || 'TBD')}</td>
             <td data-label="Price">₦${(Number(booking.payment_amount) || 0).toLocaleString('en-NG')}</td>
-            <td data-label="Status"><span class="status-badge ${statusClass}">${booking.payment_status || 'Pending'}</span></td>
+            <td data-label="Status"><span class="status-badge ${statusClass}">${escapeHTML(booking.payment_status || 'Pending')}</span></td>
+            <td data-label="Stay Status"><strong style="color: var(--text-high);">${escapeHTML(stayStatus)}</strong></td>
             <td data-label="Actions">
-              <button class="action-btn" type="button" data-booking-payment-id="${escapeHTML(booking.id)}" data-payment-status="${escapeHTML(booking.payment_status || 'Pending')}" data-room-type="${escapeHTML(booking.room_type || getBookingRoomType(booking))}">Toggle Payment</button>
-              ${isUnread ? `<button class="action-btn" style="border-color: var(--color-brand-orange); color: var(--color-brand-orange); margin-left: 6px;" onclick="markAsRead(${booking.id})">Mark Read</button>` : ''}
+              <button class="action-btn" type="button" data-booking-payment-id="${escapeHTML(booking.id)}" data-payment-status="${escapeHTML(booking.payment_status || 'Pending')}" data-room-type="${escapeHTML(roomType)}">Toggle Payment</button>
+              ${stayStatus !== 'Checked-In' ? `<button class="action-btn" type="button" style="border-color: var(--color-success); color: var(--color-success); margin-left: 6px;" data-booking-stay-id="${escapeHTML(booking.id)}" data-stay-status="Checked-In">Check-In</button>` : ''}
+              ${stayStatus === 'Checked-In' ? `<button class="action-btn" type="button" style="border-color: var(--text-muted); color: var(--text-muted); margin-left: 6px;" data-booking-stay-id="${escapeHTML(booking.id)}" data-stay-status="Checked-Out">Check-Out</button>` : ''}
+              ${isUnread ? `<button class="action-btn" type="button" style="border-color: var(--color-brand-orange); color: var(--color-brand-orange); margin-left: 6px;" data-booking-read-id="${escapeHTML(booking.id)}">Mark Read</button>` : ''}
             </td>
           </tr>
         `;
@@ -948,8 +1251,27 @@
           button.dataset.paymentStatus,
           button.dataset.roomType
         );
+        return;
       }
+
+      const stayButton = event.target.closest('button[data-booking-stay-id]');
+      if (stayButton) {
+        updateStayStatus(stayButton.dataset.bookingStayId, stayButton.dataset.stayStatus);
+        return;
+      }
+
+      const readButton = event.target.closest('button[data-booking-read-id]');
+      if (readButton) markAsRead(readButton.dataset.bookingReadId);
     });
+
+    async function updateStayStatus(id, newStatus) {
+      const { error } = await _supabase.from('bookings').update({ stay_status: newStatus }).eq('id', id);
+      if (error) {
+        alert(`Unable to update stay status: ${error.message}`);
+        return;
+      }
+      await fetchBookings();
+    }
 
     async function markAsRead(id) {
       const { error } = await _supabase.from('bookings').update({ is_read: true }).eq('id', id);
@@ -1265,10 +1587,10 @@
 
         tbody.insertAdjacentHTML('beforeend', `
           <tr class="${isUnread ? 'unread-booking' : ''}">
-            <td data-label="Guest Name"><strong>${escapeHTML(inquiry.guest_name || 'N/A')}</strong></td>
+            <td data-label="Date">${escapeHTML(dateReceived)}</td>
+            <td data-label="Name"><strong>${escapeHTML(inquiry.guest_name || 'N/A')}</strong></td>
             <td data-label="Phone / WhatsApp">${escapeHTML(inquiry.guest_phone || 'N/A')}</td>
-            <td data-label="Message / Enquiry" style="max-width: 300px; white-space: normal; word-break: break-word;">${escapeHTML(inquiry.message || 'N/A')}</td>
-            <td data-label="Date Received">${escapeHTML(dateReceived)}</td>
+            <td data-label="Message" style="max-width: 300px; white-space: normal; word-break: break-word;">${escapeHTML(inquiry.message || 'N/A')}</td>
             <td data-label="Actions">${action}</td>
           </tr>
         `);
@@ -1333,17 +1655,25 @@
 
         tbody.innerHTML += `
           <tr>
-            <td data-label="Room #"><strong>Room ${room.room_number}</strong></td>
-            <td data-label="Type">${room.room_type}</td>
-            <td data-label="Price">₦${room.price_per_night}</td>
-            <td data-label="Housekeeping"><span class="status-badge ${hkClass}">${room.housekeeping_status || 'Unknown'}</span></td>
+            <td data-label="Room #"><strong>Room ${escapeHTML(room.room_number)}</strong></td>
+            <td data-label="Type">${escapeHTML(room.room_type || 'N/A')}</td>
+            <td data-label="Price">₦${(Number(room.price_per_night) || 0).toLocaleString('en-NG')}</td>
+            <td data-label="Housekeeping"><span class="status-badge ${hkClass}">${escapeHTML(room.housekeeping_status || 'Unknown')}</span></td>
             <td data-label="Actions">
-              <button class="action-btn" onclick="toggleHousekeeping(${room.room_number}, '${room.housekeeping_status || ''}')">Update Status</button>
+              <button class="action-btn" type="button" data-housekeeping-room="${escapeHTML(room.room_number)}">Update Status</button>
             </td>
           </tr>
         `;
       });
     }
+
+    document.getElementById('rooms-table-body').addEventListener('click', event => {
+      const button = event.target.closest('button[data-housekeeping-room]');
+      if (!button) return;
+
+      const room = allRooms.find(item => String(item.room_number) === button.dataset.housekeepingRoom);
+      if (room) toggleHousekeeping(room.room_number, room.housekeeping_status);
+    });
 
     let analyticsPeriod = 'week';
 
@@ -1352,6 +1682,7 @@
         analyticsPeriod = button.dataset.analyticsPeriod;
         document.querySelectorAll('[data-analytics-period]').forEach(periodButton => {
           periodButton.classList.toggle('active', periodButton === button);
+          periodButton.setAttribute('aria-pressed', String(periodButton === button));
         });
         renderAnalytics();
       });
@@ -1423,7 +1754,7 @@
         return total + Math.max(0, Math.ceil((overlapEnd - overlapStart) / 86400000));
       }, 0);
       const occupancy = allRooms.length
-        ? Math.round((requestedRoomNights / (allRooms.length * daysInPeriod)) * 100)
+        ? Math.min(100, Math.round((requestedRoomNights / (allRooms.length * daysInPeriod)) * 100))
         : 0;
 
       document.getElementById('kpi-revenue').textContent = new Intl.NumberFormat('en-NG', {
@@ -1432,12 +1763,12 @@
         minimumFractionDigits: 2
       }).format(paidRevenue);
       document.getElementById('kpi-occupancy').textContent = `${occupancy}%`;
-      document.getElementById('kpi-reservations').textContent = String(periodBookings.length);
+      document.getElementById('kpi-volume').textContent = String(periodBookings.length);
       document.getElementById('kpi-period-label').textContent = {
         today: 'Today',
         week: 'This week',
         month: 'This month',
-        ytd: 'Year to date'
+        ytd: 'This year'
       }[analyticsPeriod];
 
       const paidEventRevenue = periodEvents.reduce((total, event) =>
@@ -1499,7 +1830,7 @@
       chart.replaceChildren();
       buckets.forEach((bucket, index) => {
         const column = document.createElement('div');
-        column.style.cssText = 'flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: end; height: 260px; gap: 8px;';
+        column.style.cssText = 'flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: end; height: 200px; gap: 8px;';
 
         const count = document.createElement('span');
         count.className = 'label-sm';
@@ -1507,7 +1838,7 @@
 
         const bar = document.createElement('div');
         bar.title = `${bucket.label}: ${counts[index]} reservations`;
-        bar.style.cssText = `width: 100%; max-width: 42px; min-height: 4px; height: ${Math.max(4, (counts[index] / maxCount) * 190)}px; border-radius: 6px 6px 0 0; background: var(--brand-orange);`;
+        bar.style.cssText = `width: 100%; max-width: 42px; min-height: 4px; height: ${Math.max(4, (counts[index] / maxCount) * 140)}px; border-radius: 6px 6px 0 0; background: var(--brand-orange);`;
 
         const label = document.createElement('span');
         label.className = 'label-sm';
@@ -1529,11 +1860,24 @@
         else if (roomType.includes('executive')) counts.executive++;
       });
 
-      document.getElementById('tier-economy').textContent = String(counts.economy);
-      document.getElementById('tier-standard').textContent = String(counts.standard);
-      document.getElementById('tier-deluxe').textContent = String(counts.deluxe);
-      document.getElementById('tier-executive').textContent = String(counts.executive);
-      document.getElementById('tier-double').textContent = String(counts.double);
+      const tierTableBody = document.getElementById('tier-table-body');
+      tierTableBody.replaceChildren();
+      Object.entries({
+        Economy: counts.economy,
+        Standard: counts.standard,
+        Deluxe: counts.deluxe,
+        Executive: counts.executive,
+        'Double Bed Deluxe': counts.double
+      }).forEach(([roomType, count]) => {
+        const row = document.createElement('tr');
+        const name = document.createElement('td');
+        name.textContent = roomType;
+        const total = document.createElement('td');
+        total.textContent = String(count);
+        total.style.textAlign = 'right';
+        row.append(name, total);
+        tierTableBody.appendChild(row);
+      });
     }
 
     const roomSearchInput = document.getElementById('room-search');
@@ -1553,14 +1897,28 @@
       else if (currentStatus === 'Dirty') newStatus = 'Inspected';
 
       const { error } = await _supabase.from('rooms').update({ housekeeping_status: newStatus }).eq('room_number', roomNumber);
-      if (!error) fetchRooms(); // Instantly refresh the table
+      if (error) {
+        alert(`Unable to update housekeeping status: ${error.message}`);
+        return;
+      }
+      await fetchRooms();
     }
 
     // Handle Manual/Walk-in Bookings by Staff
     const manualForm = document.getElementById('manual-booking-form');
     if (manualForm) {
+      const checkInInput = document.getElementById('manual-checkin');
+      const checkOutInput = document.getElementById('manual-checkout');
+      checkOutInput.addEventListener('input', () => checkOutInput.setCustomValidity(''));
+
       manualForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        if (checkOutInput.value <= checkInInput.value) {
+          checkOutInput.setCustomValidity('Check-out must be after check-in.');
+          checkOutInput.reportValidity();
+          return;
+        }
 
         const manualData = {
           guest_name: document.getElementById('manual-name').value,
