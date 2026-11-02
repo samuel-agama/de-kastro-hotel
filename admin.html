@@ -147,7 +147,7 @@
   <input type="tel" id="manual-phone" class="glass-input" placeholder="Phone Number" required>
   <input type="date" id="manual-checkin" class="glass-input" required>
   <input type="date" id="manual-checkout" class="glass-input" required>
-  <input type="number" id="manual-price" class="glass-input" placeholder="Amount (₦)" min="0.01" step="0.01" required>
+  <input type="number" id="manual-price" class="glass-input" placeholder="Rate per night (₦)" min="0.01" step="0.01" required>
   <select id="manual-room" class="glass-input" required>
     <option value="" disabled selected>Room Type</option>
     <option value="Economy">Economy</option>
@@ -168,7 +168,7 @@
             <th>Room</th>
             <th>Check-in</th>
             <th>Check-out</th>
-            <th>Price</th>
+            <th>Total Yield</th>
             <th>Status</th>
             <th>Stay Status</th>
             <th>Actions</th>
@@ -601,6 +601,41 @@
       badge.style.display = unreadCount > 0 ? 'inline-block' : 'none';
     }
 
+    function getBookingNightCount(booking) {
+      if (!booking.check_in_date || !booking.check_out_date) return 1;
+
+      const parseDate = value => {
+        const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (!match) return null;
+
+        const [, year, month, day] = match;
+        const date = new Date(0);
+        date.setUTCHours(0, 0, 0, 0);
+        date.setUTCFullYear(Number(year), Number(month) - 1, Number(day));
+        if (
+          date.getUTCFullYear() !== Number(year) ||
+          date.getUTCMonth() !== Number(month) - 1 ||
+          date.getUTCDate() !== Number(day)
+        ) return null;
+
+        return date.getTime();
+      };
+
+      const checkIn = parseDate(booking.check_in_date);
+      const checkOut = parseDate(booking.check_out_date);
+      if (checkIn === null || checkOut === null || checkOut < checkIn) return null;
+
+      return Math.max(1, (checkOut - checkIn) / 86400000);
+    }
+
+    function getBookingTotalYield(booking) {
+      const nights = getBookingNightCount(booking);
+      const nightlyRate = Number(booking.payment_amount ?? 0);
+      if (nights === null || !Number.isFinite(nightlyRate) || nightlyRate < 0) return null;
+
+      return Number((nightlyRate * nights).toFixed(2));
+    }
+
     // Render helper function for tables & search
     function renderBookings(bookingsToRender) {
       const tbody = document.getElementById('bookings-table-body');
@@ -612,6 +647,7 @@
       }
 
       bookingsToRender.forEach(booking => {
+        const totalYield = getBookingTotalYield(booking);
         const isUnread = booking.is_read === false;
         const roomType = booking.room_type || getBookingRoomType(booking) || 'N/A';
         const stayStatus = booking.stay_status || 'Upcoming';
@@ -629,8 +665,8 @@
             <td data-label="Room">${escapeHTML(roomType)}</td>
             <td data-label="Check-in">${escapeHTML(booking.check_in_date || 'TBD')}</td>
             <td data-label="Check-out">${escapeHTML(booking.check_out_date || 'TBD')}</td>
-            <td data-label="Price">₦${(Number(booking.payment_amount) || 0).toLocaleString('en-NG')}</td>
-            <td data-label="Status"><span class="${paymentStatus === 'Paid' ? 'payment-paid-glow' : ''}" style="${paymentStatus === 'Paid' ? '' : 'color: var(--color-brand-orange);'}">${escapeHTML(paymentStatus)}</span></td>
+            <td data-label="Total Yield" style="text-align: right; color: var(--color-brand-orange); font-weight: 700;">${totalYield === null ? 'N/A' : `₦${totalYield.toLocaleString('en-NG', { maximumFractionDigits: 2 })}`}</td>
+            <td data-label="Status"><span class="${paymentStatus === 'Paid' ? 'payment-paid-glow' : ''}" style="${paymentStatus === 'Paid' ? '' : 'color: var(--text-muted);'}">${escapeHTML(paymentStatus)}</span></td>
             <td data-label="Stay Status"><strong style="color: var(--text-high);">${escapeHTML(stayStatus)}</strong></td>
             <td data-label="Actions">
               <button class="action-btn" type="button" data-booking-payment-id="${escapeHTML(booking.id)}" data-payment-status="${escapeHTML(paymentStatus)}" data-room-type="${escapeHTML(roomType)}">Pay</button>
@@ -1185,7 +1221,7 @@
 
       const paidRevenue = periodBookings.reduce((total, booking) => {
         if (booking.payment_status !== 'Paid') return total;
-        return total + (Number(booking.payment_amount) || 0);
+        return total + (getBookingTotalYield(booking) || 0);
       }, 0);
 
       const daysInPeriod = Math.max(1, Math.ceil((end - start) / 86400000));
