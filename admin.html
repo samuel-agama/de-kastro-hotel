@@ -630,7 +630,7 @@
             <td data-label="Check-in">${escapeHTML(booking.check_in_date || 'TBD')}</td>
             <td data-label="Check-out">${escapeHTML(booking.check_out_date || 'TBD')}</td>
             <td data-label="Price">₦${(Number(booking.payment_amount) || 0).toLocaleString('en-NG')}</td>
-            <td data-label="Status"><span style="color: ${paymentStatus === 'Paid' ? 'var(--color-success)' : 'var(--color-brand-orange)'};">${escapeHTML(paymentStatus)}</span></td>
+            <td data-label="Status"><span class="${paymentStatus === 'Paid' ? 'payment-paid-glow' : ''}" style="${paymentStatus === 'Paid' ? '' : 'color: var(--color-brand-orange);'}">${escapeHTML(paymentStatus)}</span></td>
             <td data-label="Stay Status"><strong style="color: var(--text-high);">${escapeHTML(stayStatus)}</strong></td>
             <td data-label="Actions">
               <button class="action-btn" type="button" data-booking-payment-id="${escapeHTML(booking.id)}" data-payment-status="${escapeHTML(paymentStatus)}" data-room-type="${escapeHTML(roomType)}">Pay</button>
@@ -838,9 +838,11 @@
         const statusCell = document.createElement('td');
         statusCell.dataset.label = 'Payment';
         const statusBadge = document.createElement('span');
-        statusBadge.style.color = event.payment_status === 'Paid'
-          ? 'var(--color-success)'
-          : 'var(--color-brand-orange)';
+        if (event.payment_status === 'Paid') {
+          statusBadge.className = 'payment-paid-glow';
+        } else {
+          statusBadge.style.color = 'var(--color-brand-orange)';
+        }
         statusBadge.textContent = event.payment_status || 'Pending';
         statusCell.appendChild(statusBadge);
         row.appendChild(statusCell);

@@ -2136,6 +2136,12 @@ tbody tr:hover {
   color: #4EDEA3;
 }
 
+.payment-paid-glow {
+  color: #4EDEA3;
+  font-weight: 600;
+  text-shadow: 0 0 6px rgba(78, 222, 163, 0.65), 0 0 12px rgba(78, 222, 163, 0.35);
+}
+
 .status-dirty {
   background: rgba(239, 68, 68, 0.12);
   color: #F87171;
