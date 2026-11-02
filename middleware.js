@@ -9,8 +9,7 @@ function unauthorized() {
   return new Response('Unauthorized: Access Denied', {
     status: 401,
     headers: {
-      'Cache-Control': 'no-store',
-      'WWW-Authenticate': 'Basic realm="Secure Staff Portal"',
+      'WWW-Authenticate': 'Basic realm="Secure Area"',
     },
   });
 }
