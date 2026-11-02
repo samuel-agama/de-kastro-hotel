@@ -230,14 +230,15 @@
         <table>
           <thead>
             <tr>
-              <th>Guest Name</th>
-              <th>Phone</th>
-              <th>Event Date</th>
-              <th>Event Type</th>
-              <th>Guests</th>
-              <th>Price</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th class="label-sm">Client</th>
+              <th class="label-sm">Contact</th>
+              <th class="label-sm">Execution Date</th>
+              <th class="label-sm">Event Classification</th>
+              <th class="label-sm" style="text-align: right;">Capacity</th>
+              <th class="label-sm" style="text-align: right;">Contract Value (₦)</th>
+              <th class="label-sm">Payment</th>
+              <th class="label-sm">Event Status</th>
+              <th class="label-sm">Actions</th>
             </tr>
           </thead>
           <tbody id="events-table-body"></tbody>
@@ -611,27 +612,29 @@
       }
 
       bookingsToRender.forEach(booking => {
-        const statusClass = booking.payment_status === 'Paid' ? 'status-active' : 'status-pending';
         const isUnread = booking.is_read === false;
         const roomType = booking.room_type || getBookingRoomType(booking) || 'N/A';
         const stayStatus = booking.stay_status || 'Upcoming';
+        const paymentStatus = booking.payment_status || 'Pending';
+        const isCheckedOut = booking.stay_status === 'Checked-Out';
+        const textStyle = isCheckedOut ? 'text-decoration: line-through; color: var(--text-muted);' : '';
 
         tbody.innerHTML += `
-          <tr class="${isUnread ? 'unread-booking' : ''}">
+          <tr class="${isUnread ? 'unread-booking' : ''}" style="${isCheckedOut ? 'opacity: 0.5;' : ''}">
             <td data-label="Guest Name">
-              <strong>${escapeHTML(booking.guest_name || 'N/A')}</strong>
+              <strong style="${textStyle}">${escapeHTML(booking.guest_name || 'N/A')}</strong>
               ${isUnread ? '<span style="display:inline-block; width:8px; height:8px; background:var(--color-brand-orange); border-radius:50%; margin-left:6px;" title="New booking"></span>' : ''}
             </td>
-            <td data-label="Phone / WhatsApp">${escapeHTML(booking.guest_phone || 'N/A')}</td>
+            <td data-label="Phone / WhatsApp" style="${textStyle}">${escapeHTML(booking.guest_phone || 'N/A')}</td>
             <td data-label="Room">${escapeHTML(roomType)}</td>
             <td data-label="Check-in">${escapeHTML(booking.check_in_date || 'TBD')}</td>
             <td data-label="Check-out">${escapeHTML(booking.check_out_date || 'TBD')}</td>
             <td data-label="Price">₦${(Number(booking.payment_amount) || 0).toLocaleString('en-NG')}</td>
-            <td data-label="Status"><span class="status-badge ${statusClass}">${escapeHTML(booking.payment_status || 'Pending')}</span></td>
+            <td data-label="Status"><span style="color: ${paymentStatus === 'Paid' ? 'var(--color-success)' : 'var(--color-brand-orange)'};">${escapeHTML(paymentStatus)}</span></td>
             <td data-label="Stay Status"><strong style="color: var(--text-high);">${escapeHTML(stayStatus)}</strong></td>
             <td data-label="Actions">
-              <button class="action-btn" type="button" data-booking-payment-id="${escapeHTML(booking.id)}" data-payment-status="${escapeHTML(booking.payment_status || 'Pending')}" data-room-type="${escapeHTML(roomType)}">Toggle Payment</button>
-              ${stayStatus !== 'Checked-In' ? `<button class="action-btn" type="button" style="border-color: var(--color-success); color: var(--color-success); margin-left: 6px;" data-booking-stay-id="${escapeHTML(booking.id)}" data-stay-status="Checked-In">Check-In</button>` : ''}
+              <button class="action-btn" type="button" data-booking-payment-id="${escapeHTML(booking.id)}" data-payment-status="${escapeHTML(paymentStatus)}" data-room-type="${escapeHTML(roomType)}">Pay</button>
+              ${stayStatus !== 'Checked-In' && !isCheckedOut ? `<button class="action-btn" type="button" style="border-color: var(--color-success); color: var(--color-success); margin-left: 6px;" data-booking-stay-id="${escapeHTML(booking.id)}" data-stay-status="Checked-In">Check-In</button>` : ''}
               ${stayStatus === 'Checked-In' ? `<button class="action-btn" type="button" style="border-color: var(--text-muted); color: var(--text-muted); margin-left: 6px;" data-booking-stay-id="${escapeHTML(booking.id)}" data-stay-status="Checked-Out">Check-Out</button>` : ''}
               ${isUnread ? `<button class="action-btn" type="button" style="border-color: var(--color-brand-orange); color: var(--color-brand-orange); margin-left: 6px;" data-booking-read-id="${escapeHTML(booking.id)}">Mark Read</button>` : ''}
             </td>
@@ -765,7 +768,7 @@
       if (error) {
         console.error('Error fetching event bookings:', error);
         tbody.innerHTML =
-          '<tr><td colspan="8" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load event bookings. Check the console for details.</td></tr>';
+          '<tr><td colspan="9" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load event bookings. Check the console for details.</td></tr>';
         return;
       }
 
@@ -785,7 +788,7 @@
       if (eventsToRender.length === 0) {
         const row = document.createElement('tr');
         const cell = document.createElement('td');
-        cell.colSpan = 8;
+        cell.colSpan = 9;
         cell.style.cssText = 'text-align: center; color: var(--color-ash-gray); padding: 24px;';
         cell.textContent = 'No event bookings found.';
         row.appendChild(cell);
@@ -795,23 +798,32 @@
 
       eventsToRender.forEach(event => {
         const isUnread = event.is_read === false;
+        const eventStatus = event.event_status || 'Upcoming';
+        const isCompleted = event.event_status === 'Completed';
+        const textStyle = isCompleted
+          ? 'text-decoration: line-through; color: var(--text-muted);'
+          : '';
         const row = document.createElement('tr');
         if (isUnread) row.className = 'unread-booking';
+        if (isCompleted) row.style.opacity = '0.5';
 
         const values = [
-          ['Guest Name', event.guest_name || 'N/A'],
-          ['Phone', event.guest_phone || 'N/A'],
-          ['Event Date', event.event_date || 'TBD'],
-          ['Event Type', event.event_type || 'N/A'],
-          ['Guests', event.guest_count ?? '0']
+          ['Client', event.guest_name || 'N/A'],
+          ['Contact', event.guest_phone || 'N/A'],
+          ['Execution Date', event.event_date || 'TBD'],
+          ['Event Classification', event.event_type || 'N/A'],
+          ['Capacity', event.guest_count ?? '0']
         ];
         values.forEach(([label, value], index) => {
           const cell = document.createElement('td');
           cell.dataset.label = label;
           cell.textContent = String(value);
+          if (index === 0 || index === 1) cell.style.cssText = textStyle;
+          if (index === 4) cell.style.textAlign = 'right';
           if (index === 0) {
             const name = document.createElement('strong');
             name.textContent = String(value);
+            name.style.cssText = textStyle;
             cell.replaceChildren(name);
             if (isUnread) {
               const indicator = document.createElement('span');
@@ -824,17 +836,28 @@
         });
 
         const statusCell = document.createElement('td');
-        statusCell.dataset.label = 'Status';
+        statusCell.dataset.label = 'Payment';
         const statusBadge = document.createElement('span');
-        statusBadge.className = `status-badge ${event.payment_status === 'Paid' ? 'status-active' : 'status-pending'}`;
+        statusBadge.style.color = event.payment_status === 'Paid'
+          ? 'var(--color-success)'
+          : 'var(--color-brand-orange)';
         statusBadge.textContent = event.payment_status || 'Pending';
         statusCell.appendChild(statusBadge);
         row.appendChild(statusCell);
 
         const priceCell = document.createElement('td');
-        priceCell.dataset.label = 'Price';
+        priceCell.dataset.label = 'Contract Value (₦)';
+        priceCell.style.textAlign = 'right';
         priceCell.textContent = `₦${(Number(event.payment_amount) || 0).toLocaleString('en-NG')}`;
         row.insertBefore(priceCell, statusCell);
+
+        const eventStatusCell = document.createElement('td');
+        eventStatusCell.dataset.label = 'Event Status';
+        const eventStatusLabel = document.createElement('strong');
+        eventStatusLabel.style.color = 'var(--text-high)';
+        eventStatusLabel.textContent = eventStatus;
+        eventStatusCell.appendChild(eventStatusLabel);
+        row.appendChild(eventStatusCell);
 
         const actionsCell = document.createElement('td');
         actionsCell.dataset.label = 'Actions';
@@ -846,6 +869,16 @@
           toggleEventPayment(event.id, event.payment_status, event.payment_amount)
         );
         actionsCell.appendChild(paymentButton);
+
+        if (!isCompleted) {
+          const concludeButton = document.createElement('button');
+          concludeButton.type = 'button';
+          concludeButton.className = 'action-btn';
+          concludeButton.style.cssText = 'border-color: var(--text-muted); color: var(--text-muted); margin-left: 6px;';
+          concludeButton.textContent = 'Conclude';
+          concludeButton.addEventListener('click', () => updateEventStatus(event.id, 'Completed'));
+          actionsCell.appendChild(concludeButton);
+        }
 
         if (event.payment_status === 'Paid') {
           const pendingButton = document.createElement('button');
@@ -870,6 +903,19 @@
         row.appendChild(actionsCell);
         tbody.appendChild(row);
       });
+    }
+
+    async function updateEventStatus(id, newStatus) {
+      const { error } = await _supabase
+        .from('event_bookings')
+        .update({ event_status: newStatus })
+        .eq('id', id);
+
+      if (error) {
+        alert(`Unable to update event status: ${error.message}`);
+        return;
+      }
+      await fetchEvents();
     }
 
     function promptForPaymentAmount(message, currentAmount = '') {
