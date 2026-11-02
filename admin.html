@@ -7,6 +7,15 @@
   <link rel="icon" href="Images/logo.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "07c47386-fcf4-4cfb-9d41-c7b1d201c2a3",
+      });
+    });
+  </script>
 
   <style>
     #mobile-menu-btn {
@@ -147,6 +156,7 @@
   <input type="tel" id="manual-phone" class="glass-input" placeholder="Phone Number" required>
   <input type="date" id="manual-checkin" class="glass-input" required>
   <input type="date" id="manual-checkout" class="glass-input" required>
+  <input type="text" id="manual-room-number" class="glass-input" placeholder="Room Number" required>
   <input type="number" id="manual-price" class="glass-input" placeholder="Rate per night (₦)" min="0.01" step="0.01" required>
   <select id="manual-room" class="glass-input" required>
     <option value="" disabled selected>Room Type</option>
@@ -166,6 +176,7 @@
             <th>Guest Name</th>
             <th>Phone / WhatsApp</th>
             <th>Room</th>
+            <th>Room No.</th>
             <th>Check-in</th>
             <th>Check-out</th>
             <th>Total Yield</th>
@@ -226,6 +237,21 @@
         <h3 style="color: var(--color-white); font-weight: 500; font-family: var(--font-heading); margin: 0;">Event Space Bookings</h3>
         <input type="search" id="event-search" class="glass-input" placeholder="Search events..." aria-label="Search event bookings" style="max-width: 300px; margin: 0;">
       </div>
+      <h3 style="margin-bottom: 20px; font-size: 1.125rem;">Manual Event Entry</h3>
+      <form id="manual-event-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 40px;">
+        <input type="text" id="event-client" class="input-field" placeholder="Client Name" required>
+        <input type="tel" id="event-phone" class="input-field" placeholder="Phone Number" required>
+        <input type="date" id="event-date" class="input-field" required>
+        <select id="event-type" class="input-field" required>
+          <option value="" disabled selected>Event Classification</option>
+          <option value="Wedding Reception">Wedding Reception</option>
+          <option value="Corporate Event">Corporate Event</option>
+          <option value="Social Gathering">Social Gathering</option>
+        </select>
+        <input type="number" id="event-capacity" class="input-field" placeholder="Capacity" min="1" step="1" required>
+        <input type="number" id="event-price" class="input-field" placeholder="Contract Value (₦)" min="0.01" step="0.01" required>
+        <button type="submit" class="btn-pill btn-solid" style="border-radius: 8px;">AUTHORIZE EVENT</button>
+      </form>
       <div style="overflow-x: auto;">
         <table>
           <thead>
@@ -584,7 +610,7 @@
       if (error) {
         console.error('Error fetching bookings:', error);
         document.getElementById('bookings-table-body').innerHTML =
-          '<tr><td colspan="9" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load bookings. Check the console for details.</td></tr>';
+          '<tr><td colspan="10" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load bookings. Check the console for details.</td></tr>';
         return;
       }
 
@@ -642,7 +668,7 @@
       tbody.innerHTML = '';
 
       if (bookingsToRender.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">No matching bookings found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">No matching bookings found.</td></tr>';
         return;
       }
 
@@ -663,6 +689,18 @@
             </td>
             <td data-label="Phone / WhatsApp" style="${textStyle}">${escapeHTML(booking.guest_phone || 'N/A')}</td>
             <td data-label="Room">${escapeHTML(roomType)}</td>
+            <td data-label="Room No.">
+              <input
+                type="text"
+                class="input-field"
+                value="${escapeHTML(booking.room_number || '')}"
+                placeholder="Assign"
+                aria-label="Room number"
+                data-booking-room-id="${escapeHTML(booking.id)}"
+                data-original-room-number="${escapeHTML(booking.room_number || '')}"
+                style="width: 70px; padding: 8px; font-size: 13px; text-align: center;"
+                ${isCheckedOut ? 'disabled' : ''}>
+            </td>
             <td data-label="Check-in">${escapeHTML(booking.check_in_date || 'TBD')}</td>
             <td data-label="Check-out">${escapeHTML(booking.check_out_date || 'TBD')}</td>
             <td data-label="Total Yield" style="text-align: right; color: var(--color-brand-orange); font-weight: 700;">${totalYield === null ? 'N/A' : `₦${totalYield.toLocaleString('en-NG', { maximumFractionDigits: 2 })}`}</td>
@@ -699,6 +737,35 @@
       const readButton = event.target.closest('button[data-booking-read-id]');
       if (readButton) markAsRead(readButton.dataset.bookingReadId);
     });
+
+    document.getElementById('bookings-table-body').addEventListener('focusout', event => {
+      const input = event.target.closest('input[data-booking-room-id]');
+      if (!input || input.value === input.dataset.originalRoomNumber) return;
+
+      updateRoomNumber(input.dataset.bookingRoomId, input.value, input);
+    });
+
+    async function updateRoomNumber(id, newRoomNumber, input) {
+      input.disabled = true;
+      try {
+        const { error } = await _supabase
+          .from('bookings')
+          .update({ room_number: newRoomNumber })
+          .eq('id', id);
+
+        if (error) {
+          alert(`Failed to save room number: ${error.message}`);
+          return;
+        }
+
+        input.dataset.originalRoomNumber = newRoomNumber;
+      } catch (error) {
+        console.error('Failed to save room number:', error);
+        alert('Failed to save room number. Please check your connection.');
+      } finally {
+        input.disabled = false;
+      }
+    }
 
     async function updateStayStatus(id, newStatus) {
       const { error } = await _supabase.from('bookings').update({ stay_status: newStatus }).eq('id', id);
@@ -1390,10 +1457,12 @@
     if (manualForm) {
       const checkInInput = document.getElementById('manual-checkin');
       const checkOutInput = document.getElementById('manual-checkout');
+      const roomNumberInput = document.getElementById('manual-room-number');
       checkOutInput.addEventListener('input', () => checkOutInput.setCustomValidity(''));
 
       manualForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const submitButton = manualForm.querySelector('button[type="submit"]');
 
         if (checkOutInput.value <= checkInInput.value) {
           checkOutInput.setCustomValidity('Check-out must be after check-in.');
@@ -1401,27 +1470,97 @@
           return;
         }
 
-        const manualData = {
-          guest_name: document.getElementById('manual-name').value,
-          guest_phone: document.getElementById('manual-phone').value,
-          room_type: document.getElementById('manual-room').value,
-          check_in_date: document.getElementById('manual-checkin').value,
-          check_out_date: document.getElementById('manual-checkout').value,
-          payment_amount: Number(document.getElementById('manual-price').value),
-          message: `Walk-in / Phone Booking - Room: ${document.getElementById('manual-room').value}`,
-          payment_status: 'Paid', // Walk-ins usually settle payment immediately at reception
-          booking_status: 'Active',
-          is_read: true
-        };
+        submitButton.disabled = true;
+        try {
+          const roomNumber = roomNumberInput.value.trim();
+          const { data: conflicts, error: conflictError } = await _supabase
+            .from('bookings')
+            .select('id')
+            .eq('room_number', roomNumber)
+            .lt('check_in_date', checkOutInput.value)
+            .gt('check_out_date', checkInInput.value)
+            .or('stay_status.is.null,stay_status.neq.Checked-Out');
 
-        const { error } = await _supabase.from('bookings').insert([manualData]);
+          if (conflictError) {
+            alert(`Unable to check room availability: ${conflictError.message}`);
+            return;
+          }
 
-        if (error) {
-          alert('Error saving manual booking: ' + error.message);
-        } else {
+          if (conflicts.length > 0) {
+            alert(`Room ${roomNumber} is already booked during those dates.`);
+            return;
+          }
+
+          const manualData = {
+            guest_name: document.getElementById('manual-name').value.trim(),
+            guest_phone: document.getElementById('manual-phone').value.trim(),
+            room_type: document.getElementById('manual-room').value,
+            room_number: roomNumber,
+            check_in_date: checkInInput.value,
+            check_out_date: checkOutInput.value,
+            payment_amount: Number(document.getElementById('manual-price').value),
+            message: `Walk-in / Phone Booking - Room: ${document.getElementById('manual-room').value}`,
+            payment_status: 'Paid',
+            booking_status: 'Active',
+            is_read: true
+          };
+
+          const { error } = await _supabase.from('bookings').insert([manualData]);
+
+          if (error) {
+            alert('Error saving manual booking: ' + error.message);
+            return;
+          }
+
           alert('Manual booking successfully registered!');
           manualForm.reset();
-          fetchBookings(); // Refresh the table instantly
+          await fetchBookings();
+        } catch (error) {
+          console.error('Error saving manual booking:', error);
+          alert(`Unable to save manual booking: ${error.message || error}`);
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+    }
+
+    const manualEventForm = document.getElementById('manual-event-form');
+    if (manualEventForm) {
+      const eventDateInput = document.getElementById('event-date');
+      const today = new Date();
+      eventDateInput.min = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
+      manualEventForm.addEventListener('submit', async event => {
+        event.preventDefault();
+        const submitButton = manualEventForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+
+        try {
+          const { error } = await _supabase.from('event_bookings').insert([{
+            guest_name: document.getElementById('event-client').value.trim(),
+            guest_phone: document.getElementById('event-phone').value.trim(),
+            event_date: eventDateInput.value,
+            event_type: document.getElementById('event-type').value,
+            guest_count: Number.parseInt(document.getElementById('event-capacity').value, 10),
+            payment_amount: Number(document.getElementById('event-price').value),
+            payment_status: 'Pending',
+            event_status: 'Upcoming',
+            is_read: true
+          }]);
+
+          if (error) {
+            alert(`Unable to save manual event: ${error.message}`);
+            return;
+          }
+
+          alert('Manual event successfully registered!');
+          manualEventForm.reset();
+          await fetchEvents();
+        } catch (error) {
+          console.error('Error saving manual event:', error);
+          alert(`Unable to save manual event: ${error.message || error}`);
+        } finally {
+          submitButton.disabled = false;
         }
       });
     }
