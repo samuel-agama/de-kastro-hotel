@@ -203,6 +203,7 @@
               <th>Room Type</th>
               <th>Price</th>
               <th>Status</th>
+              <th>Housekeeping</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -768,12 +769,44 @@
     }
 
     async function updateStayStatus(id, newStatus) {
-      const { error } = await _supabase.from('bookings').update({ stay_status: newStatus }).eq('id', id);
-      if (error) {
-        alert(`Unable to update stay status: ${error.message}`);
+      const booking = allBookings.find(item => String(item.id) === String(id));
+      const roomNumber = String(booking?.room_number || '').trim();
+      const { error: bookingError } = await _supabase
+        .from('bookings')
+        .update({ stay_status: newStatus })
+        .eq('id', id);
+
+      if (bookingError) {
+        alert(`Unable to update stay status: ${bookingError.message}`);
         return;
       }
-      await fetchBookings();
+
+      if (roomNumber && (newStatus === 'Checked-In' || newStatus === 'Checked-Out')) {
+        const roomUpdate = newStatus === 'Checked-Out'
+          ? {
+              status: 'Available',
+              housekeeping_status: 'Dirty',
+              current_booking_id: null
+            }
+          : {
+              status: 'Occupied',
+              current_booking_id: id
+            };
+        const { error: roomError } = await _supabase
+          .from('rooms')
+          .update(roomUpdate)
+          .eq('room_number', roomNumber);
+
+        if (roomError) {
+          alert(`Stay status was updated, but Room ${roomNumber} could not be updated: ${roomError.message}`);
+          await Promise.all([fetchBookings(), fetchRooms()]);
+          return;
+        }
+      } else if (newStatus === 'Checked-In' || newStatus === 'Checked-Out') {
+        alert('Stay status was updated, but no room number is assigned to this booking.');
+      }
+
+      await Promise.all([fetchBookings(), fetchRooms()]);
     }
 
     async function markAsRead(id) {
@@ -1180,7 +1213,7 @@
       if (error) {
         console.error('Error fetching rooms:', error);
         document.getElementById('rooms-table-body').innerHTML =
-          '<tr><td colspan="5" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load rooms.</td></tr>';
+          '<tr><td colspan="6" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">Unable to load rooms.</td></tr>';
         return;
       }
 
@@ -1194,11 +1227,14 @@
       tbody.innerHTML = '';
 
       if (roomsToRender.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">No matching rooms found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--color-ash-gray); padding: 24px;">No matching rooms found.</td></tr>';
         return;
       }
 
       roomsToRender.forEach(room => {
+        const status = room.status || '';
+        const isKnownStatus = ['Available', 'Booked', 'Occupied', 'Maintenance'].includes(status);
+        const statusClass = isKnownStatus ? status.toLowerCase() : 'unknown';
         const hkClass = room.housekeeping_status === 'Clean' ? 'status-clean' : 'status-dirty';
 
         tbody.innerHTML += `
@@ -1206,6 +1242,16 @@
             <td data-label="Room #"><strong>Room ${escapeHTML(room.room_number)}</strong></td>
             <td data-label="Type">${escapeHTML(room.room_type || 'N/A')}</td>
             <td data-label="Price">₦${(Number(room.price_per_night) || 0).toLocaleString('en-NG')}</td>
+            <td data-label="Status">
+              <select class="input-field room-status-select room-status-${statusClass}" data-room-status-number="${escapeHTML(room.room_number)}" aria-label="Status for room ${escapeHTML(room.room_number)}">
+                <option value="" disabled ${isKnownStatus ? '' : 'selected'}>Set status</option>
+                <option value="Available" ${status === 'Available' ? 'selected' : ''}>Available</option>
+                <option value="Booked" ${status === 'Booked' ? 'selected' : ''}>Booked</option>
+                <option value="Occupied" ${status === 'Occupied' ? 'selected' : ''}>Occupied</option>
+                <option value="Maintenance" ${status === 'Maintenance' ? 'selected' : ''}>Maintenance</option>
+              </select>
+              <span class="room-status-badge room-status-${statusClass}">${escapeHTML(status || 'Unknown')}</span>
+            </td>
             <td data-label="Housekeeping"><span class="status-badge ${hkClass}">${escapeHTML(room.housekeeping_status || 'Unknown')}</span></td>
             <td data-label="Actions">
               <button class="action-btn" type="button" data-housekeeping-room="${escapeHTML(room.room_number)}">Update Status</button>
@@ -1222,6 +1268,35 @@
       const room = allRooms.find(item => String(item.room_number) === button.dataset.housekeepingRoom);
       if (room) toggleHousekeeping(room.room_number, room.housekeeping_status);
     });
+
+    document.getElementById('rooms-table-body').addEventListener('change', event => {
+      const select = event.target.closest('select[data-room-status-number]');
+      if (select) updateRoomStatus(select.dataset.roomStatusNumber, select.value, select);
+    });
+
+    async function updateRoomStatus(roomNumber, status, select) {
+      select.disabled = true;
+      try {
+        const { error } = await _supabase
+          .from('rooms')
+          .update({ status })
+          .eq('room_number', roomNumber);
+
+        if (error) {
+          alert(`Unable to update Room ${roomNumber}: ${error.message}`);
+          await fetchRooms();
+          return;
+        }
+
+        await fetchRooms();
+      } catch (error) {
+        console.error(`Unable to update Room ${roomNumber}:`, error);
+        alert(`Unable to update Room ${roomNumber}: ${error.message || error}`);
+        await fetchRooms();
+      } finally {
+        select.disabled = false;
+      }
+    }
 
     let analyticsPeriod = 'week';
 
@@ -1473,6 +1548,39 @@
         submitButton.disabled = true;
         try {
           const roomNumber = roomNumberInput.value.trim();
+          const { data: room, error: roomError } = await _supabase
+            .from('rooms')
+            .select('room_number, room_type, status')
+            .eq('room_number', roomNumber)
+            .maybeSingle();
+
+          if (roomError) {
+            alert(`Unable to verify Room ${roomNumber}: ${roomError.message}`);
+            return;
+          }
+
+          if (!room) {
+            alert(`Booking failed: Room ${roomNumber} does not exist.`);
+            return;
+          }
+
+          if (room.status !== 'Available') {
+            alert(`Booking failed: Room ${roomNumber} is currently ${room.status || 'not marked Available'}.`);
+            return;
+          }
+
+          const selectedRoomType = document.getElementById('manual-room').value;
+          const normalizeRoomType = value => String(value || '')
+            .toLowerCase()
+            .trim()
+            .replace(/_/g, ' ')
+            .replace(/\s*room$/, '')
+            .replace(/\s+/g, ' ');
+          if (room.room_type && normalizeRoomType(room.room_type) !== normalizeRoomType(selectedRoomType)) {
+            alert(`Booking failed: Room ${roomNumber} is a ${room.room_type} room, not ${selectedRoomType}.`);
+            return;
+          }
+
           const { data: conflicts, error: conflictError } = await _supabase
             .from('bookings')
             .select('id')
@@ -1494,27 +1602,57 @@
           const manualData = {
             guest_name: document.getElementById('manual-name').value.trim(),
             guest_phone: document.getElementById('manual-phone').value.trim(),
-            room_type: document.getElementById('manual-room').value,
+            room_type: selectedRoomType,
             room_number: roomNumber,
             check_in_date: checkInInput.value,
             check_out_date: checkOutInput.value,
             payment_amount: Number(document.getElementById('manual-price').value),
-            message: `Walk-in / Phone Booking - Room: ${document.getElementById('manual-room').value}`,
+            message: `Walk-in / Phone Booking - Room: ${selectedRoomType}`,
             payment_status: 'Paid',
             booking_status: 'Active',
             is_read: true
           };
 
-          const { error } = await _supabase.from('bookings').insert([manualData]);
+          const { data: savedBooking, error } = await _supabase
+            .from('bookings')
+            .insert([manualData])
+            .select('id')
+            .single();
 
           if (error) {
             alert('Error saving manual booking: ' + error.message);
             return;
           }
 
+          const { data: lockedRoom, error: roomLockError } = await _supabase
+            .from('rooms')
+            .update({ status: 'Booked', current_booking_id: savedBooking.id })
+            .eq('room_number', roomNumber)
+            .eq('status', 'Available')
+            .select('room_number')
+            .maybeSingle();
+
+          if (roomLockError || !lockedRoom) {
+            const { error: rollbackError } = await _supabase
+              .from('bookings')
+              .delete()
+              .eq('id', savedBooking.id);
+
+            if (rollbackError) {
+              console.error('Could not roll back booking after room reservation failed:', rollbackError);
+              alert(`Booking ${savedBooking.id} was created, but Room ${roomNumber} could not be reserved. Remove or resolve the booking manually.`);
+            } else {
+              alert(roomLockError
+                ? `Could not reserve Room ${roomNumber}: ${roomLockError.message}`
+                : `Booking failed: Room ${roomNumber} is no longer available.`);
+            }
+            await Promise.all([fetchBookings(), fetchRooms()]);
+            return;
+          }
+
           alert('Manual booking successfully registered!');
           manualForm.reset();
-          await fetchBookings();
+          await Promise.all([fetchBookings(), fetchRooms()]);
         } catch (error) {
           console.error('Error saving manual booking:', error);
           alert(`Unable to save manual booking: ${error.message || error}`);

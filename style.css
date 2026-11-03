@@ -2191,6 +2191,46 @@ tbody tr:hover {
   color: var(--color-brand-orange-hover);
 }
 
+.room-status-select {
+  display: block;
+  min-width: 130px;
+  margin-bottom: 8px;
+  padding: 8px;
+}
+
+.room-status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.room-status-available {
+  border-color: rgba(78, 222, 163, 0.45);
+  background-color: rgba(16, 185, 129, 0.14);
+  color: #4EDEA3;
+}
+
+.room-status-booked {
+  border-color: rgba(250, 204, 21, 0.45);
+  background-color: rgba(250, 204, 21, 0.14);
+  color: #FACC15;
+}
+
+.room-status-occupied {
+  border-color: rgba(248, 113, 113, 0.45);
+  background-color: rgba(239, 68, 68, 0.14);
+  color: #F87171;
+}
+
+.room-status-maintenance,
+.room-status-unknown {
+  border-color: rgba(148, 163, 184, 0.4);
+  background-color: rgba(148, 163, 184, 0.12);
+  color: #94A3B8;
+}
+
 .action-btn {
   border-color: var(--color-border);
   border-radius: 8px;
