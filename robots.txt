@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
 
 # Point crawlers directly to the sitemap
 Sitemap: https://www.dekastrohotel.com/sitemap.xml

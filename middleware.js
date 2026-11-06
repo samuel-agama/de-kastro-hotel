@@ -22,6 +22,10 @@ export default function middleware(request) {
     throw new Error('Set ADMIN_USERNAME and ADMIN_PASSWORD in the Vercel project environment variables.');
   }
 
+  if (expectedPassword.length < 16) {
+    throw new Error('ADMIN_PASSWORD must be at least 16 characters long.');
+  }
+
   const authorization = request.headers.get('authorization') || '';
   const match = /^Basic\s+([A-Za-z0-9+/]+={0,2})$/i.exec(authorization);
 
