@@ -420,8 +420,7 @@
         try {
           const { data, error } = await _supabase
             .from('rooms')
-            .select('room_type, price_per_night')
-            .eq('is_available', true)
+            .select('room_type, price_per_night, status')
             .order('price_per_night', { ascending: true });
 
           if (error) throw error;
@@ -429,17 +428,25 @@
           if (data && data.length > 0) {
             roomSelect.innerHTML = '<option value="" disabled selected>Choose your room...</option>';
             const uniqueRoomTypes = [...new Map(data.map(room => [room.room_type, room])).values()];
+            const availableRoomTypes = new Set(
+              data
+                .filter(room => room.status === 'Available')
+                .map(room => room.room_type)
+            );
 
             uniqueRoomTypes.forEach(room => {
               const option = document.createElement('option');
               option.value = room.room_type;
-              option.textContent = `${room.room_type} — ₦${room.price_per_night} / night`;
+              const isAvailable = availableRoomTypes.has(room.room_type);
+              option.textContent = `${room.room_type} — ₦${room.price_per_night} / night${isAvailable ? '' : ' - (Sold Out)'}`;
+              option.disabled = !isAvailable;
               roomSelect.appendChild(option);
             });
 
             if (requestedRoom) {
               const normalizeRoomType = value => value.toLowerCase().replace(/\s*room$/, '').trim();
               const matchingRoom = uniqueRoomTypes.find(room =>
+                availableRoomTypes.has(room.room_type) &&
                 normalizeRoomType(room.room_type) === normalizeRoomType(requestedRoom)
               );
               if (matchingRoom) {
