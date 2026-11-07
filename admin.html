@@ -120,16 +120,21 @@
         <button id="mobile-menu-close" type="button" aria-label="Close navigation menu" style="background: rgba(6, 14, 26, 0.1); border: none; color: var(--color-bg-base); font-size: 24px; width: 40px; height: 40px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;">✕</button>
       </div>
       <nav aria-label="Dashboard sections" style="display: flex; flex-direction: column;">
+        <a href="#panel-analytics" class="mobile-link" data-mobile-tab="analytics">Overview</a>
         <a href="#panel-bookings" class="mobile-link" data-mobile-tab="bookings">Active Bookings</a>
         <a href="#panel-housekeeping" class="mobile-link" data-mobile-tab="housekeeping">Housekeeping Status</a>
         <a href="#panel-inquiries" class="mobile-link" data-mobile-tab="inquiries">Customer Inquiries</a>
         <a href="#panel-events" class="mobile-link" data-mobile-tab="events">Event Bookings</a>
-        <a href="#panel-analytics" class="mobile-link" data-mobile-tab="analytics">Performance Analytics</a>
       </nav>
     </div>
 
     <!-- Navigation Tabs -->
     <div class="nav-tabs glass-panel">
+      <div class="dashboard-brand">
+        <img src="Images/logo.png" alt="">
+        <span>De Kastro</span>
+      </div>
+      <button type="button" class="tab-btn btn-solid" id="tab-analytics">Overview</button>
       <button type="button" class="tab-btn btn-solid" id="tab-bookings">
         Active Bookings <span id="notification-badge" class="notification-badge" aria-live="polite">0</span>
       </button>
@@ -140,7 +145,6 @@
       <button type="button" class="tab-btn glass-input" id="tab-events">
         Event Bookings <span id="event-badge" class="notification-badge" aria-live="polite">0</span>
       </button>
-      <button type="button" class="tab-btn glass-input" id="tab-analytics">Performance Analytics</button>
     </div>
 
 <!-- Bookings Panel -->
@@ -277,7 +281,7 @@
     <!-- Panel 5: Performance Analytics -->
     <div id="panel-analytics" style="display: none;">
       <div class="analytics-header">
-        <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; margin: 0;">Performance Analytics</h2>
+        <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; margin: 0;">Overview</h2>
         <div class="pill-track analytics-periods" role="group" aria-label="Analytics timeframe">
           <button type="button" class="pill-segment" data-analytics-period="today" aria-pressed="false">Today</button>
           <button type="button" class="pill-segment active" data-analytics-period="week" aria-pressed="true">Week</button>
@@ -444,7 +448,8 @@
 
     function showDashboard() {
       loginView.style.display = 'none';
-      dashboardView.style.display = 'block';
+      dashboardView.style.display = 'grid';
+      switchTab('analytics', tabAnalytics);
       fetchBookings();
       fetchRooms();
       fetchInquiries();

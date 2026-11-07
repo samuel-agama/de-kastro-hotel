@@ -1637,7 +1637,7 @@
       box-sizing: border-box;
     }
 
-    .glass-panel {
+    #dashboard-container .glass-panel {
       background: linear-gradient(145deg, rgba(19, 34, 56, 0.9), rgba(11, 23, 42, 0.96));
       border: 1px solid var(--color-border);
       border-radius: 16px;
@@ -2014,12 +2014,20 @@ body {
 }
 
 .login-card,
-.glass-panel,
 .analytic-card {
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
   border-radius: 16px;
   box-shadow: none;
+}
+
+#dashboard-container .glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  box-shadow: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .login-card h2,
@@ -2041,6 +2049,11 @@ h3 {
   border-radius: 8px;
   color: var(--color-white);
   font: 400 0.875rem/1.25rem var(--font-body);
+}
+
+#dashboard-container .glass-input {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .input-field::placeholder,
@@ -2070,14 +2083,32 @@ h3 {
 }
 
 #dashboard-container {
-  max-width: 1440px;
-  padding: 32px;
+  display: none;
+  grid-template-columns: 248px minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "sidebar header"
+    "sidebar content";
+  align-items: start;
+  gap: 0 32px;
+  max-width: none;
+  margin: 0;
+  padding: 24px 32px 32px 24px;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  background:
+    radial-gradient(ellipse at 92% 8%, rgba(212, 106, 21, 0.08), transparent 34%),
+    linear-gradient(135deg, var(--color-bg-base) 0%, var(--color-bg-surface) 100%);
 }
 
 .dashboard-header {
+  grid-area: header;
   align-items: center;
-  border-color: var(--color-border);
-  margin-bottom: 24px;
+  min-width: 0;
+  margin: 0 0 24px;
+  padding: 8px 0 20px;
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .dashboard-header h1 {
@@ -2085,46 +2116,100 @@ h3 {
   font-weight: 600;
 }
 
+.dashboard-header h1::before {
+  content: "DE KASTRO  /  HOTEL OPERATIONS";
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-brand-orange);
+  font: 600 0.65rem/1.2 var(--font-body);
+  letter-spacing: 0.14em;
+}
+
 .nav-tabs {
-  justify-content: flex-start;
-  gap: 6px;
-  padding: 8px;
-  background: #081220;
-  border-radius: 9999px;
+  grid-area: sidebar;
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  min-height: calc(100vh - 48px);
+  padding: 20px 14px;
+  border-radius: 18px;
+}
+
+.dashboard-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 24px;
+  padding: 4px 8px 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-white);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.dashboard-brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 9px;
 }
 
 .nav-tabs .tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex: 0 0 auto;
+  width: 100% !important;
   min-height: 40px;
-  padding: 9px 18px;
+  padding: 10px 12px;
   border: 1px solid transparent;
-  border-radius: 9999px;
+  border-radius: 10px;
   font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 600;
+  text-align: left;
+  white-space: normal;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-tabs .tab-btn.glass-input {
   background: transparent;
   color: var(--color-ash-gray);
+  box-shadow: none;
 }
 
 .nav-tabs .tab-btn.glass-input:hover {
-  background: var(--color-panel-hover);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--color-white);
 }
 
 .nav-tabs .tab-btn.btn-solid {
-  background: var(--color-brand-orange);
-  color: var(--color-bg-base);
+  background: rgba(212, 106, 21, 0.18);
+  border-color: rgba(212, 106, 21, 0.28);
+  color: var(--color-brand-orange-hover);
+}
+
+#dashboard-container > #panel-bookings,
+#dashboard-container > #panel-housekeeping,
+#dashboard-container > #panel-inquiries,
+#dashboard-container > #panel-events,
+#dashboard-container > #panel-analytics {
+  grid-area: content;
+  min-width: 0;
+}
+
+#dashboard-container > #panel-analytics {
+  width: 100%;
 }
 
 .notification-badge {
   padding: 2px 7px;
   border-radius: 9999px;
-  background: rgba(6, 14, 26, 0.22);
-  color: inherit;
+  background: var(--color-brand-orange);
+  color: var(--color-bg-base);
   font-variant-numeric: tabular-nums;
 }
 
@@ -2298,25 +2383,34 @@ tbody tr:hover {
   outline-offset: 2px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   #dashboard-container {
-    padding: 20px 12px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+      "header"
+      "content";
+    gap: 0;
+    padding: 20px 16px 28px;
   }
 
-  .nav-tabs {
-    justify-content: flex-start;
-    border-radius: 16px;
+  #dashboard-container .dashboard-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
   }
 
-  .nav-tabs .tab-btn {
-    flex: 1 1 calc(50% - 6px);
-    white-space: normal;
+  #dashboard-container .dashboard-header h1::before {
+    font-size: 0.6rem;
   }
 }
 
 @media (max-width: 420px) {
-  .nav-tabs .tab-btn {
-    flex-basis: 100%;
+  #dashboard-container {
+    padding: 16px 12px 24px;
+  }
+
+  #dashboard-container .dashboard-header h1 {
+    font-size: 1.35rem;
   }
 }
 /* admin css  */
