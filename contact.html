@@ -163,7 +163,7 @@
         <div style="margin-bottom: 32px;">
           <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-ash-gray); margin-bottom: 8px;">Direct Booking Line</div>
           <div style="font-size: 24px; color: var(--color-white); font-family: var(--font-heading); margin-bottom: 4px;">+234 806 291 1356</div>
-          <a href="https://wa.me/2348062911356" target="_blank" rel="noopener noreferrer" style="color: var(--color-brand-orange); text-decoration: none; font-size: 14px; display: inline-block;">Chat with us on WhatsApp &rarr;</a>
+          <a href="https://wa.me/2348062911356?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20a%20room.%20I%20have%20noted%20the%20hotel%27s%20no-smoking%20and%20guest%20damage%20policies." target="_blank" rel="noopener noreferrer" style="color: var(--color-brand-orange); text-decoration: none; font-size: 14px; display: inline-block;">Chat with us on WhatsApp &rarr;</a>
         </div>
 
         <!-- Address -->
@@ -234,6 +234,12 @@
             <p id="room-message" role="status" aria-live="polite" style="color: var(--color-ash-gray); font-size: 13px;"></p>
           </div>
 
+          <label for="guest-policy-acknowledgment" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 24px; cursor: pointer;">
+            <input type="checkbox" id="guest-policy-acknowledgment" name="guest-policy-acknowledgment" required style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--color-brand-orange);">
+            <span style="color: var(--color-ash-gray); font-size: 14px; line-height: 1.5;">
+              I acknowledge the <strong>₦50,000 No Smoking penalty</strong> and agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer" style="color: var(--color-brand-orange);">Guest Damage Policies</a>.
+            </span>
+          </label>
           <button type="submit" class="btn-solid" style="width: 100%; background: var(--color-brand-orange); color: #000; padding: 14px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;">Secure Booking</button>
           <p id="booking-message" role="status" aria-live="polite" style="color: var(--color-ash-gray); font-size: 13px;"></p>
         </form>
@@ -319,7 +325,7 @@
       <a href="#enquiry-section" class="btn-solid" style="background-color: transparent; border: 1px solid var(--color-white); color: var(--color-white);">Send an Enquiry</a>
 
       <!-- 2. WhatsApp Message -->
-      <a href="https://wa.me/2348062911356" class="btn-solid" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
+      <a href="https://wa.me/2348062911356?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20a%20room.%20I%20have%20noted%20the%20hotel%27s%20no-smoking%20and%20guest%20damage%20policies." class="btn-solid" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
 
       <!-- 3. Direct Phone Call -->
       <a href="tel:+2348062911356" class="btn-solid" style="background-color: transparent; border: 1px solid var(--color-brand-orange); color: var(--color-brand-orange);">Call Front Desk</a>
@@ -480,7 +486,7 @@
             guest_phone: document.getElementById('guest-phone').value.trim(),
             check_in_date: checkIn.value,
             check_out_date: checkOut.value,
-            message: `Requested Room: ${roomSelect.value}`,
+            message: `Requested Room: ${roomSelect.value} | Guest acknowledged the no-smoking penalty and guest damage policies.`,
             payment_status: 'Pending',
             booking_status: 'Active'
           };
@@ -491,6 +497,7 @@
           const whatsappMessage = encodeURIComponent(
             `Hello! I just submitted a room booking request online for ${formData.guest_name}, ` +
             `${formData.check_in_date} to ${formData.check_out_date} (${roomSelect.value}). ` +
+            'I acknowledge the ₦50,000 no-smoking penalty and agree to the guest damage policies. ' +
             'Please confirm availability and the amount due.'
           );
           formContainer.innerHTML = `

@@ -72,3 +72,33 @@ if (header && desktopNavigation) {
     }
   });
 }
+
+const privacyNotice = document.createElement('aside');
+privacyNotice.id = 'privacy-notice';
+privacyNotice.className = 'privacy-notice';
+privacyNotice.setAttribute('role', 'region');
+privacyNotice.setAttribute('aria-label', 'Privacy notice');
+privacyNotice.innerHTML = `
+  <div>
+    <h2>Your privacy matters</h2>
+    <p>We use essential browser storage to support site features and remember when this notice is dismissed. We do not currently use this notice to enable analytics or advertising tracking. <a href="privacy-policy.html">Read our Privacy Policy</a>.</p>
+  </div>
+  <button type="button" aria-label="Dismiss privacy notice">Dismiss</button>
+`;
+document.body.appendChild(privacyNotice);
+
+const dismissPrivacyNotice = privacyNotice.querySelector('button');
+try {
+  privacyNotice.hidden = localStorage.getItem('deKastroPrivacyNoticeDismissed') === 'true';
+} catch (error) {
+  console.warn('Unable to read the privacy notice preference:', error);
+}
+
+dismissPrivacyNotice.addEventListener('click', () => {
+  privacyNotice.hidden = true;
+  try {
+    localStorage.setItem('deKastroPrivacyNoticeDismissed', 'true');
+  } catch (error) {
+    console.warn('Unable to save the privacy notice preference:', error);
+  }
+});
