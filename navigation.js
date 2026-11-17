@@ -1,6 +1,80 @@
 const header = document.querySelector('.flex-header');
 const desktopNavigation = header?.querySelector('.header-nav');
 
+const contactBar = document.createElement('nav');
+contactBar.className = 'floating-contact-bar';
+contactBar.setAttribute('aria-label', 'Quick contact actions');
+contactBar.innerHTML = `
+  <div class="floating-contact-actions" id="floating-contact-actions">
+    <a class="floating-contact-link floating-contact-call" href="tel:+2348062911356" aria-label="Call De Kastro Hotel's 24/7 emergency line at +234 806 291 1356">
+      <span aria-hidden="true">🚨</span>
+      <span>24/7 Emergency Call</span>
+    </a>
+    <a class="floating-contact-link floating-contact-whatsapp" href="https://wa.me/2348062911356?text=Hello%2C%20I%20would%20like%20to%20make%20an%20urgent%20enquiry." target="_blank" rel="noopener noreferrer" data-event="whatsapp_lead">
+      <span aria-hidden="true">💬</span>
+      <span>Chat on WhatsApp</span>
+    </a>
+  </div>
+  <button class="floating-contact-toggle" type="button" aria-label="Hide quick contact actions" aria-controls="floating-contact-actions" aria-expanded="true">
+    <span class="floating-contact-dismiss" aria-hidden="true">×</span>
+    <span class="floating-contact-restore">Contact</span>
+  </button>
+`;
+document.body.appendChild(contactBar);
+document.body.classList.add('has-floating-contact-bar');
+
+const contactActions = contactBar.querySelector('.floating-contact-actions');
+const contactToggle = contactBar.querySelector('.floating-contact-toggle');
+let touchStart = null;
+
+function setContactBarCollapsed(isCollapsed) {
+  contactBar.classList.toggle('is-collapsed', isCollapsed);
+  contactToggle.setAttribute('aria-expanded', String(!isCollapsed));
+  contactToggle.setAttribute(
+    'aria-label',
+    isCollapsed ? 'Show quick contact actions' : 'Hide quick contact actions'
+  );
+
+  if (isCollapsed && contactActions.contains(document.activeElement)) {
+    contactToggle.focus();
+  }
+}
+
+contactToggle.addEventListener('click', () => {
+  setContactBarCollapsed(!contactBar.classList.contains('is-collapsed'));
+});
+
+contactBar.addEventListener('touchstart', event => {
+  if (event.touches.length !== 1) {
+    touchStart = null;
+    return;
+  }
+
+  touchStart = {
+    x: event.touches[0].clientX,
+    y: event.touches[0].clientY
+  };
+}, { passive: true });
+
+contactBar.addEventListener('touchend', event => {
+  if (!touchStart || event.changedTouches.length !== 1) return;
+
+  const deltaX = event.changedTouches[0].clientX - touchStart.x;
+  const deltaY = event.changedTouches[0].clientY - touchStart.y;
+  touchStart = null;
+
+  if (Math.abs(deltaY) < 48 || Math.abs(deltaY) <= Math.abs(deltaX) * 1.25) return;
+
+  event.preventDefault();
+  const isCollapsed = contactBar.classList.contains('is-collapsed');
+  if (deltaY > 0 && !isCollapsed) setContactBarCollapsed(true);
+  if (deltaY < 0 && isCollapsed) setContactBarCollapsed(false);
+}, { passive: false });
+
+contactBar.addEventListener('touchcancel', () => {
+  touchStart = null;
+}, { passive: true });
+
 if (header && desktopNavigation) {
   const menuButton = document.createElement('button');
   menuButton.className = 'mobile-menu-btn';

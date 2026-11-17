@@ -238,7 +238,7 @@
       min-height: 100vh;
     }
     /* Opaque content layers rise over the pinned hero and cover the viewport. */
-    body > :not(.hero-wrapper):not(.hero-interior-wrapper):not(script) {
+    body > :not(.hero-wrapper):not(.hero-interior-wrapper):not(.privacy-notice):not(.floating-contact-bar):not(script) {
       position: relative;
       z-index: 1;
       background-color: var(--color-bg-base);
@@ -1165,7 +1165,7 @@
       min-height: 100vh;
     }
     /* Opaque content layers rise over the pinned hero and cover the viewport. */
-    body > :not(.hero-wrapper):not(.hero-interior-wrapper):not(script) {
+    body > :not(.hero-wrapper):not(.hero-interior-wrapper):not(.privacy-notice):not(.floating-contact-bar):not(script) {
       position: relative;
       z-index: 1;
       background-color: var(--color-bg-base);
@@ -1264,7 +1264,7 @@
       min-height: 100vh;
     }
     /* Opaque content layers rise over the pinned hero and cover the viewport. */
-    body > :not(.hero-wrapper):not(.hero-interior-wrapper):not(script) {
+    body > :not(.hero-wrapper):not(.hero-interior-wrapper):not(.privacy-notice):not(.floating-contact-bar):not(script) {
       position: relative;
       z-index: 1;
       background-color: var(--color-bg-base);
@@ -2586,6 +2586,39 @@ body > #mobile-menu-overlay {
   color: var(--text-main);
 }
 
+.testimonials-intro {
+  margin: -8px 0 32px;
+  color: var(--color-ash-gray);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 24px;
+}
+
+.testimonials-grid .review-card {
+  max-width: none;
+  margin: 0;
+  text-align: left;
+  border-radius: 12px;
+}
+
+.testimonials-grid blockquote {
+  margin: 0;
+  color: var(--color-bone-white);
+  font-style: italic;
+}
+
+.testimonials-grid blockquote p {
+  margin: 0 0 16px;
+}
+
+.testimonials-grid figcaption {
+  color: var(--color-brand-orange);
+  font-weight: 600;
+}
+
 .problem-solution-section,
 .how-it-works-section {
   padding: 48px 20px;
@@ -2638,6 +2671,125 @@ body > #mobile-menu-overlay {
   gap: 24px;
 }
 
+.floating-contact-bar {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+}
+
+.floating-contact-actions {
+  display: flex;
+  gap: 12px;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+.floating-contact-bar.is-collapsed {
+  left: auto;
+}
+
+.floating-contact-bar.is-collapsed .floating-contact-actions {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translateY(calc(100% + 12px));
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.floating-contact-link {
+  display: inline-flex;
+  min-height: 48px;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  padding: 12px 18px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.floating-contact-link:focus-visible {
+  outline: 3px solid var(--color-white);
+  outline-offset: 3px;
+}
+
+.floating-contact-call {
+  background: #dc2626;
+}
+
+.floating-contact-whatsapp {
+  background: #0b7a3a;
+}
+
+.floating-contact-link:hover {
+  filter: brightness(1.1);
+}
+
+.floating-contact-toggle {
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: var(--color-bg-surface);
+  color: var(--color-white);
+  font: inherit;
+  cursor: pointer;
+}
+
+.floating-contact-toggle:focus-visible {
+  outline: 3px solid var(--color-white);
+  outline-offset: 3px;
+}
+
+.floating-contact-dismiss {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.floating-contact-restore {
+  display: none;
+}
+
+.floating-contact-bar.is-collapsed .floating-contact-toggle {
+  position: static;
+  width: auto;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.floating-contact-bar.is-collapsed .floating-contact-dismiss {
+  display: none;
+}
+
+.floating-contact-bar.is-collapsed .floating-contact-restore {
+  display: inline;
+}
+
+.has-floating-contact-bar .privacy-notice {
+  bottom: 96px;
+}
+
 .step-card {
   display: flex;
   min-height: 180px;
@@ -2664,6 +2816,30 @@ body > #mobile-menu-overlay {
 
   .review-card {
     padding: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .floating-contact-bar {
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    left: 12px;
+  }
+
+  .floating-contact-bar.is-collapsed {
+    right: 12px;
+  }
+
+  .floating-contact-actions { gap: 8px; }
+
+  .floating-contact-link {
+    flex: 1 1 0;
+    padding: 12px 8px;
+    font-size: 12px;
+  }
+
+  .has-floating-contact-bar .privacy-notice {
+    bottom: 84px;
   }
 }
 
