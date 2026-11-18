@@ -2621,7 +2621,7 @@ body > #mobile-menu-overlay {
 
 .problem-solution-section,
 .how-it-works-section {
-  padding: 48px 20px;
+  padding: 0 20px;
   margin: 0 auto;
 }
 
@@ -2939,6 +2939,6 @@ body > #mobile-menu-overlay {
 }
 
 .section-gap {
-  padding-top: clamp(3rem, 6vw, 6rem);
-  padding-bottom: clamp(3rem, 6vw, 6rem);
+  padding-top: clamp(2rem, 3.5vw, 3rem);
+  padding-bottom: clamp(2rem, 3.5vw, 3rem);
 }
