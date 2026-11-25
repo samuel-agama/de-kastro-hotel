@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin.html
 
 # Point crawlers directly to the sitemap
-Sitemap: https://www.dekastrohotel.com/sitemap.xml
+Sitemap: https://dekastrohotelltd.com/sitemap.xml
